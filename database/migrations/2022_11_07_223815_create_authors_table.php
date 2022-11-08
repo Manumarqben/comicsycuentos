@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->string('alias');
+            $table->string('alias')->unique();
             $table->string('biography')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->foreignId('user_id')->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 
