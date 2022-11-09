@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('penalty_user', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('birthdate')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
+            $table->foreignId('penalty_id')->constrained();
+            $table->foreignId('user_id')->constrained();
+            $table->timestamp('ending_date');
+            $table->unique(['penalty_id', 'user_id']);
         });
     }
 
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('penalty_user');
     }
 };
