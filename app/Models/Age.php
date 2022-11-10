@@ -12,7 +12,7 @@ class Age extends Model
     use HasFactory;
 
     protected $fillable = [
-        "age",
+        "name",
         "description",
     ];
 }

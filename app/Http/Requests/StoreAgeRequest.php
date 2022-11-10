@@ -24,7 +24,7 @@ class StoreAgeRequest extends FormRequest
     public function rules()
     {
         return [
-            'age' => 'required',
+            'name' => 'required',
             'description' => 'required',
         ];
     }

@@ -21,10 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('types', TypeController::class);
-Route::resource('networks', SocialNetworkController::class);
-Route::resource('genres', GenreController::class);
-Route::resource('ages', AgeController::class);
+
 
 Route::middleware([
     'auth:sanctum',
@@ -34,4 +31,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource('types', TypeController::class);
+    Route::resource('networks', SocialNetworkController::class);
+    Route::resource('genres', GenreController::class);
+    Route::resource('ages', AgeController::class);
 });

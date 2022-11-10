@@ -3,9 +3,9 @@
     <form action="{{ route('ages.store') }}" method="POST">
       @csrf
       <div>
-        <label for="age">Edad</label>
+        <label for="name">Edad</label>
         <div>
-          <input type="number" name="age" id="age" required autocomplete="age" autofocus>
+          <input type="number" name="name" id="name" required autocomplete="name" autofocus>
         </div>
       </div>
 
