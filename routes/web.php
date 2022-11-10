@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AgeController;
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\SocialNetworkController;
+use App\Http\Controllers\TypeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('types', TypeController::class);
+Route::resource('networks', SocialNetworkController::class);
+Route::resource('genres', GenreController::class);
+Route::resource('ages', AgeController::class);
 
 Route::middleware([
     'auth:sanctum',

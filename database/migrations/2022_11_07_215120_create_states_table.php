@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('states', function (Blueprint $table) {
             $table->id();
-            $table->string('state')->unique();
+            $table->string('name')->unique();
         });
     }
 

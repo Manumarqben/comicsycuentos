@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('social_networks', function (Blueprint $table) {
             $table->id();
-            $table->string('social_network')->unique();
+            $table->string('name')->unique();
         });
     }
 
