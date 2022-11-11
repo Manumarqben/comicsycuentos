@@ -3,7 +3,9 @@
 use App\Http\Controllers\AgeController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\SocialNetworkController;
+use App\Http\Controllers\StateController;
 use App\Http\Controllers\TypeController;
+use App\Http\Controllers\WorkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,4 +37,6 @@ Route::middleware([
     Route::resource('networks', SocialNetworkController::class);
     Route::resource('genres', GenreController::class);
     Route::resource('ages', AgeController::class);
+    Route::resource('states', StateController::class);
+    Route::resource('works', WorkController::class);
 });
