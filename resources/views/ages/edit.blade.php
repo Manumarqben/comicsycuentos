@@ -4,10 +4,10 @@
             @csrf
             @method("PUT")
             <div>
-                <label for="age">Edad</label>
+                <label for="name">Edad</label>
                 <div>
-                    <input type="number" name="age" id="age" required
-                        autocomplete="age" autofocus value="{{ $age->age }}">
+                    <input type="number" name="name" id="name" required
+                        autocomplete="name" autofocus value="{{ $age->name }}">
                 </div>
             </div>
 

@@ -1,13 +1,16 @@
 <x-app-layout>
     <div>
-        <form action="{{ route('networks.update', $network->id) }}" method="post">
+        <form action="{{ route('networks.update', $network->id) }}"
+            method="POST">
             @csrf
-            @method("put")
+            @method('PUT')
             <div>
                 <label for="name">Nombre</label>
                 <div>
-                    <input type="text" name="type" id="name" required
-                        autocomplete="name" autofocus value="{{ $network->name }}">
+                    <input type="text" name="name" id="name" required
+                        autocomplete="name" autofocus
+                        value="{{ $network->name }}"
+                    >
                 </div>
             </div>
 

@@ -47,10 +47,10 @@ class SocialNetworkController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SocialNetwork  $socialNetwork
+     * @param  \App\Models\SocialNetwork  $network
      * @return \Illuminate\Http\Response
      */
-    public function show(SocialNetwork $socialNetwork)
+    public function show(SocialNetwork $network)
     {
         return redirect()->route('networks.index');
     }
@@ -58,12 +58,12 @@ class SocialNetworkController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SocialNetwork  $socialNetwork
+     * @param  \App\Models\SocialNetwork  $network
      * @return \Illuminate\Http\Response
      */
-    public function edit(SocialNetwork $socialNetwork)
+    public function edit(SocialNetwork $network)
     {
-        return view('networks.edit', compact('socialNetwork'));
+        return view('networks.edit', compact('network'));
     }
 
     /**
@@ -73,11 +73,11 @@ class SocialNetworkController extends Controller
      * @param  \App\Models\SocialNetwork  $socialNetwork
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreSocialNetworkRequest $request, SocialNetwork $socialNetwork)
+    public function update(StoreSocialNetworkRequest $request, SocialNetwork $network)
     {
         $data = $request->validated();
 
-        $socialNetwork->update($data);
+        $network->update($data);
 
         return redirect()->route('networks.index');
     }
@@ -88,9 +88,9 @@ class SocialNetworkController extends Controller
      * @param  \App\Models\SocialNetwork  $socialNetwork
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SocialNetwork $socialNetwork)
+    public function destroy(SocialNetwork $network)
     {
-        $socialNetwork->delete();
+        $network->delete();
 
         return redirect()->route('networks.index');
     }

@@ -1,9 +1,9 @@
 <x-app-layout>
   <div>
-    <form action="{{ route('networks.store') }}" method="post">
+    <form action="{{ route('networks.store') }}" method="POST">
       @csrf
       <div>
-        <label for="type">Nombre</label>
+        <label for="name">Nombre</label>
         <div>
           <input type="text" name="name" id="name" required autocomplete="name" autofocus>
         </div>

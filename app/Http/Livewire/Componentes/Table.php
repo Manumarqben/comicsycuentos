@@ -7,7 +7,7 @@ use Livewire\Component;
 class Table extends Component
 {
     public $elementos;
-    public $ruta;
+    public $recurso;
     public $acciones = true;
 
     public function render()

@@ -7,7 +7,7 @@
                         <th>{{ strtoupper($columnas) }}</th>
                     @endforeach
                     @if ($acciones)
-                        <th>Acciones</th>
+                        <th>ACCIONES</th>
                     @endif
                 </tr>
             </thead>
@@ -21,18 +21,20 @@
                         @endforeach
                         @if ($acciones)
                             <td>
-                                <a href="{{ route($ruta . '.edit', $elemento->id) }}"
-                                    class="inline-flex items-center justify-center px-4 py-2 bg-yellow-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-500 focus:outline-none focus:border-yellow-700 focus:ring focus:ring-yellow-200 active:bg-yellow-600 disabled:opacity-25 transition">Editar</a>
-                                <form
-                                    action="{{ route($ruta . '.destroy', $elemento->id) }}"
-                                    method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit"
-                                        class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition">
-                                        Borrar
-                                    </button>
-                                </form>
+                                @livewire('componentes.btn-crud', [
+                                    'recurso' => $recurso,
+                                    'accion' => 'edit',
+                                    'parametros' => $elemento->id,
+                                    'color' => 'yellow',
+                                    'slot' => 'Editar',
+                                ])
+                                @livewire('componentes.btn-crud', [
+                                    'recurso' => $recurso,
+                                    'accion' => 'destroy',
+                                    'parametros' => $elemento->id,
+                                    'color' => 'red',
+                                    'slot' => 'Borrar',
+                                ])
                             </td>
                         @endif
                     </tr>

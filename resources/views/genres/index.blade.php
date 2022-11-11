@@ -2,14 +2,15 @@
     <div class="w-full">
         <div class="flex justify-center">
             <div>
-                @livewire('componentes.a-btn', [
-                    'ruta' => 'types.create',
+                @livewire('componentes.btn-crud', [
+                    'recurso' => 'genres',
+                    'accion' => 'create',
                     'color' => 'green',
                     'slot' => 'Crear',
                 ])
                 @livewire('componentes.table', [
                     'elementos' => $genres,
-                    'ruta' => 'genres',
+                    'recurso' => 'genres',
                 ])
             </div>
         </div>
