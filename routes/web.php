@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgeController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\SocialNetworkController;
 use App\Http\Controllers\StateController;
@@ -38,5 +39,6 @@ Route::middleware([
     Route::resource('genres', GenreController::class);
     Route::resource('ages', AgeController::class);
     Route::resource('states', StateController::class);
+    Route::resource('authors', AuthorController::class);
     Route::resource('works', WorkController::class);
 });

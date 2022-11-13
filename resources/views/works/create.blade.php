@@ -25,7 +25,7 @@
                         required>
                 </div>
             </div>
-            
+
             <div>
                 <select name="age_id" id="age_id">
                     @foreach ($ages as $age)
@@ -34,9 +34,7 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
 
-            <div>
                 <select name="state_id" id="state_id">
                     @foreach ($states as $state)
                         <option value="{{ $state->id }}">
@@ -44,9 +42,7 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
 
-            <div>
                 <select name="type_id" id="type_id">
                     @foreach ($types as $type)
                         <option value="{{ $type->id }}">
@@ -55,11 +51,12 @@
                     @endforeach
                 </select>
             </div>
+            
             <div>
-
                 <button type="submit">
                     Envíar
                 </button>
+            </div>
         </form>
     </div>
 </x-app-layout>

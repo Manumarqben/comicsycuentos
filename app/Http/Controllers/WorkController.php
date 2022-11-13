@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkRequest;
 use App\Models\Age;
+use App\Models\Author;
 use App\Models\State;
 use App\Models\Type;
 use App\Models\Work;
@@ -48,10 +49,15 @@ class WorkController extends Controller
      */
     public function store(StoreWorkRequest $request)
     {
-        $autor = auth()->user()->id;
-        $request->author_id($autor);
-
         $data = $request->validated();
+
+        $front_path = $request->file('front_page')->store('fronts');
+        $data['front_page'] = $front_path;
+
+        $usuario = auth()->user()->id;
+        $autor = Author::where('user_id', $usuario)->first()->id;
+
+        $data['author_id'] = $autor;
 
         Work::create($data);
 
@@ -66,7 +72,7 @@ class WorkController extends Controller
      */
     public function show(Work $work)
     {
-        //
+        return redirect()->route('types.index');
     }
 
     /**
@@ -77,7 +83,7 @@ class WorkController extends Controller
      */
     public function edit(Work $work)
     {
-        //
+        return view('works.edit', compact('work'));
     }
 
     /**
@@ -89,7 +95,11 @@ class WorkController extends Controller
      */
     public function update(Request $request, Work $work)
     {
-        //
+        $data = $request->validated();
+
+        $work->update($data);
+
+        return redirect()->route('works.index');
     }
 
     /**
@@ -100,6 +110,7 @@ class WorkController extends Controller
      */
     public function destroy(Work $work)
     {
-        //
+        $work->delete();
+        return redirect()->route('works.index');
     }
 }
