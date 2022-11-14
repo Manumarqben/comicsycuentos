@@ -1,6 +1,6 @@
 <x-app-layout>
     <div>
-        <form action="{{ route('types.update', $type->id) }}" method="POST"
+        <form action="{{ route('works.update', $work->id) }}" method="POST"
             enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -22,8 +22,7 @@
             <div>
                 <label for="front_page">Protada</label>
                 <div>
-                    <input type="file" name="front_page" id="front_page"
-                        required>
+                    <input type="file" name="front_page" id="front_page">
                 </div>
             </div>
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ages', function (Blueprint $table) {
             $table->id();
             $table->integer('name')->unique();
-            $table->string('description')->unique();
+            $table->text('description')->unique();
         });
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('penalties', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('description')->unique();
+            $table->text('description')->unique();
         });
     }
 

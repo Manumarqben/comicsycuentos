@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreWorkRequest;
+use App\Http\Requests\UpdateWorkRequest;
 use App\Models\Age;
 use App\Models\Author;
 use App\Models\State;
 use App\Models\Type;
 use App\Models\Work;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class WorkController extends Controller
 {
@@ -18,7 +20,7 @@ class WorkController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $works = Work::all();
         return view('works.index', ['works' => $works]);
     }
@@ -34,11 +36,7 @@ class WorkController extends Controller
         $ages = Age::all();
         $states = State::all();
 
-        return view('works.create', [
-            'types' => $types,
-            'ages' => $ages,
-            'states' => $states,
-        ]);
+        return view('works.create', compact('types', 'ages', 'states'));
     }
 
     /**
@@ -56,7 +54,6 @@ class WorkController extends Controller
 
         $usuario = auth()->user()->id;
         $autor = Author::where('user_id', $usuario)->first()->id;
-
         $data['author_id'] = $autor;
 
         Work::create($data);
@@ -72,7 +69,7 @@ class WorkController extends Controller
      */
     public function show(Work $work)
     {
-        return redirect()->route('types.index');
+        return redirect()->route('works.index');
     }
 
     /**
@@ -83,7 +80,11 @@ class WorkController extends Controller
      */
     public function edit(Work $work)
     {
-        return view('works.edit', compact('work'));
+        $types = Type::all();
+        $ages = Age::all();
+        $states = State::all();
+
+        return view('works.edit', compact('work', 'types', 'ages', 'states'));
     }
 
     /**
@@ -93,9 +94,16 @@ class WorkController extends Controller
      * @param  \App\Models\Work  $work
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Work $work)
+    public function update(UpdateWorkRequest $request, Work $work)
     {
         $data = $request->validated();
+
+        if ($request->hasFile('front_path')) {
+            $front_path = $request->file('front_page')->store('fronts');
+            $data['front_page'] = $front_path;
+
+            Storage::delete($work->$front_path);
+        }
 
         $work->update($data);
 
