@@ -21,7 +21,14 @@ class WorkController extends Controller
      */
     public function index()
     {   
-        $works = Work::all();
+        $cumple = auth()->user()->birthdate;
+        $edad = now()->diff($cumple)->format('%y');
+        if ($cumple == null || $edad < 18) {
+            $works = Work::where('age_id', '!=', 6);
+        } else {
+            $works = Work::all();
+        }
+        // $works->paginate(9);
         return view('works.index', ['works' => $works]);
     }
 
