@@ -56,31 +56,33 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        //
+        //llevará a la vista del usuario "PENDIENTE"
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Admin $admin)
-    {
-        //
-    }
+// Por el momento no tiene sentido modificar un administrador. 
+// en un futuro si se agregan categoria de admin si.
+    // /**
+    //  * Show the form for editing the specified resource.
+    //  *
+    //  * @param  \App\Models\Admin  $admin
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function edit(Admin $admin)
+    // {
+    //     //
+    // }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Admin $admin)
-    {
-        //
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  \App\Models\Admin  $admin
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(Request $request, Admin $admin)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
