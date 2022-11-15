@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SocialNetwork extends Model
+class Admin extends Model
 {
     public $timestamps = false;
-    
+
     use HasFactory;
 
     protected $fillable = [
-        "name",
+        "user_id",
     ];
 }

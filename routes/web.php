@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgeController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
@@ -34,6 +35,7 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::resource('admins', AdminController::class);
     Route::resource('types', TypeController::class);
     Route::resource('networks', SocialNetworkController::class);
     Route::resource('genres', GenreController::class);
