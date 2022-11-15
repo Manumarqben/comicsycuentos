@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('markers', function (Blueprint $table) {
             $table->id();
-            $table->string('marker')->unique();
-            $table->string('description')->unique();
+            $table->string('name')->unique();
+            $table->text('description')->unique();
         });
     }
 

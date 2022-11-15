@@ -21,7 +21,7 @@
 
             <div class="mt-4">
                 <x-jet-label for="birthdate" value="{{ __('Birthdate') }}" />
-                <x-jet-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" required />
+                <x-jet-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" />
             </div>
 
             <div class="mt-4">

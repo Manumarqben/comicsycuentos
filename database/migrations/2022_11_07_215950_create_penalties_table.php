@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('penalties', function (Blueprint $table) {
             $table->id();
-            $table->string('penalty')->unique();
-            $table->string('description')->unique();
+            $table->string('name')->unique();
+            $table->text('description')->unique();
         });
     }
 
