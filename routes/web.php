@@ -35,6 +35,14 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'is.admin',
+    ])->group(function () {
     Route::resource('admins', AdminController::class);
     Route::resource('types', TypeController::class);
     Route::resource('networks', SocialNetworkController::class);

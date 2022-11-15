@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Admin;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+
+use function PHPUnit\Framework\isNull;
 
 class User extends Authenticatable
 {
@@ -59,4 +62,14 @@ class User extends Authenticatable
     protected $appends = [
         // 
     ];
+
+    /**
+     * Comprueba si el usuario es administrador.
+     * 
+     * @return boolean
+     */
+    public function isAdmin() 
+    {
+        return !is_null(Admin::where('user_id', auth()->user()->id)->first());
+    }
 }

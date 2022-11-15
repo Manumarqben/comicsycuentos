@@ -16,6 +16,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        dd(auth()->check() && auth()->user()->isAdmin());
         $admins = Admin::all();
         return view('admins.index', compact('admins'));
     }
