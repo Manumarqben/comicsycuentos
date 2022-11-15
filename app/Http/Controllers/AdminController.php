@@ -16,7 +16,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        dd(auth()->check() && auth()->user()->isAdmin());
         $admins = Admin::all();
         return view('admins.index', compact('admins'));
     }
@@ -57,32 +56,33 @@ class AdminController extends Controller
     public function show(Admin $admin)
     {
         //llevará a la vista del usuario "PENDIENTE"
+        return redirect()->route('admin.index');
     }
 
 // Por el momento no tiene sentido modificar un administrador. 
 // en un futuro si se agregan categoria de admin si.
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  \App\Models\Admin  $admin
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit(Admin $admin)
-    // {
-    //     //
-    // }
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Admin  $admin
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Admin $admin)
+    {
+        return redirect()->route('admins.index');
+    }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\Models\Admin  $admin
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, Admin $admin)
-    // {
-    //     //
-    // }
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Admin  $admin
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Admin $admin)
+    {
+        //
+    }
 
     /**
      * Remove the specified resource from storage.

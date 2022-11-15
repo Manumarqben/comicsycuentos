@@ -42,7 +42,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
     'is.admin',
-    ])->group(function () {
+])->group(function () {
+    // Route::get('/admins', [AdminController::class, 'index'])->name('admins.index');
+    // Route::get('/admins/create', [AdminController::class, 'create'])->name('admins.create');
+    // Route::post('/admins', [AdminController::class, 'store'])->name('admins.store');
+    // Route::delete('/admins/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
+
     Route::resource('admins', AdminController::class);
     Route::resource('types', TypeController::class);
     Route::resource('networks', SocialNetworkController::class);

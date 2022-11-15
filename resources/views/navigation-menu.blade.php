@@ -16,22 +16,22 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
                     @if (Auth::user()->isAdmin())
-                    <x-jet-nav-link href="{{ route('types.index') }}" :active="request()->routeIs('types.index')">
+                    <x-jet-nav-link href="{{ route('types.index') }}" :active="request()->routeIs('types.*')">
                         Tipos
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('networks.index') }}" :active="request()->routeIs('networks.index')">
+                    <x-jet-nav-link href="{{ route('networks.index') }}" :active="request()->routeIs('networks.*')">
                         Redes Sociales
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('genres.index') }}" :active="request()->routeIs('genres.index')">
+                    <x-jet-nav-link href="{{ route('genres.index') }}" :active="request()->routeIs('genres.*')">
                         Generos
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('ages.index') }}" :active="request()->routeIs('ages.index')">
+                    <x-jet-nav-link href="{{ route('ages.index') }}" :active="request()->routeIs('ages.*')">
                         EMR
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('states.index') }}" :active="request()->routeIs('states.index')">
+                    <x-jet-nav-link href="{{ route('states.index') }}" :active="request()->routeIs('states.*')">
                         Estados
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admins.index') }}" :active="request()->routeIs('states.index')">
+                    <x-jet-nav-link href="{{ route('admins.index') }}" :active="request()->routeIs('admins.*')">
                         Admin
                     </x-jet-nav-link>
                     @endif
@@ -161,22 +161,22 @@
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
             @if (Auth::user()->isAdmin())
-                <x-jet-responsive-nav-link href="{{ route('types.index') }}" :active="request()->routeIs('types.index')">
+                <x-jet-responsive-nav-link href="{{ route('types.index') }}" :active="request()->routeIs('types.*')">
                     Tipos
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('networks.index') }}" :active="request()->routeIs('networks.index')">
+                <x-jet-responsive-nav-link href="{{ route('networks.index') }}" :active="request()->routeIs('networks.*')">
                     Redes Sociales
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('genres.index') }}" :active="request()->routeIs('genres.index')">
+                <x-jet-responsive-nav-link href="{{ route('genres.index') }}" :active="request()->routeIs('genres.*')">
                     Generos
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('ages.index') }}" :active="request()->routeIs('ages.index')">
+                <x-jet-responsive-nav-link href="{{ route('ages.index') }}" :active="request()->routeIs('ages.*')">
                     EMR
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('states.index') }}" :active="request()->routeIs('states.index')">
+                <x-jet-responsive-nav-link href="{{ route('states.index') }}" :active="request()->routeIs('states.*')">
                     Estados
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('admins.index') }}" :active="request()->routeIs('states.index')">
+                <x-jet-responsive-nav-link href="{{ route('admins.index') }}" :active="request()->routeIs('admins.*')">
                     Admin
                 </x-jet-responsive-nav-link>
             @endif
