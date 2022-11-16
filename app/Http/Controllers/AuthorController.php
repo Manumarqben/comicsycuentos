@@ -105,13 +105,14 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        if (!$author->works->first()) {
-            if ($author->profile_photo_path)
-            {
-                Storage::delete($author->profile_photo_path);
-            }
-            $author->delete();
-        }
+        // if (!$author->works->first()) {
+        //     if ($author->profile_photo_path)
+        //     {
+        //         Storage::delete($author->profile_photo_path);
+        //     }
+        //     $author->delete();
+        // }
+        $author->delete();
         //MENSAJE PARA QUE BORRE TODAS LAS OBRAS
         return redirect()->route('authors.index');
     }
