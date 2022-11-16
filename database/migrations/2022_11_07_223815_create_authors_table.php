@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('alias')->unique();
             $table->string('biography')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('user_id')->unique()->nullable()->constrained()->nullOnDelete();
         });
     }
 

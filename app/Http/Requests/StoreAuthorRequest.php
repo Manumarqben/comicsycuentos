@@ -25,7 +25,7 @@ class StoreAuthorRequest extends FormRequest
     {
         return [
             'alias' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'biography' => [

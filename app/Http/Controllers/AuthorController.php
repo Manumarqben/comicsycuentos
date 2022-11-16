@@ -45,6 +45,8 @@ class AuthorController extends Controller
             $data['profile_photo_path'] = $profile_photo_path;
         };
 
+        $data['alias'] ??= auth()->user()->name;
+
         $data['user_id'] = auth()->user()->id;
 
         Author::create($data);

@@ -6,7 +6,7 @@
             <div>
                 <label for="alias">Alias</label>
                 <div>
-                    <input type="text" name="alias" id="alias" required
+                    <input type="text" name="alias" id="alias"
                         autocomplete="alias" autofocus>
                 </div>
             </div>
