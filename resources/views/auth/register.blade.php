@@ -21,7 +21,7 @@
 
             <div class="mt-4">
                 <x-label for="birthdate" value="{{ __('Birthdate') }}" />
-                <x-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" required />
+                <x-input id="birthdate" class="block mt-1 w-full" type="date" name="birthdate" :value="old('birthdate')" />
             </div>
 
             <div class="mt-4">
