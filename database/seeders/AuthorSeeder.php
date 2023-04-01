@@ -19,7 +19,7 @@ class AuthorSeeder extends Seeder
             'slug' => str('Author')->slug(),
             'biography' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum maiores at quo porro, animi et! Reprehenderit quisquam dolor, ab exercitationem fugit saepe vel asperiores odio natus corrupti unde accusantium consectetur!',
             'profile_photo_path' => 'https://mdbootstrap.com/img/new/standard/nature/184.jpg',
-            'user_id' => User::where('name', 'author@gmail.com')->first()->id,
+            'user_id' => User::where('email', 'author@gmail.com')->first()->id,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

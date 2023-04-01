@@ -17,7 +17,7 @@ class ApplicantSeeder extends Seeder
         DB::table('applicants')->insert([
             'alias' => 'Applicant',
             'slug' => str('Applicant')->slug(),
-            'user_id' => User::where('name', 'applicant')->first()->id,
+            'user_id' => User::where('email', 'applicant@gmail.com')->first()->id,
             'created_at' => now(),
         ]);
     }
