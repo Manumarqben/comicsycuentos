@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Chapter;
+use App\Models\User;
 use App\Models\Work;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -30,5 +31,17 @@ class ChapterFactory extends Factory
             'title' => $this->faker->sentence(),
             'work_id' => Work::inRandomOrder()->first()->id,
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Chapter $chapter) {
+            // Se asignan usuarios que han votado el capítulo
+            $users = User::inRandomOrder()->take(rand(0, 5))->get();
+            foreach ($users as $user) {
+                $vote = rand(0, 1);
+                $user->votedChapters()->attach([$chapter->id => ['like' => $vote]]);
+            }
+        });
     }
 }

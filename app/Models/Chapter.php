@@ -23,4 +23,12 @@ class Chapter extends Model
     {
         return $this->belongsTo(Work::class);
     }
+
+    /**
+     * Obtain users related to this chapter through the 'likes' table.
+     */
+    public function votes()
+    {
+        return $this->belongsToMany(User::class, 'likes');
+    }
 }
