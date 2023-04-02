@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             MarkerSeeder::class,
             StateSeeder::class,
             TypeSeeder::class,
+            WorkSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 
