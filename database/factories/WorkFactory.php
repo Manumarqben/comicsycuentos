@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Age;
 use App\Models\Author;
 use App\Models\Genre;
+use App\Models\Marker;
 use App\Models\State;
 use App\Models\Type;
 use App\Models\User;
@@ -53,6 +54,13 @@ class WorkFactory extends Factory
         ->afterCreating(function (Work $work) {
             $users = User::inRandomOrder()->take(rand(0, 5))->get();
             $work->usersFavorite()->attach($users);
+        })
+        ->afterCreating(function (Work $work) {
+            $users = User::inRandomOrder()->take(rand(0, 5))->get();
+            foreach ($users as $user) {
+                $marker = Marker::all()->random();
+                $work->usersMarkers()->attach([$user->id => ['marker_id' => $marker->id]]);
+            }
         });
     }
 }

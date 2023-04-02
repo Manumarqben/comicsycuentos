@@ -70,4 +70,20 @@ class Work extends Model
     {
         return $this->belongsToMany(User::class, 'favorites');
     }
+
+    /**
+     * Obtain users related to this work through the 'marker_user_work' table.
+     */
+    public function usersMarkers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'marker_user_work');
+    }
+
+    /**
+     * Obtain markers related to this work through the 'marker_user_work' table.
+     */
+    public function markers(): BelongsToMany
+    {
+        return $this->belongsToMany(Marker::class, 'marker_user_work');
+    }
 }

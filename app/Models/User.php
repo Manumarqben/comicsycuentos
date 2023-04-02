@@ -93,4 +93,20 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Work::class, 'favorites');
     }
+
+    /**
+     * Obtain works related to this user through the 'marker_user_work' table.
+     */
+    public function works(): BelongsToMany
+    {
+        return $this->belongsToMany(Work::class, 'marker_user_work');
+    }
+
+    /**
+     * Obtain markers related to this user through the 'marker_user_work' table.
+     */
+    public function markers():BelongsToMany
+    {
+        return $this->belongsToMany(Marker::class, 'marker_user_work');
+    }
 }

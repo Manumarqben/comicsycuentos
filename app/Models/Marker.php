@@ -14,4 +14,20 @@ class Marker extends Model
         'slug',
         'description',
     ];
+
+    /**
+     * Obtain users related to this marker through the 'marker_user_work' table.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'marker_user_work');
+    }
+
+    /**
+     * Obtain works related to this marker through the 'marker_user_work' table.
+     */
+    public function works()
+    {
+        return $this->belongsToMany(Work::class, 'marker_user_work');
+    }
 }
