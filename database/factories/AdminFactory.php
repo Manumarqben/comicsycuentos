@@ -25,9 +25,8 @@ class AdminFactory extends Factory
      */
     public function definition(): array
     {
-        $user_id = User::whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('admins');
-        })->inRandomOrder()->first()->id;
+        $user_id = User::whereDoesntHave('admin')
+            ->inRandomOrder()->first()->id;
 
         return [
             'user_id' => $user_id,

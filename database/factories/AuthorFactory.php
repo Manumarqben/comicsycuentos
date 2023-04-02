@@ -25,11 +25,9 @@ class AuthorFactory extends Factory
      */
     public function definition(): array
     {
-        $user_id = User::whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('authors');
-        })->whereNotIn('id', function ($query) {
-            $query->select('user_id')->from('applicants');
-        })->inRandomOrder()->first()->id;
+        $user_id = User::whereDoesntHave('author')
+            ->whereDoesntHave('applicant')
+            ->inRandomOrder()->first()->id;
 
         $alias = $this->faker->unique()->word();
 
