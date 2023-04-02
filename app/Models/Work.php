@@ -62,4 +62,12 @@ class Work extends Model
     {
         return $this->belongsToMany(Genre::class);
     }
+
+    /**
+     * Obtain users related to this work through the 'favorites' table.
+     */
+    public function usersFavorite(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

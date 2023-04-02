@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Genre;
 use App\Models\State;
 use App\Models\Type;
+use App\Models\User;
 use App\Models\Work;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -48,6 +49,10 @@ class WorkFactory extends Factory
         return $this->afterCreating(function (Work $work) {
             $genres = Genre::inRandomOrder()->take(rand(1, 3))->get();
             $work->genres()->attach($genres);
+        })
+        ->afterCreating(function (Work $work) {
+            $users = User::inRandomOrder()->take(rand(0, 5))->get();
+            $work->usersFavorite()->attach($users);
         });
     }
 }

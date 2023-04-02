@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -83,5 +84,13 @@ class User extends Authenticatable
     public function author(): ?HasOne
     {
         return $this->hasOne(Author::class);
+    }
+
+    /**
+     * Obtain works related to this user through the 'favorites' table.
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Work::class, 'favorites');
     }
 }
