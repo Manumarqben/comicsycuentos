@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -59,4 +60,28 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the admin associated with the user if exists.
+     */
+    public function admin(): ?HasOne
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    /**
+     * Obtain the user -associated applicant if it exists.
+     */
+    public function applicant(): ?HasOne
+    {
+        return $this->hasOne(Applicant::class);
+    }
+
+    /**
+     * Obtain the user -associated author if it exists.
+     */
+    public function author(): ?HasOne
+    {
+        return $this->hasOne(Author::class);
+    }
 }
