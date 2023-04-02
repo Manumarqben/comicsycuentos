@@ -86,4 +86,9 @@ class Work extends Model
     {
         return $this->belongsToMany(Marker::class, 'marker_user_work');
     }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class);
+    }
 }

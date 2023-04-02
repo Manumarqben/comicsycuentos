@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Age;
 use App\Models\Author;
+use App\Models\Chapter;
 use App\Models\Genre;
 use App\Models\Marker;
 use App\Models\State;
@@ -48,19 +49,35 @@ class WorkFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Work $work) {
+            // Se asignan géneros la obra
             $genres = Genre::inRandomOrder()->take(rand(1, 3))->get();
             $work->genres()->attach($genres);
         })
-        ->afterCreating(function (Work $work) {
-            $users = User::inRandomOrder()->take(rand(0, 5))->get();
-            $work->usersFavorite()->attach($users);
-        })
-        ->afterCreating(function (Work $work) {
-            $users = User::inRandomOrder()->take(rand(0, 5))->get();
-            foreach ($users as $user) {
-                $marker = Marker::all()->random();
-                $work->usersMarkers()->attach([$user->id => ['marker_id' => $marker->id]]);
-            }
-        });
+            ->afterCreating(function (Work $work) {
+                // Se asignan usuarios que tienen en favoritos la obra
+                $users = User::inRandomOrder()->take(rand(0, 5))->get();
+                $work->usersFavorite()->attach($users);
+            })
+            ->afterCreating(function (Work $work) {
+                // Se asignan usuarios que tienen marcada la obra con algún marcador
+                $users = User::inRandomOrder()->take(rand(0, 5))->get();
+                foreach ($users as $user) {
+                    $marker = Marker::all()->random();
+                    $work->usersMarkers()->attach([$user->id => ['marker_id' => $marker->id]]);
+                }
+            })
+            ->afterCreating(function (Work $work) {
+                // Se asignan capítulos a la obra
+                $number = 1;
+                // El state permite trabajar con la variable local desde el factory
+                // El use (&$number) permite referenciar a la variable
+                Chapter::factory(rand(0, 20))->state(function () use (&$number) {
+                    return [
+                        'number' => $number++,
+                    ];
+                })->create([
+                    'work_id' => $work->id,
+                ]);
+            });
     }
 }
