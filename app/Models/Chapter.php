@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Chapter extends Model
 {
@@ -15,7 +16,10 @@ class Chapter extends Model
         'work_id',
     ];
 
-    public function work()
+    /**
+     * Return the work.
+     */
+    public function work(): BelongsTo
     {
         return $this->belongsTo(Work::class);
     }

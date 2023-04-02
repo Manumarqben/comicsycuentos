@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Work extends Model
 {
@@ -87,7 +88,10 @@ class Work extends Model
         return $this->belongsToMany(Marker::class, 'marker_user_work');
     }
 
-    public function chapters()
+    /**
+     * Get all the chapters associated with this work.
+     */
+    public function chapters(): HasMany
     {
         return $this->hasMany(Chapter::class);
     }
