@@ -25,7 +25,7 @@ class AdminFactory extends Factory
      */
     public function definition(): array
     {
-        $user_id = User::whereDoesntHave('admin')
+        $user_id = User::doesntHave('admin')
             ->inRandomOrder()->first()->id;
 
         return [

@@ -25,8 +25,8 @@ class ApplicantFactory extends Factory
      */
     public function definition(): array
     {
-        $user_id = User::whereDoesntHave('applicant')
-        ->whereDoesntHave('author')
+        $user_id = User::doesntHave('applicant')
+        ->doesntHave('author')
         ->inRandomOrder()->first()->id;
 
         $alias = $this->faker->unique()->word();

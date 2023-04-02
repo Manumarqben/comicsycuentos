@@ -25,8 +25,8 @@ class AuthorFactory extends Factory
      */
     public function definition(): array
     {
-        $user_id = User::whereDoesntHave('author')
-            ->whereDoesntHave('applicant')
+        $user_id = User::doesntHave('author')
+            ->doesntHave('applicant')
             ->inRandomOrder()->first()->id;
 
         $alias = $this->faker->unique()->word();
