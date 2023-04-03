@@ -11,10 +11,10 @@ class Show extends Component
     use WithPagination;
 
     public Work $work;
-    public $sortDirection = 'asc';
+    public $sortDirection = 'desc';
 
     protected $queryString = [
-        'sortDirection' => ['except' => 'asc', 'as' => 'sort'],
+        'sortDirection' => ['except' => 'desc', 'as' => 'sort'],
     ];
 
     public function mount($slug)
@@ -31,7 +31,7 @@ class Show extends Component
 
     public function setSortDirection()
     {
-        $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
+        $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
     }
 
     public function render()
