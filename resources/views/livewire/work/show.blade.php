@@ -57,11 +57,16 @@
     </div>
     <x-section-border />
     <div id="chapters" class="flex flex-col">
-        @foreach ($work->chapters as $chapter)
+        @forelse ($this->chapters as $chapter)
             <div class="flex justify-between">
                 {{ "$chapter->number. $chapter->title" }}
                 <x-button>Leer</x-button>
             </div>
-        @endforeach
+        @empty
+            <div class="flex justify-center h2">
+                {{ __('There is still no chapters') }}
+            </div>
+        @endforelse
+        {{ $this->chapters->links() }}
     </div>
 </div>
