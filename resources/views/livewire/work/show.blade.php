@@ -57,6 +57,15 @@
     </div>
     <x-section-border />
     <div id="chapters" class="flex flex-col">
+        <div class="ml-auto">
+            <x-button wire:click="setSortDirection">
+                @if ($sortDirection == 'asc')
+                    asc
+                @else
+                    desc
+                @endif
+            </x-button>
+        </div>
         @forelse ($this->chapters as $chapter)
             <div class="flex justify-between">
                 {{ "$chapter->number. $chapter->title" }}
