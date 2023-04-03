@@ -56,4 +56,12 @@
         </div>
     </div>
     <x-section-border />
+    <div id="chapters" class="flex flex-col">
+        @foreach ($work->chapters as $chapter)
+            <div class="flex justify-between">
+                {{ "$chapter->number. $chapter->title" }}
+                <x-button>Leer</x-button>
+            </div>
+        @endforeach
+    </div>
 </div>
