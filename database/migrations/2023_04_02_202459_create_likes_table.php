@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->boolean('like');
             $table->unique(['chapter_id', 'user_id']);
-            $table->timestamps();
         });
     }
 
