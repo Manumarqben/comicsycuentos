@@ -20,7 +20,7 @@ class Chapter extends Model
     ];
 
     /**
-     * Return the work.
+     * Returns the work to which the instance belongs.
      */
     public function work(): BelongsTo
     {
@@ -28,7 +28,7 @@ class Chapter extends Model
     }
 
     /**
-     * Obtain users related to this chapter through the 'likes' table.
+     * Get users related to this instance through the 'likes' table.
      */
     public function votes(): BelongsToMany
     {
@@ -36,13 +36,16 @@ class Chapter extends Model
     }
 
     /**
-     * Get all the images associated with this chapter.
+     * Get all the images associated to the instance.
      */
     public function images(): HasMany
     {
         return $this->hasMany(ChapterImage::class);
     }
 
+    /**
+     * Get the text associated with the instance.
+     */
     public function text(): HasOne
     {
         return $this->hasOne(ChapterText::class);

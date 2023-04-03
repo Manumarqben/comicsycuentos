@@ -24,7 +24,7 @@ class Work extends Model
     ];
 
     /**
-     * Obtain the age.
+     * Returns the age to which the instance belongs.
      */
     public function age(): BelongsTo
     {
@@ -33,7 +33,7 @@ class Work extends Model
 
 
     /**
-     * Obtain the state.
+     * Returns the state to which the instance belongs.
      */
     public function state(): BelongsTo
     {
@@ -41,7 +41,7 @@ class Work extends Model
     }
 
     /**
-     * Obtain the type.
+     * Returns the type to which the instance belongs.
      */
     public function type(): BelongsTo
     {
@@ -49,7 +49,7 @@ class Work extends Model
     }
 
     /**
-     * Obtain the author.
+     * Returns the author to which the instance belongs.
      */
     public function author(): BelongsTo
     {
@@ -57,7 +57,7 @@ class Work extends Model
     }
 
     /**
-     * Obtain genres related to this work.
+     * Get genres related to this instance.
      */
     public function genres(): BelongsToMany
     {
@@ -65,7 +65,7 @@ class Work extends Model
     }
 
     /**
-     * Obtain users related to this work through the 'favorites' table.
+     * Get users related to this instance through the 'favorites' table.
      */
     public function usersFavorite(): BelongsToMany
     {
@@ -73,7 +73,7 @@ class Work extends Model
     }
 
     /**
-     * Obtain users related to this work through the 'marker_user_work' table.
+     * Get users related to this instance through the 'marker_user_work' table.
      */
     public function usersMarkers(): BelongsToMany
     {
@@ -81,7 +81,7 @@ class Work extends Model
     }
 
     /**
-     * Obtain markers related to this work through the 'marker_user_work' table.
+     * Get markers related to this instance through the 'marker_user_work' table.
      */
     public function markers(): BelongsToMany
     {
@@ -89,7 +89,7 @@ class Work extends Model
     }
 
     /**
-     * Get all the chapters associated with this work.
+     * Get all the chapters associated to the instance.
      */
     public function chapters(): HasMany
     {

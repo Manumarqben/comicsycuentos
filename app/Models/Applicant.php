@@ -17,7 +17,7 @@ class Applicant extends Model
     ];
 
     /**
-     * Return to the user.
+     * Returns the user to which the instance belongs.
      */
     public function user(): BelongsTo
     {

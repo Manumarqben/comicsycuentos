@@ -17,9 +17,9 @@ class Genre extends Model
     ];
 
     /**
-     * Obtain genres related to this work.
+     * Get works related to this instance.
      */
-    public function genres(): BelongsToMany
+    public function works(): BelongsToMany
     {
         return $this->belongsToMany(Work::class);
     }

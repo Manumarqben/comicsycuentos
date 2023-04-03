@@ -16,7 +16,7 @@ class Marker extends Model
     ];
 
     /**
-     * Obtain users related to this marker through the 'marker_user_work' table.
+     * Get users related to this instance through the 'marker_user_work' table.
      */
     public function users()
     {
@@ -24,7 +24,7 @@ class Marker extends Model
     }
 
     /**
-     * Obtain works related to this marker through the 'marker_user_work' table.
+     * Get works related to this instance through the 'marker_user_work' table.
      */
     public function works()
     {

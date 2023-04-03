@@ -16,7 +16,7 @@ class State extends Model
     ];
 
     /**
-     * Get all the works associated with this state.
+     * Get all the works associated to the instance.
      */
     public function works(): HasMany
     {

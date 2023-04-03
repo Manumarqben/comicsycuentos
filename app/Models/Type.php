@@ -17,7 +17,7 @@ class Type extends Model
     ];
 
     /**
-     * Get all the works associated with this type.
+     * Get all the works associated to the instance.
      */
     public function works(): HasMany
     {

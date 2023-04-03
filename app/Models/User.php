@@ -63,7 +63,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the admin associated with the user if exists.
+     * Get the admin associated with the instance.
      */
     public function admin(): ?HasOne
     {
@@ -71,7 +71,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtain the user -associated applicant if it exists.
+     * Get the applicant associated with the instance.
      */
     public function applicant(): ?HasOne
     {
@@ -79,7 +79,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtain the user -associated author if it exists.
+     * Get the author associated with the instance.
      */
     public function author(): ?HasOne
     {
@@ -87,7 +87,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtain works related to this user through the 'favorites' table.
+     * Get works related to this instance through the 'favorites' table.
      */
     public function favorites(): BelongsToMany
     {
@@ -95,7 +95,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtain works related to this user through the 'marker_user_work' table.
+     * Get works related to this instance through the 'marker_user_work' table.
      */
     public function works(): BelongsToMany
     {
@@ -103,7 +103,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtain markers related to this user through the 'marker_user_work' table.
+     * Get markers related to this instance through the 'marker_user_work' table.
      */
     public function markers(): BelongsToMany
     {
@@ -111,7 +111,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtain chapters related to this user through the 'likes' table.
+     * Get works related to this instance through the 'likes' table.
      */
     public function votedChapters(): BelongsToMany
     {

@@ -20,7 +20,7 @@ class Author extends Model
     ];
 
     /**
-     * Return to the user.
+     * Returns the user to which the instance belongs.
      */
     public function user(): BelongsTo
     {
@@ -28,7 +28,7 @@ class Author extends Model
     }
 
     /**
-     * Get all the works associated with this author.
+     * Get all the works associated to the instance.
      */
     public function works(): HasMany
     {

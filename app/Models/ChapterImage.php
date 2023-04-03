@@ -19,7 +19,7 @@ class ChapterImage extends Model
     ];
 
     /**
-     * Obtain chapter related to this image.
+     * Returns the chapter to which the instance belongs.
      */
     public function chapter(): BelongsTo
     {

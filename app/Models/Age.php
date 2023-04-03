@@ -16,7 +16,7 @@ class Age extends Model
     ];
 
     /**
-     * Get all the works associated with this age.
+     * Get all the works associated to the instance.
      */
     public function works(): HasMany
     {
