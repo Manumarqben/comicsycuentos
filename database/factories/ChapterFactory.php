@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Chapter;
 use App\Models\ChapterImage;
+use App\Models\ChapterText;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -44,14 +45,20 @@ class ChapterFactory extends Factory
                 $user->votedChapters()->attach([$chapter->id => ['like' => $vote]]);
             }
         })->afterCreating(function (Chapter $chapter) {
-            $order = 1;
-            ChapterImage::factory(rand(1, 5))->state(function () use (&$order) {
-                return [
-                    'order' => $order++,
-                ];
-            })->create([
-                'chapter_id' => $chapter->id,
-            ]);
+            if (rand(0, 1)) {
+                $order = 1;
+                ChapterImage::factory(rand(1, 5))->state(function () use (&$order) {
+                    return [
+                        'order' => $order++,
+                    ];
+                })->create([
+                    'chapter_id' => $chapter->id,
+                ]);
+            } else {
+                ChapterText::factory()->create([
+                    'chapter_id' => $chapter->id,
+                ]);
+            }
         });
     }
 }
