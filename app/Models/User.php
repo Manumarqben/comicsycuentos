@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -59,4 +61,60 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the admin associated with the instance.
+     */
+    public function admin(): ?HasOne
+    {
+        return $this->hasOne(Admin::class);
+    }
+
+    /**
+     * Get the applicant associated with the instance.
+     */
+    public function applicant(): ?HasOne
+    {
+        return $this->hasOne(Applicant::class);
+    }
+
+    /**
+     * Get the author associated with the instance.
+     */
+    public function author(): ?HasOne
+    {
+        return $this->hasOne(Author::class);
+    }
+
+    /**
+     * Get works related to this instance through the 'favorites' table.
+     */
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Work::class, 'favorites');
+    }
+
+    /**
+     * Get works related to this instance through the 'marker_user_work' table.
+     */
+    public function works(): BelongsToMany
+    {
+        return $this->belongsToMany(Work::class, 'marker_user_work');
+    }
+
+    /**
+     * Get markers related to this instance through the 'marker_user_work' table.
+     */
+    public function markers(): BelongsToMany
+    {
+        return $this->belongsToMany(Marker::class, 'marker_user_work');
+    }
+
+    /**
+     * Get works related to this instance through the 'likes' table.
+     */
+    public function votedChapters(): BelongsToMany
+    {
+        return $this->belongsToMany(Chapter::class, 'likes');
+    }
 }
