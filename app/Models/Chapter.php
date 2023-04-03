@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Chapter extends Model
 {
@@ -27,8 +29,16 @@ class Chapter extends Model
     /**
      * Obtain users related to this chapter through the 'likes' table.
      */
-    public function votes()
+    public function votes(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'likes');
+    }
+
+    /**
+     * Get all the images associated with this chapter.
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(ChapterImage::class);
     }
 }
