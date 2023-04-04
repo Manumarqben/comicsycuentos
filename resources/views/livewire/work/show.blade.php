@@ -79,6 +79,6 @@
                 </div>
             @endforeach
         @endif
-        {{ $this->chapters->links() }}
+        {{ $this->chapters->links('livewire.paginator') }}
     </div>
 </div>
