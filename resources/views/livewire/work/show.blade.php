@@ -63,7 +63,7 @@
                 {{ __('There is still no chapters') }}
             </div>
         @else
-            <div class="ml-auto">
+            <div class="ml-auto pb-5">
                 <x-button wire:click="setSortDirection">
                     @if ($sortDirection == 'desc')
                         desc
@@ -73,9 +73,16 @@
                 </x-button>
             </div>
             @foreach ($this->chapters as $chapter)
-                <div class="flex justify-between">
+                <div id="chapter-{{ $loop->iteration }}"
+                    class="flex justify-between">
                     {{ "$chapter->number. $chapter->title" }}
-                    <x-button>Leer</x-button>
+                    @auth
+                        @if ($chapter->number > 5)
+                            <x-button>No Visto</x-button>
+                        @else
+                            <x-button>Visto</x-button>
+                        @endif
+                    @endauth
                 </div>
             @endforeach
         @endif
