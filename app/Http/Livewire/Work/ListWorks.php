@@ -11,10 +11,28 @@ class ListWorks extends Component
     use WithPagination;
 
     public $author;
+    public $state;
+
+    protected $queryString = [
+        'state' => ['except' => ''],
+    ];
+
+    protected $listeners = [
+        'setState'
+    ];
+
+    public function setState($state)
+    {
+        $this->state = $state;
+    }
 
     public function render()
     {
         $works = Work::where('author_id', $this->author);
+
+        $works->whereHas('state', function ($query) {
+            $query->where('slug', $this->state);
+        });
 
         $works = $works->paginate(12);
 

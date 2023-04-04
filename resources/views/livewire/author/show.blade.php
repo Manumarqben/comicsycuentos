@@ -20,6 +20,12 @@
         </div>
     </div>
     <div>
-        @livewire('work.list-works', ['author' => $author->id], key('list-works'))
+        <div>
+            <button wire:click="$emitTo('work.list-works', 'setState', 'publishing')">Publishing</button>
+            <button wire:click="$emitTo('work.list-works', 'setState', 'finished')">Finished</button>
+            <button wire:click="$emitTo('work.list-works', 'setState', 'hiatus')">Hiatus</button>
+            <button wire:click="$emitTo('work.list-works', 'setState', 'discontinued')">Discontinued</button>
+        </div>
+        @livewire('work.list-works', ['author' => $author->id, 'state' => $state], key('list-works'))
     </div>
 </div>

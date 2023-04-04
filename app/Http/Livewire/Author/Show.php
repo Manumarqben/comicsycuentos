@@ -8,6 +8,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public Author $author;
+    public $state = 'publishing';
 
     public function mount($slug)
     {
