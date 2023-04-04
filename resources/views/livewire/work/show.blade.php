@@ -28,54 +28,57 @@
                 </div>
             </div>
         </div>
-        <div id="info" class="grow">
+        <div id="info" class="grow space-y-2 px-5">
             <div id="title"
                 class="text-2xl sm:text-4xl text-center sm:text-left line-clamp-1">
                 {{ $work->title }}
             </div>
-            <div id="synopsis" class="line-clamp-6">
-                <p>{{ __('Synopsis') }}:</p>
-                {{ $work->synopsis }}
+            <div id="synopsis" class="line-clamp-[9] sm:line-clamp-6 ">
+                <div class="text-justify">{{ $work->synopsis }}</div>
             </div>
             <div id="state">
-                {{ __('State') }}:
+                <p class="font-bold text-lg">{{ __('State') }}:</p>
                 {{ $work->state->name }}
             </div>
             <div id="genres">
-                <p>{{ __('Genres') }}:</p>
-                <div class="line-clamp-2">
+                <p class="font-bold text-lg">{{ __('Genres') }}:</p>
+                <div class="line-clamp-2 ">
                     @foreach ($work->genres as $genre)
                         {{ $genre->name }}
                     @endforeach
                 </div>
             </div>
             <div id="author">
-                {{ __('Author') }}:
+                <p class="font-bold text-lg">{{ __('Author') }}:</p>
                 {{ $work->author->alias }}
             </div>
         </div>
     </div>
-    <x-section-border />
+    <div id="border" class="py-8 px-3">
+        <div class="border-t border-gray-200 dark:border-gray-700"></div>
+    </div>
     <div id="chapters" class="flex flex-col">
-        <div class="ml-auto">
-            <x-button wire:click="setSortDirection">
-                @if ($sortDirection == 'desc')
-                    desc
-                @else
-                    asc
-                @endif
-            </x-button>
-        </div>
-        @forelse ($this->chapters as $chapter)
-            <div class="flex justify-between">
-                {{ "$chapter->number. $chapter->title" }}
-                <x-button>Leer</x-button>
-            </div>
-        @empty
+        @if ($this->chapters->isEmpty())
             <div class="flex justify-center h2">
                 {{ __('There is still no chapters') }}
             </div>
-        @endforelse
+        @else
+            <div class="ml-auto">
+                <x-button wire:click="setSortDirection">
+                    @if ($sortDirection == 'desc')
+                        desc
+                    @else
+                        asc
+                    @endif
+                </x-button>
+            </div>
+            @foreach ($this->chapters as $chapter)
+                <div class="flex justify-between">
+                    {{ "$chapter->number. $chapter->title" }}
+                    <x-button>Leer</x-button>
+                </div>
+            @endforeach
+        @endif
         {{ $this->chapters->links() }}
     </div>
 </div>
