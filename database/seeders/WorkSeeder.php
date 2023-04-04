@@ -21,7 +21,7 @@ class WorkSeeder extends Seeder
         $work = Work::create([
             'title' => 'Don Quijote de la Mancha',
             'slug' => str('Don Quijote de la Mancha')->slug(),
-            'synopsis' => 'Lorem ipsum dolor sit amet consectetur adipisietwrhywcing elit. Quod ipsum praesentium voluptas hic atque voluptatum, labore autem id earum minus similique, quia dignissimos itaque aspernatur nulla perferendis beatae eveniet qui!',
+            'synopsis' => 'Lorem ipsum dolor sit amet consectetur adipisietwrhywcing elit. Quod ipsum praesentium voluptas hic atque voluptatum, labore autem id earum minus similique, quia dignissimos itaque aspernatur nulla perferendis beatae eveniet qui!, Lorem ipsum dolor sit amet consectetur adipisietwrhywcing elit. Quod ipsum praesentium voluptas hic atque voluptatum, labore autem id earum minus similique, quia dignissimos itaque aspernatur nulla perferendis beatae eveniet qui!, Lorem ipsum dolor sit amet consectetur adipisietwrhywcing elit. Quod ipsum praesentium voluptas hic atque voluptatum, labore autem id earum minus similique, quia dignissimos itaque aspernatur nulla perferendis beatae eveniet qui!',
             'front_page' => 'https://m.media-amazon.com/images/I/41D4yBQJGrL._SY264_BO1,204,203,200_QL40_ML2_.jpg',
             'age_id' => Age::all()->random()->id,
             'state_id' => State::all()->random()->id,
