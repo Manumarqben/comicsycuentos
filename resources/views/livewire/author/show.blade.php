@@ -19,4 +19,7 @@
             </div>
         </div>
     </div>
+    <div>
+        @livewire('work.list-works', ['author' => $author->id], key('list-works'))
+    </div>
 </div>
