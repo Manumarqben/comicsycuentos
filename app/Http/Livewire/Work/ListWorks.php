@@ -44,11 +44,15 @@ class ListWorks extends Component
     {
         $works = $this->childrenFilter();
 
-        $works->where('author_id', $this->author);
+        if ($this->author) {
+            $works->where('author_id', $this->author);
+        }
 
-        $works->whereHas('state', function ($query) {
-            $query->where('slug', $this->state);
-        });
+        if ($this->state) {
+            $works->whereHas('state', function ($query) {
+                $query->where('slug', $this->state);
+            });
+        }
 
         $works = $works->paginate(12);
 

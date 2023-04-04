@@ -20,7 +20,7 @@
         </div>
     </div>
     <div>
-        <div>
+        <div class="flex justify-between pb-8">
             <button wire:click="$emitTo('work.list-works', 'setState', 'publishing')">Publishing</button>
             <button wire:click="$emitTo('work.list-works', 'setState', 'finished')">Finished</button>
             <button wire:click="$emitTo('work.list-works', 'setState', 'hiatus')">Hiatus</button>
