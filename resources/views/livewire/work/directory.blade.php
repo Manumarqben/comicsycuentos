@@ -5,11 +5,6 @@
         </h2>
     </x-slot>
     <div class="container">
-        @foreach ($works as $work)
-            <a href="{{ route('work.show', $work->slug) }}">
-                {{ $work->title }}
-            </a>
-            <br>
-        @endforeach
+        @livewire('work.list-works', key('list-directory'))
     </div>
 </div>

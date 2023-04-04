@@ -50,7 +50,9 @@
             </div>
             <div id="author">
                 <p class="font-bold text-lg">{{ __('Author') }}:</p>
-                {{ $work->author->alias }}
+                <a href="{{ route('author.show', $work->author->slug) }}">
+                    {{ $work->author->alias }}
+                </a>
             </div>
         </div>
     </div>
