@@ -77,7 +77,9 @@
             @foreach ($this->chapters as $chapter)
                 <div id="chapter-{{ $loop->iteration }}"
                     class="flex justify-between">
-                    {{ "$chapter->number. $chapter->title" }}
+                    <a href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}">
+                        {{ "$chapter->number. $chapter->title" }}
+                    </a>
                     @auth
                         @if ($chapter->number > 5)
                             <x-button>No Visto</x-button>
