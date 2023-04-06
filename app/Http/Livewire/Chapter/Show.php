@@ -8,6 +8,7 @@ use Livewire\Component;
 class Show extends Component
 {
     public $chapter;
+    public $typeContent;
 
     public function mount($workSlug, $chapterNumber)
     {
@@ -19,8 +20,20 @@ class Show extends Component
                 ->firstOrFail(),
         ]);
     }
+
     public function render()
     {
-        return view('livewire.chapter.show');
+        if ($this->chapter->text) {
+            $this->typeContent = 'text';
+            // TODO: vista (o componente?) aparte para lector de texto.
+            return view('livewire.chapter.show');
+        }
+
+        if ($this->chapter->images->isNotEmpty()) {
+            $this->typeContent = 'images';
+            $content = $this->chapter->images()->orderBy('order')->get();
+            // TODO: vista (o componente?) aparte para lector de imagenes, con sus opciones (paginación, cascada, etc...).
+            return view('livewire.chapter.show', compact('content'));
+        }
     }
 }
