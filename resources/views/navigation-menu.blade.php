@@ -15,6 +15,11 @@
                     <x-nav-link href="{{ route('works.directory') }}" :active="request()->routeIs('works.directory')">
                         {{ __('Directory') }}
                     </x-nav-link>
+                    @auth
+                        <x-nav-link href="{{ route('user.library') }}" :active="request()->routeIs('user.library')">
+                            {{ __('Library') }}
+                        </x-nav-link>
+                    @endauth
                 </div>
             </div>
 
