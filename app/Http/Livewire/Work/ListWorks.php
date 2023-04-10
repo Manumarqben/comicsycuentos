@@ -13,7 +13,7 @@ class ListWorks extends Component
 
     public $author;
     public $state;
-    public $marker = 'following';
+    public $marker;
 
     protected $queryString = [
         'state' => ['except' => ''],
@@ -52,11 +52,12 @@ class ListWorks extends Component
     {
         $works = $this->childrenFilter();
 
-        if (request()->routeIs('user.library')) {
-            $works = auth()->user()->works()
-                ->whereHas('markers', function ($query) {
-                    $query->where('slug', $this->marker);
-                });
+        if ($this->marker) {
+            $works->whereHas('usersMarkers', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })->whereHas('markers', function ($query) {
+                $query->where('slug', $this->marker);
+            });
         }
 
         if ($this->author) {
