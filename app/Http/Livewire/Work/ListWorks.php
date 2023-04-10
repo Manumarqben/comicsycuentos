@@ -13,18 +13,26 @@ class ListWorks extends Component
 
     public $author;
     public $state;
+    public $marker;
 
     protected $queryString = [
         'state' => ['except' => ''],
+        'marker' => ['except' => 'following'],
     ];
 
     protected $listeners = [
-        'setState'
+        'setState',
+        'setMarker',
     ];
 
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function setMarker($marker)
+    {
+        $this->marker = $marker;
     }
 
     private function childrenFilter()
@@ -44,8 +52,12 @@ class ListWorks extends Component
     {
         $works = $this->childrenFilter();
 
-        if (request()->routeIs('user.library')) {
-            $works = auth()->user()->works();
+        if ($this->marker) {
+            $works->whereHas('usersMarkers', function ($query) {
+                $query->where('user_id', auth()->user()->id);
+            })->whereHas('markers', function ($query) {
+                $query->where('slug', $this->marker);
+            });
         }
 
         if ($this->author) {
