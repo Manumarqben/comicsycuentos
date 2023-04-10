@@ -44,6 +44,10 @@ class ListWorks extends Component
     {
         $works = $this->childrenFilter();
 
+        if (request()->routeIs('user.library')) {
+            $works = auth()->user()->works();
+        }
+
         if ($this->author) {
             $works->where('author_id', $this->author);
         }
