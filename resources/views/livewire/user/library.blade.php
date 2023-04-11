@@ -14,6 +14,9 @@
         <x-button wire:click="$emitTo('work.list-works', 'setMarker', 'pending')">
             {{ __('Pending') }}
         </x-button>
+        <x-button wire:click="$emitTo('work.list-works', 'setMarker', 'favorite')">
+            {{ __('Favorites') }}
+        </x-button>
     </div>
 
     @livewire('work.list-works', ['marker' => $marker], key('list-library'))
