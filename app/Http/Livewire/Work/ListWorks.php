@@ -53,11 +53,16 @@ class ListWorks extends Component
         $works = $this->childrenFilter();
 
         if ($this->marker) {
-            $works->whereHas('usersMarkers', function ($query) {
-                $query->where('user_id', auth()->user()->id);
-            })->whereHas('markers', function ($query) {
-                $query->where('slug', $this->marker);
-            });
+            if ($this->marker === 'favorite') {
+                $works->whereHas('usersFavorite', function ($query) {
+                    $query->where('user_id', auth()->user()->id);
+                });
+            } else {
+                $works->whereHas('markers', function ($query) {
+                    $query->where('slug', $this->marker)
+                        ->where('user_id', auth()->user()->id);
+                });
+            }
         }
 
         if ($this->author) {
