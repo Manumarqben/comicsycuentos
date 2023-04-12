@@ -2,14 +2,19 @@
     show: false,
     message: '',
     type: '',
+    timerId: null,
 }"
-    x-on:alert.window="show = true; 
+    x-on:alert.window="
+        if (timerId !== null) {
+            clearTimeout(timerId);
+        }
+        show = true; 
         message = $event.detail.message;
         type = $event.detail.type || 'success';
-        setTimeout(() => show = false, 2000);"
+        timerId = setTimeout(() => show = false, 2000);
+    "
     class="text-md text-gray-600 fixed bottom-7 left-0 w-2/3 sm:w-1/3">
-    <div x-show="show" 
-        x-transition:enter="transition ease-out duration-300"
+    <div x-show="show" x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0 -translate-x-96"
         x-transition:enter-end="opacity-100 translate-x-0"
         x-transition:leave="transition ease-in duration-300"
@@ -23,8 +28,7 @@
             'alert-warning': type === 'warning',
             'alert-warning': type === 'info',
         }"
-        style="display: none;"
-        >
+        style="display: none;">
         <span class="block sm:inline" x-text="message"></span>
         <div class="ml-2 flex items-center">
             <template x-if="type === 'success'">
