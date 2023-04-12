@@ -24,6 +24,9 @@
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300">
             @livewire('navigation-menu')
 
+            <!-- Alerta personalizada global -->
+            <x-alert />
+
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white dark:bg-gray-800 shadow">
