@@ -26,6 +26,11 @@
                         </p>
                     </div>
                 </div>
+                @auth
+                    <div id="actions">
+                        @livewire('work.favorite-button', ['id' => $work->id], key('fav-button'))
+                    </div>
+                @endauth
             </div>
         </div>
         <div id="info" class="grow space-y-2 px-5">
@@ -77,7 +82,8 @@
             @foreach ($this->chapters as $chapter)
                 <div id="chapter-{{ $loop->iteration }}"
                     class="flex justify-between">
-                    <a href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}">
+                    <a
+                        href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}">
                         {{ "$chapter->number. $chapter->title" }}
                     </a>
                     @auth
