@@ -23,9 +23,13 @@ class FavoriteButton extends Component
 
     public function fav()
     {
-        $this->favorite
-            ? $this->work->usersFavorite()->detach(auth()->user()->id)
-            : $this->work->usersFavorite()->attach(auth()->user()->id);
+        if ($this->favorite) {
+            $this->work->usersFavorite()->detach(auth()->user()->id);
+            $this->dispatchBrowserEvent('alert', ['message' => 'Work removed from favorites successfully']);
+        } else {
+            $this->work->usersFavorite()->attach(auth()->user()->id);
+            $this->dispatchBrowserEvent('alert', ['message' => 'Work added to favorites successfully']);
+        }
     }
 
     public function render()
