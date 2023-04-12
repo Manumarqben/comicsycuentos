@@ -6,7 +6,6 @@
                 <div id="type" class="absolute top-0 h-1/6 w-full">
                     <div
                         class="flex justify-center items-center h-full bg-white bg-opacity-90">
-                        {{-- TODO: hacer que el bg dependa del tipo --}}
                         <p class="text-4xl font-bold text-gray-800">
                             {{ strToUpper($work->type->name) }}</p>
                     </div>
@@ -20,18 +19,17 @@
                     class="absolute bottom-0 right-0 h-1/6 aspect-square">
                     <div
                         class="flex justify-center items-center h-full bg-white bg-opacity-90">
-                        {{-- TODO: hacer que el bd dependa del age --}}
                         <p class="text-2xl sm:text-3xl font-bold text-gray-800">
                             {{ $work->age->year == 0 ? 'TP' : '+' . $work->age->year }}
                         </p>
                     </div>
                 </div>
-                @auth
-                    <div id="actions">
-                        @livewire('work.favorite-button', ['id' => $work->id], key('fav-button'))
-                    </div>
-                @endauth
             </div>
+            @auth
+                <div id="actions">
+                    @livewire('work.favorite-button', ['id' => $work->id], key('fav-button'))
+                </div>
+            @endauth
         </div>
         <div id="info" class="grow space-y-2 px-5">
             <div id="title"
@@ -71,7 +69,7 @@
             </div>
         @else
             <div class="ml-auto pb-5">
-                <x-button wire:click="setSortDirection">
+                <x-button wire:click="setSortDirection" class="text-red-800">
                     @if ($sortDirection == 'desc')
                         desc
                     @else

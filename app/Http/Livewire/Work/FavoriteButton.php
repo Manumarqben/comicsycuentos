@@ -8,11 +8,13 @@ use Livewire\Component;
 class FavoriteButton extends Component
 {
     public $work;
+    public $isFavorite;
 
     public function mount($id)
     {
         $this->fill([
             $this->work = Work::findOrFail($id),
+            $this->isFavorite = $this->favorite,
         ]);
     }
 
@@ -26,9 +28,11 @@ class FavoriteButton extends Component
         if ($this->favorite) {
             $this->work->usersFavorite()->detach(auth()->user()->id);
             $this->dispatchBrowserEvent('alert', ['message' => 'Work removed from favorites successfully']);
+            $this->isFavorite = false;
         } else {
             $this->work->usersFavorite()->attach(auth()->user()->id);
             $this->dispatchBrowserEvent('alert', ['message' => 'Work added to favorites successfully']);
+            $this->isFavorite = true;
         }
     }
 
