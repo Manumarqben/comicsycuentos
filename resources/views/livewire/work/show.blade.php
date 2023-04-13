@@ -26,7 +26,8 @@
                 </div>
             </div>
             @auth
-                <div id="actions">
+                <div id="actions" class="flex">
+                    @livewire('work.marker-selector', ['id' => $work->id], key('marker-selector'))
                     @livewire('work.favorite-button', ['id' => $work->id], key('fav-button'))
                 </div>
             @endauth
