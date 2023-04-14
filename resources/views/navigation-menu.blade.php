@@ -25,7 +25,9 @@
 
             @auth
                 <div class="flex items-center">
-                    @livewire('applicant.save', key('applicant-save'))
+                    @can('create', App\Models\Applicant::class)
+                        @livewire('applicant.save', key('applicant-save'))
+                    @endcan
                 </div>
             @endauth
 

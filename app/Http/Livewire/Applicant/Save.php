@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Applicant;
 
 use App\Models\Applicant;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class Save extends Component
 {
+    use AuthorizesRequests;
+
     public $show;
     public Applicant $applicant;
 
@@ -49,6 +52,8 @@ class Save extends Component
 
     public function submit()
     {
+        $this->authorize('create', $this->applicant);
+
         $this->applicant->alias = $this->applicant->alias ? trim($this->applicant->alias) : auth()->user()->name;
         $this->applicant->slug = str($this->applicant->alias)->slug();
         $this->applicant->user_id = auth()->user()->id;
@@ -58,8 +63,7 @@ class Save extends Component
         
         $this->applicant->save();
 
-        $this->emitSelf('refresh');
-        $this->emit('refresh-applicant-list');
+        $this->emit('refresh-navigation-menu');
 
         $this->dispatchBrowserEvent('alert', ['message' => 'Application sent successfully']);
 
