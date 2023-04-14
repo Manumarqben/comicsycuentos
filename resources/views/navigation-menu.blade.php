@@ -23,6 +23,14 @@
                 </div>
             </div>
 
+            @auth
+                <div class="flex items-center">
+                    @can('create', App\Models\Applicant::class)
+                        @livewire('applicant.save', key('applicant-save'))
+                    @endcan
+                </div>
+            @endauth
+
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
