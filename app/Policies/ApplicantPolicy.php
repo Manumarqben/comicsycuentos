@@ -30,8 +30,8 @@ class ApplicantPolicy
     public function create(User $user): \Illuminate\Auth\Access\Response|bool
     {
         return $user->applicant || $user->author
-        ? Response::denyWithStatus(403)
-        : Response::allow();
+            ? Response::denyWithStatus(403)
+            : Response::allow();
     }
 
     /**
@@ -45,9 +45,11 @@ class ApplicantPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Applicant $applicant): bool
+    public function delete(User $user, Applicant $applicant): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->id == $applicant->user_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**
