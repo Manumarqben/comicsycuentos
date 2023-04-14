@@ -1,4 +1,26 @@
-<div x-data="applicantModal()">
+<div x-data="{
+    data: {
+        alias: {
+            content: @entangle('applicant.alias').defer,
+            rules: {
+                max: 50,
+                min: 4,
+            },
+            error: '',
+        },
+    },
+
+    init() {
+        this.$watch('data.alias', value => {
+            validation(value, 'alias')
+        })
+    },
+
+    get valid() {
+        return this.data.alias.content == '' ||
+            validation(this.data.alias);
+    },
+}">
     <x-button wire:click.prevent="$toggle('show')">Be author</x-button>
     <x-dialog-modal wire:model="show">
         @slot('title')
@@ -42,31 +64,4 @@
     @once
         <script src="{{ asset('js/validator.js') }}"></script>
     @endonce
-    <script>
-        function applicantModal() {
-            return {
-                data: {
-                    alias: {
-                        content: @entangle('applicant.alias').defer,
-                        rules: {
-                            max: 50,
-                            min: 4,
-                        },
-                        error: '',
-                    },
-                },
-
-                init() {
-                    this.$watch('data.alias', value => {
-                        validation(value, 'alias')
-                    })
-                },
-
-                get valid() {
-                    return this.data.alias.content == '' ||
-                        validation(this.data.alias);
-                },
-            }
-        }
-    </script>
 </div>
