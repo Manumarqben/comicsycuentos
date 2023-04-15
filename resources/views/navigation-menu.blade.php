@@ -27,6 +27,8 @@
                 <div class="flex items-center">
                     @can('create', App\Models\Applicant::class)
                         @livewire('applicant.save', key('applicant-save'))
+                    @elsecan('delete', auth()->user()->applicant)
+                        @livewire('applicant.delete', key('applicant-delete'))
                     @endcan
                 </div>
             @endauth
