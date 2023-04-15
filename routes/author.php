@@ -24,6 +24,6 @@ Route::group(['prefix' => 'authors'], function () {
       'author'
     ],
   ], function () {
-    Route::get('/{slug}/manage', AuthorManage::class)->name('authors.manage');
+    Route::get('/{slug}/manage', AuthorManage::class)->name('author.manage');
   });
 });
