@@ -20,8 +20,24 @@
             @endif
 
             <div class="col-span-6 sm:col-span-4">
-                <x-label for="photo" value="{{ __('Author photo') }}" />
-                <input type="file" name="photo" id="photo">
+                <div id="preview" class="flex justify-center sm:mb-4">
+                    <div
+                        class=" h-52 sm:h-64 w-52 sm:w-64 rounded-full overflow-hidden border-4 border-gray-500">
+                        @if ($photo)
+                            <img src="{{ $photo->temporaryUrl() }}">
+                        @else
+                            <img class="object-cover w-full h-full"
+                                src="{{ $author->profile_photo_path }}"
+                                alt="{{ $author->alias }}" />
+                        @endif
+                    </div>
+                </div>
+                <div>
+                    <x-label for="photo" value="{{ __('Author photo') }}" />
+                    <input type="file" name="photo" id="photo"
+                        wire:model="photo">
+                    <x-input-error for="photo" />
+                </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
@@ -30,7 +46,6 @@
                     class="mt-1 block w-full"
                     x-model.debounce.500ms="data.alias.content" />
                 <x-input-error-client message="data.alias.error" />
-
             </div>
 
             <div class="col-span-6 sm:col-span-4">

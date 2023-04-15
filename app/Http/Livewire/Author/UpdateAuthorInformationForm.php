@@ -6,12 +6,15 @@ use App\Models\Author;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class UpdateAuthorInformationForm extends Component
 {
     use AuthorizesRequests;
+    use WithFileUploads;
 
     public Author $author;
+    public $photo;
 
     protected function rules()
     {
@@ -29,13 +32,23 @@ class UpdateAuthorInformationForm extends Component
             ],
             'author.biography' => [
                 'max:255',
-            ]
+            ],
         ];
     }
 
     protected $validationAttributes = [
         'slug' => "alias",
     ];
+
+    public function updatedPhoto()
+    {
+        $this->validate([
+            'photo' => [
+                'image',
+                'max:1024',
+            ],
+        ]);
+    }
 
     public function mount($author)
     {
@@ -53,6 +66,13 @@ class UpdateAuthorInformationForm extends Component
         $this->author->biography = trim($this->author->biography);
 
         $this->validate();
+
+        if ($this->photo) {
+            $extension = $this->photo->getClientOriginalExtension();
+            $fileName = $this->author->id . '.' . $extension;
+            $path = $this->photo->storeAs('author_profile_photos', $fileName, 'public');
+            $this->author->profile_photo_path = $path;
+        }
 
         $this->author->save();
 
