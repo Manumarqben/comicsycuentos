@@ -21,16 +21,8 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <div id="preview" class="flex justify-center sm:mb-4">
-                    <div
-                        class=" h-52 sm:h-64 w-52 sm:w-64 rounded-full overflow-hidden border-4 border-gray-500">
-                        @if ($photo)
-                            <img src="{{ $photo->temporaryUrl() }}">
-                        @else
-                            <img class="object-cover w-full h-full"
-                                src="{{ $author->profilePhoto ? asset(Storage::url($author->profilePhoto->path)) : 'https://upload.wikimedia.org/wikipedia/commons/0/09/Cervantes_J%C3%A1uregui.jpg' }}"
-                                alt="{{ $author->alias }}" />
-                        @endif
-                    </div>
+                    <x-author-profile-photo :path="$this->profilePhotoPath"
+                        alt="{{ $author->alias }}" />
                 </div>
                 <div>
                     <x-label for="photo" value="{{ __('Author photo') }}" />

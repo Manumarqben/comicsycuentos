@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Author;
 
 use App\Models\Author;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -55,6 +56,19 @@ class UpdateAuthorInformationForm extends Component
         $this->fill([
             'author' => $author,
         ]);
+    }
+
+    public function getProfilePhotoPathProperty()
+    {
+        if($this->photo) {
+            return $this->photo->temporaryUrl();
+        }
+
+        if ($this->author->profilePhoto) {
+            return asset(Storage::url($this->author->profilePhoto->path));
+        }
+
+        return 'https://upload.wikimedia.org/wikipedia/commons/0/09/Cervantes_J%C3%A1uregui.jpg';
     }
 
     public function updateAuthorInformation()
