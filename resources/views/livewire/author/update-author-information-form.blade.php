@@ -27,7 +27,7 @@
                             <img src="{{ $photo->temporaryUrl() }}">
                         @else
                             <img class="object-cover w-full h-full"
-                                src="{{ $author->profile_photo_path }}"
+                                src="{{ $author->profilePhoto ? asset(Storage::url($author->profilePhoto->path)) : 'https://upload.wikimedia.org/wikipedia/commons/0/09/Cervantes_J%C3%A1uregui.jpg' }}"
                                 alt="{{ $author->alias }}" />
                         @endif
                     </div>

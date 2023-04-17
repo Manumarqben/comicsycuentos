@@ -5,7 +5,7 @@
             <div
                 class=" h-52 sm:h-64 w-52 sm:w-64 rounded-full overflow-hidden border-4 border-gray-500">
                 <img class="object-cover w-full h-full"
-                    src="{{ $author->profile_photo_path }}"
+                    src="{{ $author->profilePhoto ? asset(Storage::url($author->profilePhoto->path)) : 'https://upload.wikimedia.org/wikipedia/commons/0/09/Cervantes_J%C3%A1uregui.jpg' }}"
                     alt="{{ $author->alias }}" />
             </div>
         </div>
@@ -21,10 +21,14 @@
     </div>
     <div>
         <div class="flex justify-between pb-8">
-            <button wire:click="$emitTo('work.list-works', 'setState', 'publishing')">Publishing</button>
-            <button wire:click="$emitTo('work.list-works', 'setState', 'finished')">Finished</button>
-            <button wire:click="$emitTo('work.list-works', 'setState', 'hiatus')">Hiatus</button>
-            <button wire:click="$emitTo('work.list-works', 'setState', 'discontinued')">Discontinued</button>
+            <button
+                wire:click="$emitTo('work.list-works', 'setState', 'publishing')">Publishing</button>
+            <button
+                wire:click="$emitTo('work.list-works', 'setState', 'finished')">Finished</button>
+            <button
+                wire:click="$emitTo('work.list-works', 'setState', 'hiatus')">Hiatus</button>
+            <button
+                wire:click="$emitTo('work.list-works', 'setState', 'discontinued')">Discontinued</button>
         </div>
         @livewire('work.list-works', ['author' => $author->id, 'state' => $state], key('list-works'))
     </div>

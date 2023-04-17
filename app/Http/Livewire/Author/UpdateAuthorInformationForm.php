@@ -71,7 +71,9 @@ class UpdateAuthorInformationForm extends Component
             $extension = $this->photo->getClientOriginalExtension();
             $fileName = $this->author->id . '.' . $extension;
             $path = $this->photo->storeAs('author_profile_photos', $fileName, 'public');
-            $this->author->profile_photo_path = $path;
+            $this->author->profilePhoto()->updateOrCreate([
+                'path' => $path,
+            ]);
         }
 
         $this->author->save();

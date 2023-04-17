@@ -35,7 +35,6 @@ class AuthorFactory extends Factory
             'alias' => $alias,
             'slug' => str($alias)->slug(),
             'biography' => $this->faker->sentence(),
-            'profile_photo_path' => $this->faker->imageUrl(200, 200, 'people', true),
             'user_id' => $user_id,
         ];
     }
