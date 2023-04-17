@@ -36,7 +36,7 @@ function validation(data, property = "property") {
     }
     if (
         "require" in data.rules &&
-        data.rules.number &&
+        data.rules.require &&
         !require(data.content)
     ) {
         data.error = `The ${property} field is required.`;

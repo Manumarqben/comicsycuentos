@@ -4,4 +4,9 @@
             {{ __('Author administration panel') }}
         </h2>
     </x-slot>
+    <div class="container">
+        <div class="mt-10 sm:mt-0">
+            @livewire('author.update-author-information-form', ['author' => $author])
+        </div>
+    </div>
 </div>

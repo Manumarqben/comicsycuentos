@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Author extends Model
 {
@@ -15,7 +16,6 @@ class Author extends Model
         'alias',
         'slug',
         'biography',
-        'profile_photo_path',
         'user_id',
     ];
 
@@ -33,5 +33,13 @@ class Author extends Model
     public function works(): HasMany
     {
         return $this->hasMany(Work::class);
+    }
+
+    /**
+     * Get the photo associated with the instance.
+     */
+    public function profilePhoto(): HasOne
+    {
+        return $this->hasOne(AuthorProfilePhotos::class);
     }
 }
