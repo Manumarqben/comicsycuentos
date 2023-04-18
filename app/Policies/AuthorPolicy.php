@@ -38,16 +38,18 @@ class AuthorPolicy
     public function update(User $user, Author $author): \Illuminate\Auth\Access\Response|bool
     {
         return $user->id == $author->user_id
-        ? Response::allow()
-        : Response::denyWithStatus(404);
+            ? Response::allow()
+            : Response::denyWithStatus(404);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Author $author): bool
+    public function delete(User $user, Author $author): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->id == $author->user_id
+            ? Response::allow()
+            : Response::denyWithStatus(404);
     }
 
     /**
