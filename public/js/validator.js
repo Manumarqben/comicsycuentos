@@ -54,7 +54,7 @@ function validation(data, property = "property") {
  */
 function require(text) {
     const regex = new RegExp(`\\S\+`);
-    return regex.test(text);
+    return text != null && regex.test(text);
 }
 
 /**
