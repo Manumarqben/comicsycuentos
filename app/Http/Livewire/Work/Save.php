@@ -14,6 +14,7 @@ class Save extends Component
     use AuthorizesRequests;
 
     public Work $work;
+    public $frontPage;
 
     protected $rules = [
         'work.title' => [
@@ -30,17 +31,21 @@ class Save extends Component
             'unique:works,synopsis',
             'required',
         ],
-        'work.author_id' => [
+        'work.age_id' => [
             'required',
-        ],
-        'work.type_id' => [
-            'required'
+            'exists:ages,id',
         ],
         'work.state_id' => [
-            'required'
+            'required',
+            'exists:states,id',
         ],
-        'work.age_id' => [
-            'required'
+        'work.type_id' => [
+            'required',
+            'exists:types,id',
+        ],
+        'work.author_id' => [
+            'required',
+            'exists:authors,id',
         ],
     ];
 
@@ -51,6 +56,16 @@ class Save extends Component
         'state_id' => "state",
         'age_id' => "age",
     ];
+
+    public function updatedFrontPage()
+    {
+        $this->validate([
+            'frontPage' => [
+                'image',
+                'max:1024',
+            ],
+        ]);
+    }
 
     public function mount()
     {
@@ -68,6 +83,11 @@ class Save extends Component
         $this->work->author_id = auth()->user()->author->id;
 
         $this->validate();
+
+        $extension = $this->frontPage->getClientOriginalExtension();
+        $fileName = $this->work->id . '.' . $extension;
+        $path = $this->frontPage->storeAs('front_pages', $fileName, 'public');
+        $this->work->front_page = $path;
 
         //     $this->work->save();
 
