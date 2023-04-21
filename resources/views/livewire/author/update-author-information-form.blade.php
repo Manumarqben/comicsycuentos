@@ -42,10 +42,10 @@
 
             <div class="col-span-6 sm:col-span-4">
                 <x-label for="biography" value="{{ __('Biography') }}" />
-                <textarea name="biography" id="biography"
-                    class="mt-1 block w-full h-32 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                <x-textarea name="biography" id="biography"
+                    class="mt-1 block w-full h-32"
                     x-model.debounce.500ms="data.biography.content">
-                </textarea>
+                </x-textarea>
                 <x-input-error-client message="data.biography.error" />
             </div>
         </x-slot>
