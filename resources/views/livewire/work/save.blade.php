@@ -24,20 +24,20 @@
                 </div>
                 <div class="col-span-6">
                     <x-label for="synopsis">Synopsis</x-label>
-                    <textarea name="synopsis" id="synopsis"
-                        class="mt-1 block w-full h-32 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                    <x-textarea name="synopsis" id="synopsis"
+                        class="mt-1 block w-full h-32"
                         x-model.debounce.500ms="data.synopsis.content"
-                        @input="$refs.synopsisServerError.classList.add('hidden')" />
+                        @input="$refs.synopsisServerError.classList.add('hidden')">
                         {{ old('work.synopsis') }}
-                    </textarea>
+                    </x-textarea>
                     <x-input-error-client message="data.synopsis.error"
                         x-show="!validSynopsis" />
                     <div x-ref="synopsisServerError">
                         <x-input-error for="work.synopsis" />
                     </div>
                 </div>
-                <div class="col-span-6 sm:flex">
-                    <div>
+                <div class="col-span-6 md:flex">
+                    <div class="flex flex-col w-full md:h-full pb-4">
                         <div>
                             <x-label for="frontPage">{{ __('Front page') }}
                             </x-label>
@@ -109,8 +109,9 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <x-work-information-card :frontPage="$this->frontPagePath">
+                    <div class="w-full flex justify-center">
+                        <x-work-information-card :frontPage="$this->frontPagePath"
+                            class="bg-red-300">
                             @slot('type')
                                 <span x-text="type"></span>
                             @endslot
@@ -176,7 +177,7 @@
                         age: {
                             content: @entangle('work.age_id').defer,
                             rules: {
-                                require: false,
+                                require: true,
                             },
                             error: '',
                         },
