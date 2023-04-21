@@ -2,29 +2,14 @@
     <div id="data"
         class="flex flex-col sm:flex-row gap-3 items-center sm:items-start">
         <div id="card">
-            <div class="relative h-80 w-64 sm:h-96 sm:w-72">
-                <div id="type" class="absolute top-0 h-1/6 w-full">
-                    <div
-                        class="flex justify-center items-center h-full bg-white bg-opacity-90">
-                        <p class="text-4xl font-bold text-gray-800">
-                            {{ strToUpper($work->type->name) }}</p>
-                    </div>
-                </div>
-                <div id="frontPage" class="h-full w-full">
-                    <img class="object-cover w-full h-full"
-                        src="{{ $work->front_page }}"
-                        alt="{{ $work->title }}" />
-                </div>
-                <div id="age"
-                    class="absolute bottom-0 right-0 h-1/6 aspect-square">
-                    <div
-                        class="flex justify-center items-center h-full bg-white bg-opacity-90">
-                        <p class="text-2xl sm:text-3xl font-bold text-gray-800">
-                            {{ $work->age->year == 0 ? 'TP' : '+' . $work->age->year }}
-                        </p>
-                    </div>
-                </div>
-            </div>
+            <x-work-information-card frontPage="{{ $work->front_page }}">
+                @slot('type')
+                    {{ strToUpper($work->type->name) }}
+                @endslot
+                @slot('age')
+                    {{ $work->age->year == 0 ? 'TP' : '+' . $work->age->year }}
+                @endslot
+            </x-work-information-card>
             @auth
                 <div id="actions" class="flex">
                     @livewire('work.marker-selector', ['id' => $work->id], key('marker-selector'))
