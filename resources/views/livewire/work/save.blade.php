@@ -36,58 +36,83 @@
                         <x-input-error for="work.synopsis" />
                     </div>
                 </div>
-                <div class="col-span-6">
-                    <x-label for="types">Types</x-label>
-                    <select class="block w-full" x-model="data.type.content"
-                        @input="$refs.typeServerError.classList.add('hidden')">
-                        <option value="">{{ __('Select a type') }}</option>
-                        @foreach ($types as $id => $type)
-                            <option value="{{ $id }}"
-                                wire:key="{{ "type-$id" }}">
-                                {{ $type }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error-client message="data.type.error"
-                        x-show="!validType" />
-                    <div x-ref="typeServerError">
-                        <x-input-error for="work.type_id" />
+                <div class="col-span-6 sm:flex">
+                    <div>
+                        <div>
+                            <x-label for="frontPage">{{ __('Front page') }}
+                            </x-label>
+                            <x-input id="frontPage" type="file" name="frontPage"
+                                :value="old('frontPage')" wire:model="frontPage" />
+                            <x-input-error for="frontPage" />
+                        </div>
+                        <div>
+                            <x-label for="types">{{ __('Types') }}</x-label>
+                            <select class="block w-full" x-model="data.type.content"
+                                x-ref="types"
+                                @input="$refs.typeServerError.classList.add('hidden')">
+                                <option value="">{{ __('Select a type') }}
+                                </option>
+                                @foreach ($types as $id => $type)
+                                    <option value="{{ $id }}"
+                                        id="{{ "type-$id" }}"
+                                        wire:key="{{ "type-$id" }}">
+                                        {{ $type }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error-client message="data.type.error"
+                                x-show="!validType" />
+                            <div x-ref="typeServerError">
+                                <x-input-error for="work.type_id" />
+                            </div>
+                        </div>
+                        <div>
+                            <x-label for="states">{{ __('State') }}</x-label>
+                            <select class="block w-full"
+                                x-model="data.state.content"
+                                @input="$refs.stateServerError.classList.add('hidden')">
+                                <option value="">{{ __('Select a state') }}
+                                </option>
+                                @foreach ($states as $id => $state)
+                                    <option value="{{ $id }}"
+                                        id="{{ "state-$id" }}"
+                                        wire:key="{{ "state-$id" }}">
+                                        {{ $state }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error-client message="data.state.error"
+                                x-show="!validState" />
+                            <div x-ref="stateServerError">
+                                <x-input-error for="work.state_id" />
+                            </div>
+                        </div>
+                        <div>
+                            <x-label for="ages">{{ __('Ages') }}</x-label>
+                            <select class="block w-full" x-model="data.age.content"
+                                x-ref="ages"
+                                @input="$refs.ageServerError.classList.add('hidden')">
+                                <option value="">{{ __('Select a age') }}
+                                </option>
+                                @foreach ($ages as $id => $age)
+                                    <option value="{{ $id }}"
+                                        id="{{ "age-$id" }}"
+                                        wire:key="{{ "age-$id" }}">
+                                        {{ $age }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error-client message="data.age.error"
+                                x-show="!validAge" />
+                            <div x-cloak x-ref="ageServerError">
+                                <x-input-error for="work.age_id" />
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-span-6">
-                    <x-label for="states">State</x-label>
-                    <select class="block w-full" x-model="data.state.content"
-                        @input="$refs.stateServerError.classList.add('hidden')">
-                        <option value="">{{ __('Select a state') }}</option>
-                        @foreach ($states as $id => $state)
-                            <option value="{{ $id }}"
-                                wire:key="{{ "state-$id" }}">
-                                {{ $state }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error-client message="data.state.error"
-                        x-show="!validState" />
-                    <div x-ref="stateServerError">
-                        <x-input-error for="work.state_id" />
-                    </div>
-                </div>
-                <div class="col-span-6">
-                    <x-label for="ages">Ages</x-label>
-                    <select class="block w-full" x-model="data.age.content"
-                        @input="$refs.ageServerError.classList.add('hidden')">
-                        <option value="">{{ __('Select a age') }}</option>
-                        @foreach ($ages as $id => $age)
-                            <option value="{{ $id }}"
-                                wire:key="{{ "age-$id" }}">
-                                {{ $age }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error-client message="data.age.error"
-                        x-show="!validAge" />
-                    <div x-cloak x-ref="ageServerError">
-                        <x-input-error for="work.age_id" />
+                    <div>
+                        @if ($frontPage)
+                            <img src="{{ $this->frontPagePath }}">
+                        @endif
                     </div>
                 </div>
             @endslot
@@ -98,9 +123,9 @@
                 </x-button>
             @endslot
         </x-form>
-        @once
+        @pushOnce('customScripts')
             <script src="{{ asset('js/validator.js') }}"></script>
-        @endonce
+        @endPushOnce
         <script>
             function form() {
                 return {

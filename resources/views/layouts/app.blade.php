@@ -14,6 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="{{ asset('js/checkTheme.js') }}"></script>
+        @stack('customScripts')
 
         <!-- Styles -->
         @livewireStyles

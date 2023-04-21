@@ -8,10 +8,12 @@ use App\Models\Type;
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Save extends Component
 {
     use AuthorizesRequests;
+    use WithFileUploads;
 
     public Work $work;
     public $frontPage;
@@ -63,6 +65,7 @@ class Save extends Component
             'frontPage' => [
                 'image',
                 'max:1024',
+                'required',
             ],
         ]);
     }
@@ -72,6 +75,13 @@ class Save extends Component
         $this->fill([
             $this->work = new Work(),
         ]);
+    }
+
+    public function getFrontPagePathProperty()
+    {
+        if ($this->frontPage) {
+            return $this->frontPage->temporaryUrl();
+        }
     }
 
     public function submit()
@@ -84,12 +94,10 @@ class Save extends Component
 
         $this->validate();
 
-        $extension = $this->frontPage->getClientOriginalExtension();
-        $fileName = $this->work->id . '.' . $extension;
-        $path = $this->frontPage->storeAs('front_pages', $fileName, 'public');
+        $path = $this->frontPage->store('front_pages', 'public');
         $this->work->front_page = $path;
 
-        //     $this->work->save();
+        $this->work->save();
 
         $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
     }
