@@ -110,9 +110,14 @@
                         </div>
                     </div>
                     <div>
-                        @if ($frontPage)
-                            <img src="{{ $this->frontPagePath }}">
-                        @endif
+                        <x-work-information-card :frontPage="$this->frontPagePath">
+                            @slot('type')
+                                <span x-text="type"></span>
+                            @endslot
+                            @slot('age')
+                                <span x-text="age"></span>
+                            @endslot
+                        </x-work-information-card>
                     </div>
                 </div>
             @endslot
@@ -129,6 +134,9 @@
         <script>
             function form() {
                 return {
+                    type: 'Type',
+                    age: 'Age',
+
                     validTitle: true,
                     validSynopsis: true,
                     validType: true,
@@ -183,12 +191,14 @@
                         });
                         this.$watch('data.type', value => {
                             this.validType = validation(value, 'type');
+                            this.type = this.getType();
                         });
                         this.$watch('data.state', value => {
                             this.validState = validation(value, 'state');
                         });
                         this.$watch('data.age', value => {
                             this.validAge = validation(value, 'age');
+                            this.age = this.getAge();
                         });
                     },
 
@@ -209,21 +219,46 @@
                             this.validAge;
                     },
 
+                    getType() {
+                        let type = document.getElementById('type-' + this.$refs.types
+                            .value);
+                        type = type ? type.textContent.trim().toUpperCase() : 'Type';
+                        return type;
+                    },
+
+                    getAge() {
+                        let age = document.getElementById('age-' + this.$refs.ages
+                            .value);
+                        if (age) {
+                            age = age.textContent.trim();
+                            if (age != 0) {
+                                return '+' + age;
+                            }
+                            return 'TP';
+                        }
+                        return 'Age'
+                    },
+
                     submit() {
                         this.validateAllFields();
                         if (this.valid) {
                             this.$wire.submit().then(() => {
                                 // con el then evito que se muestren los errores anteriores antes de tener la respuesta.
-                                this.$refs.titleServerError.classList.remove(
-                                    'hidden');
-                                this.$refs.synopsisServerError.classList.remove(
-                                    'hidden');
-                                this.$refs.typeServerError.classList.remove(
-                                    'hidden');
-                                this.$refs.stateServerError.classList.remove(
-                                    'hidden');
-                                this.$refs.ageServerError.classList.remove(
-                                    'hidden');
+                                this.$refs.titleServerError.classList
+                                    .remove(
+                                        'hidden');
+                                this.$refs.synopsisServerError.classList
+                                    .remove(
+                                        'hidden');
+                                this.$refs.typeServerError.classList
+                                    .remove(
+                                        'hidden');
+                                this.$refs.stateServerError.classList
+                                    .remove(
+                                        'hidden');
+                                this.$refs.ageServerError.classList
+                                    .remove(
+                                        'hidden');
                             })
                         }
                     },
