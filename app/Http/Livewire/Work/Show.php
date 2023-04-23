@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Work;
 
 use App\Models\Work;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Show extends Component
 {
+    use AuthorizesRequests;
     use WithPagination;
 
     public Work $work;
@@ -36,6 +38,8 @@ class Show extends Component
 
     public function render()
     {
+        $this->authorize('view', $this->work);
+
         return view('livewire.work.show');
     }
 }
