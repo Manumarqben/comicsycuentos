@@ -37,12 +37,16 @@
                     </div>
                 </div>
                 <div class="col-span-6 md:flex">
-                    <div class="flex flex-col w-full md:h-full pb-4">
+                    <div class="flex flex-col w-full md:h-full pb-4 gap-3">
                         <div>
-                            <x-label for="frontPage">{{ __('Front page') }}
+                            <x-label for="frontPage">
+                                {{ __('Front page') }}
                             </x-label>
                             <x-input id="frontPage" type="file" name="frontPage"
                                 :value="old('frontPage')" wire:model="frontPage" />
+                            <span wire:loading wire:target="frontPage">
+                                {{ __('Uploading') }}...
+                            </span>
                             <x-input-error for="frontPage" />
                         </div>
                         <div>
@@ -219,7 +223,7 @@
                     },
 
                     get type() {
-                        let type = this.types[this.data.type.content] ?? 'type'; 
+                        let type = this.types[this.data.type.content] ?? 'type';
                         return type.trim().toUpperCase();
                     },
 
@@ -235,7 +239,7 @@
                         this.validateAllFields();
                         if (this.valid) {
                             this.$wire.submit().then(() => {
-                                // con el then evito que se muestren los errores anteriores antes de tener la respuesta.
+                                {{-- ? info: con el then evito que se muestren los errores anteriores antes de tener la respuesta. --}}
                                 this.$refs.titleServerError.classList
                                     .remove('hidden');
                                 this.$refs.synopsisServerError.classList

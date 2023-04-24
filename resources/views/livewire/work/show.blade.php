@@ -2,7 +2,7 @@
     <div id="data"
         class="flex flex-col sm:flex-row gap-3 items-center sm:items-start">
         <div id="card">
-            <x-work-information-card frontPage="{{ $work->front_page }}"
+            <x-work-information-card frontPage="{{ asset(Storage::url($work->front_page)) }}"
                 imgAlt="{{ $work->title }}">
                 @slot('type')
                     {{ strToUpper($work->type->name) }}

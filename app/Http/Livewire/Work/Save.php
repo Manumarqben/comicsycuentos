@@ -7,6 +7,7 @@ use App\Models\State;
 use App\Models\Type;
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -89,7 +90,7 @@ class Save extends Component
         }
 
         if ($this->work->front_page) {
-            return $this->work->front_page;
+            return asset(Storage::url($this->work->front_page));
         }
     }
 
@@ -113,7 +114,11 @@ class Save extends Component
 
         $this->work->save();
 
-        $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
+        if ($this->work->created_at == $this->work->updated_at) {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
+        } else {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
+        }
     }
 
     public function render()
