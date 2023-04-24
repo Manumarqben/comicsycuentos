@@ -7,6 +7,7 @@ use App\Models\State;
 use App\Models\Type;
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -18,38 +19,41 @@ class Save extends Component
     public Work $work;
     public $frontPage;
 
-    protected $rules = [
-        'work.title' => [
-            'unique:works,title',
-            'max:200',
-            'required',
-        ],
-        'work.slug' => [
-            'unique:works,slug',
-            'max:255',
-            'required',
-        ],
-        'work.synopsis' => [
-            'unique:works,synopsis',
-            'required',
-        ],
-        'work.age_id' => [
-            'required',
-            'exists:ages,id',
-        ],
-        'work.state_id' => [
-            'required',
-            'exists:states,id',
-        ],
-        'work.type_id' => [
-            'required',
-            'exists:types,id',
-        ],
-        'work.author_id' => [
-            'required',
-            'exists:authors,id',
-        ],
-    ];
+    protected function rules()
+    {
+        return    $rules = [
+            'work.title' => [
+                Rule::unique('works', 'title')->ignore($this->work->id),
+                'max:200',
+                'required',
+            ],
+            'work.slug' => [
+                Rule::unique('works', 'slug')->ignore($this->work->id),
+                'max:255',
+                'required',
+            ],
+            'work.synopsis' => [
+                Rule::unique('works', 'synopsis')->ignore($this->work->id),
+                'required',
+            ],
+            'work.age_id' => [
+                'required',
+                'exists:ages,id',
+            ],
+            'work.state_id' => [
+                'required',
+                'exists:states,id',
+            ],
+            'work.type_id' => [
+                'required',
+                'exists:types,id',
+            ],
+            'work.author_id' => [
+                'required',
+                'exists:authors,id',
+            ],
+        ];
+    }
 
     protected $validationAttributes = [
         'slug' => "title",
@@ -70,10 +74,11 @@ class Save extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($slug = null)
     {
+        // TODO: se me ha olvidado añadir los generos al crear la obra
         $this->fill([
-            $this->work = new Work(),
+            $this->work = Work::where('slug', $slug)->firstOrNew(),
         ]);
     }
 
@@ -82,11 +87,18 @@ class Save extends Component
         if ($this->frontPage) {
             return $this->frontPage->temporaryUrl();
         }
+
+        if ($this->work->front_page) {
+            return $this->work->front_page;
+        }
     }
 
     public function submit()
     {
-        $this->authorize('create', Work::class);
+        $this->work->id ?
+            $this->authorize('update', $this->work) :
+            $this->authorize('create', Work::class);
+
         $this->work->title = trim($this->work->title);
         $this->work->slug = str($this->work->title)->slug();
         $this->work->synopsis = trim($this->work->synopsis);
@@ -94,8 +106,10 @@ class Save extends Component
 
         $this->validate();
 
-        $path = $this->frontPage->store('front_pages', 'public');
-        $this->work->front_page = $path;
+        if ($this->frontPage) {
+            $path = $this->frontPage->store('front_pages', 'public');
+            $this->work->front_page = $path;
+        }
 
         $this->work->save();
 

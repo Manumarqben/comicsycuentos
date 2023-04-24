@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full flex justify-center">
+                    <div class="w-full flex justify-center" id="preview">
                         <x-work-information-card :frontPage="$this->frontPagePath"
                             class="bg-red-300">
                             @slot('type')
@@ -135,8 +135,8 @@
         <script>
             function form() {
                 return {
-                    type: 'Type',
-                    age: 'Age',
+                    types: @json($types),
+                    ages: @json($ages),
 
                     validTitle: true,
                     validSynopsis: true,
@@ -192,14 +192,12 @@
                         });
                         this.$watch('data.type', value => {
                             this.validType = validation(value, 'type');
-                            this.type = this.getType();
                         });
                         this.$watch('data.state', value => {
                             this.validState = validation(value, 'state');
                         });
                         this.$watch('data.age', value => {
                             this.validAge = validation(value, 'age');
-                            this.age = this.getAge();
                         });
                     },
 
@@ -220,24 +218,17 @@
                             this.validAge;
                     },
 
-                    getType() {
-                        let type = document.getElementById('type-' + this.$refs.types
-                            .value);
-                        type = type ? type.textContent.trim().toUpperCase() : 'Type';
-                        return type;
+                    get type() {
+                        let type = this.types[this.data.type.content] ?? 'type'; 
+                        return type.trim().toUpperCase();
                     },
 
-                    getAge() {
-                        let age = document.getElementById('age-' + this.$refs.ages
-                            .value);
-                        if (age) {
-                            age = age.textContent.trim();
-                            if (age != 0) {
-                                return '+' + age;
-                            }
-                            return 'TP';
+                    get age() {
+                        let age = this.ages[this.data.age.content];
+                        if (age !== undefined) {
+                            return age == 0 ? 'TP' : `+${age}`;
                         }
-                        return 'Age'
+                        return 'Age';
                     },
 
                     submit() {
@@ -246,20 +237,15 @@
                             this.$wire.submit().then(() => {
                                 // con el then evito que se muestren los errores anteriores antes de tener la respuesta.
                                 this.$refs.titleServerError.classList
-                                    .remove(
-                                        'hidden');
+                                    .remove('hidden');
                                 this.$refs.synopsisServerError.classList
-                                    .remove(
-                                        'hidden');
+                                    .remove('hidden');
                                 this.$refs.typeServerError.classList
-                                    .remove(
-                                        'hidden');
+                                    .remove('hidden');
                                 this.$refs.stateServerError.classList
-                                    .remove(
-                                        'hidden');
+                                    .remove('hidden');
                                 this.$refs.ageServerError.classList
-                                    .remove(
-                                        'hidden');
+                                    .remove('hidden');
                             })
                         }
                     },
