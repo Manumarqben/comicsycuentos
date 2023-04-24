@@ -27,6 +27,6 @@ Route::group(['prefix' => 'works'], function () {
     ],
   ], function () {
     Route::get('/create', WorkSave::class)->name('work.create');
+    Route::get('/work/{slug}/update', WorkSave::class)->name('work.update');
   });
-
 });

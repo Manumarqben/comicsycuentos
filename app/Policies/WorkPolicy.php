@@ -44,9 +44,11 @@ class WorkPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Work $work): bool
+    public function update(User $user, Work $work): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->author->id == $work->author_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**
