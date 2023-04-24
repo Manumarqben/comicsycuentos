@@ -41,6 +41,10 @@
                                             class="button">
                                             <x-icon.edit />
                                         </a>
+                                        <x-danger-button
+                                            wire:click="$emitTo('work.delete-work-modal', 'open', [{{ $work->id }}])">
+                                            <x-icon.trash />
+                                        </x-danger-button>
                                     </div>
                                 </div>
                             @endforeach
@@ -48,6 +52,7 @@
                     @endif
                 </x-slot>
             </x-action-section>
+            @livewire('work.delete-work-modal')
         </div>
 
         <x-section-border />
