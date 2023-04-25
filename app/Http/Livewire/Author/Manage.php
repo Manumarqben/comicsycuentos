@@ -14,7 +14,7 @@ class Manage extends Component
 
     public function mount($slug)
     {
-        $this->author = Author::where('slug', $slug)->with('works')->firstOrFail();
+        $this->author = Author::where('slug', $slug)->with('works', 'works.chapters')->firstOrFail();
     }
 
     public function render()
