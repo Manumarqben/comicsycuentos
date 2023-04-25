@@ -54,9 +54,11 @@ class WorkPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Work $work): bool
+    public function delete(User $user, Work $work): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->author->id == $work->author_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**

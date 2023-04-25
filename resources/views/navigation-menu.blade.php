@@ -146,6 +146,10 @@
                                 </form>
                             </x-slot>
                         </x-dropdown>
+                    @else
+                        <!-- Login and Register -->
+                        <a href="{{ route('login') }}" class="font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">Log in</a>
+                        <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">Register</a>
                     @endauth
                 </div>
             </div>
