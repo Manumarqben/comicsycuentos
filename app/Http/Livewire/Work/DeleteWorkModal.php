@@ -30,6 +30,7 @@ class DeleteWorkModal extends Component
 
         $this->work->delete();
 
+        $this->emit('refresh-manege-author-works');
         $this->dispatchBrowserEvent('alert', ['message' => 'Work deleted successfully']);
         $this->show = false;
     }
