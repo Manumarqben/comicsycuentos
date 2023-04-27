@@ -43,12 +43,15 @@ class Save extends Component
                 'image',
                 'max:1024',
             ],
+            'contentType' => [
+                'required',
+            ],
         ];
     }
 
-    public function updatingChapter()
-    {
-    }
+    protected $messages = [
+        'contentType.required' => 'You need to select a valid content type.',
+    ];
 
     public function mount($workSlug, $chapterNumber = null)
     {
@@ -73,9 +76,27 @@ class Save extends Component
 
         $this->validate();
 
-        $this->chapter->save();
+        // $this->chapter->save();
+
+        if ($this->contentType == 'text') {
+            $this->saveText();
+        }
+
+        if ($this->contentType == 'image') {
+            $this->saveImages();
+        }
 
         $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
+    }
+
+    private function saveText()
+    {
+        $this->chapter->text()->updateOrCreate(['content' => $this->chapterText]);
+    }
+
+    private function saveImages()
+    {
+        dd('images');
     }
 
     public function render()

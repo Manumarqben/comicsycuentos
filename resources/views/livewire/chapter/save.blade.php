@@ -39,27 +39,44 @@
                             </div>
                         </div>
                     </div>
-                    <div id="content">
-                        <div class="flex flex-row">
-                            <x-button @click.prevent="contentType = 'text'"
-                                x-bind:disabled="contentType == 'text'"
-                                wire:loading.attr="disabled">
-                                Text
-                            </x-button>
-                            <x-button @click.prevent="contentType = 'image'"
-                                x-bind:disabled="contentType == 'image'"
-                                wire:loading.attr="disabled">
-                                Image
-                            </x-button>
+                    <div class="col-span-6">
+                        <div id="content-menu">
+                            <div class="flex flex-row">
+                                <x-button @click.prevent="setContentType('text')"
+                                    x-bind:disabled="data.type.content == 'text'"
+                                    wire:loading.attr="disabled">
+                                    Text
+                                </x-button>
+                                <x-button @click.prevent="setContentType('image')"
+                                    x-bind:disabled="data.type.content == 'image'"
+                                    wire:loading.attr="disabled">
+                                    Image
+                                </x-button>
+                            </div>
+                            <x-input-error-client
+                                message="'You need to select a valid content type.'"
+                                x-show="!validType" />
+                            <div x-ref="contentTypeServerError">
+                                <x-input-error for="contentType" />
+                            </div>
                         </div>
-                        <div x-show="contentType == 'text'">
-                            texto
-                            {{-- * Parte encargada de crear contenido del capítulo cuando es texto --}}
-                        </div>
+                        <div id="chapterContent">
+                            @if ($contentType == 'text')
+                                <div>
+                                    text
+                                    <x-input-error for="chapterText" />
 
-                        <div x-show="contentType == 'image'">
-                            imágenes
-                            {{-- * Parte encargada de crear contenido del capítulo cuando son imágenes --}}
+                                    {{-- * Parte encargada de crear contenido del capítulo cuando es texto --}}
+                                </div>
+                            @endif
+                            @if ($contentType == 'image')
+                                <div>
+                                    imágenes
+                                    <x-input-error for="chapterImages" />
+
+                                    {{-- * Parte encargada de crear contenido del capítulo cuando son imágenes --}}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endslot
@@ -80,8 +97,15 @@
                     return {
                         validNumber: true,
                         validTitle: true,
+                        validType: true,
+                        validContent: true,
 
-                        contentType: @entangle('contentType').defer,
+                        get valid() {
+                            return this.validNumber &&
+                                this.validTitle &&
+                                this.validType &&
+                                this.validContent;
+                        },
 
                         data: {
                             number: {
@@ -101,6 +125,20 @@
                                 },
                                 error: '',
                             },
+                            type: {
+                                content: @entangle('contentType'),
+                                rules: {
+                                    require: true,
+                                },
+                                error: '',
+                            },
+                            text: {
+                                content: @entangle('chapterText'),
+                                rules: {
+                                    require: true,
+                                },
+                                error: '',
+                            },
                         },
 
                         init() {
@@ -110,16 +148,23 @@
                             this.$watch('data.title', value => {
                                 this.validTitle = validation(value, 'title');
                             })
+                            this.$watch('data.type', value => {
+                                this.validType = validation(value, 'content type');
+                            })
                         },
 
                         validateAllFields() {
-                            this.validNumber = validation(this.data.number, 'number');
+                            this.validNumber = validation(this.data.number,
+                                'number');
                             this.validTitle = validation(this.data.title, 'title');
+                            this.validType = validation(this.data.type, 'type');
                         },
 
-                        get valid() {
-                            return this.validNumber &&
-                                this.validTitle;
+                        setContentType(value) {
+                            this.data.type.content = value;
+                            this.validContent = true;
+                            this.$refs.contentTypeServerError.classList.add(
+                                'hidden');
                         },
 
                         submit() {
@@ -129,6 +174,9 @@
                                     this.$refs.numberServerError.classList
                                         .remove('hidden');
                                     this.$refs.titleServerError.classList
+                                        .remove('hidden');
+                                    this.$refs.contentTypeServerError
+                                        .classList
                                         .remove('hidden');
                                 });
                             }
