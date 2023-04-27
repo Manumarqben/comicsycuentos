@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Chapter\Save as ChapterSave;
 use App\Http\Livewire\Chapter\Show as ChapterShow;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/viewer/{workSlug}/chapter-{chapterNumber}', ChapterShow::class)->name('chapter.viewer');
 
-
-Route::get('/viewer/{workSlug}/{chapterNumber}', ChapterShow::class)->name('chapter.viewer');
+Route::group([
+  'middleware' => [
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'author',
+  ]
+], function () {
+  Route::get('/works/work/{workSlug}/chapter/create', ChapterSave::class)->name('chapter.create');
+  Route::get('/works/work/{workSlug}/chapter-{chapterNumber}/update', ChapterSave::class)->name('chapter.update');
+});

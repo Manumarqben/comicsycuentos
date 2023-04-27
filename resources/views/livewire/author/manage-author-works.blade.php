@@ -35,7 +35,8 @@
                                         wire:click="$emitTo('work.delete-work-modal', 'open', [{{ $work->id }}])">
                                         <x-icon.trash />
                                     </x-danger-button>
-                                    <a href="" class="button">
+                                    <a href="{{ route('chapter.create', $work->slug) }}"
+                                        class="button">
                                         <x-icon.plus />
                                     </a>
                                 </div>

@@ -1,7 +1,7 @@
 <div>
     <x-slot name="header">
         <h2 class="h2">
-            {{ __('Works creation form') }}
+            {{ __('Work form') }}
         </h2>
     </x-slot>
     <div x-data="form()" class="container">

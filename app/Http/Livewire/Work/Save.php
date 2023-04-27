@@ -78,8 +78,15 @@ class Save extends Component
     public function mount($slug = null)
     {
         // TODO: se me ha olvidado añadir los generos al crear la obra
+
+        // TODO: si un usuario autor añade por url un titulo erroneo hace un create
+        // if ($slug != null) {
+        //     $work = Work::where('slug', $slug)->firstOrFail();
+        // }
+
         $this->fill([
             $this->work = Work::where('slug', $slug)->firstOrNew(),
+            // $this->work = $work ?? new Work(),
         ]);
     }
 
