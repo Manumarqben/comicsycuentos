@@ -61,7 +61,6 @@
                             imágenes
                             {{-- * Parte encargada de crear contenido del capítulo cuando son imágenes --}}
                         </div>
-
                     </div>
                 @endslot
 
@@ -75,68 +74,68 @@
 
             @pushOnce('customScripts')
                 <script src="{{ asset('js/validator.js') }}"></script>
-                <script>
-                    function form() {
-                        return {
-                            validNumber: true,
-                            validTitle: true,
-
-                            contentType: @entangle('contentType').defer,
-
-                            data: {
-                                number: {
-                                    content: @entangle('chapter.number').defer,
-                                    rules: {
-                                        require: true,
-                                        number: true,
-                                        greaterThanOrEqual: 0,
-                                    },
-                                    error: '',
-                                },
-                                title: {
-                                    content: @entangle('chapter.title').defer,
-                                    rules: {
-                                        require: true,
-                                        max: 255,
-                                    },
-                                    error: '',
-                                },
-                            },
-
-                            init() {
-                                this.$watch('data.number', value => {
-                                    this.validNumber = validation(value, 'number');
-                                })
-                                this.$watch('data.title', value => {
-                                    this.validTitle = validation(value, 'title');
-                                })
-                            },
-
-                            validateAllFields() {
-                                this.validNumber = validation(this.data.number, 'number');
-                                this.validTitle = validation(this.data.title, 'title');
-                            },
-
-                            get valid() {
-                                return this.validNumber &&
-                                    this.validTitle;
-                            },
-
-                            submit() {
-                                this.validateAllFields();
-                                if (this.valid) {
-                                    this.$wire.submit().then(() => {
-                                        this.$refs.numberServerError.classList
-                                            .remove('hidden');
-                                        this.$refs.titleServerError.classList
-                                            .remove('hidden');
-                                    });
-                                }
-                            },
-                        }
-                    }
-                </script>
             @endPushOnce
+            <script>
+                function form() {
+                    return {
+                        validNumber: true,
+                        validTitle: true,
+
+                        contentType: @entangle('contentType').defer,
+
+                        data: {
+                            number: {
+                                content: @entangle('chapter.number').defer,
+                                rules: {
+                                    require: true,
+                                    number: true,
+                                    greaterThanOrEqual: 0,
+                                },
+                                error: '',
+                            },
+                            title: {
+                                content: @entangle('chapter.title').defer,
+                                rules: {
+                                    require: true,
+                                    max: 255,
+                                },
+                                error: '',
+                            },
+                        },
+
+                        init() {
+                            this.$watch('data.number', value => {
+                                this.validNumber = validation(value, 'number');
+                            })
+                            this.$watch('data.title', value => {
+                                this.validTitle = validation(value, 'title');
+                            })
+                        },
+
+                        validateAllFields() {
+                            this.validNumber = validation(this.data.number, 'number');
+                            this.validTitle = validation(this.data.title, 'title');
+                        },
+
+                        get valid() {
+                            return this.validNumber &&
+                                this.validTitle;
+                        },
+
+                        submit() {
+                            this.validateAllFields();
+                            if (this.valid) {
+                                this.$wire.submit().then(() => {
+                                    this.$refs.numberServerError.classList
+                                        .remove('hidden');
+                                    this.$refs.titleServerError.classList
+                                        .remove('hidden');
+                                });
+                            }
+                        },
+                    }
+                }
+            </script>
         </div>
     </div>
 </div>

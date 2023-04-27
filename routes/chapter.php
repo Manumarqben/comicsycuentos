@@ -21,6 +21,7 @@ Route::group([
     config('jetstream.auth_session'),
     'verified',
     'author',
+    'chapter',
   ]
 ], function () {
   Route::get('/works/work/{workSlug}/chapter/create', ChapterSave::class)->name('chapter.create');

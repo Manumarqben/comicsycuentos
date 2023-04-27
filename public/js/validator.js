@@ -27,11 +27,11 @@ function validation(data, property = "property") {
         return false;
     }
     if ("greaterThanOrEqual" in data.rules && !greaterThanOrEqual(data.content, data.rules.greaterThanOrEqual)) {
-        data.error = `The ${property} must be greater than or equal to ${data.rules.greaterThanOrEqual}.`;
+        data.error = `The ${property} field must be at least ${data.rules.greaterThanOrEqual}.`;
         return false;
     }
     if ("smallerThanOrEqual" in data.rules && !smallerThanOrEqual(data.content, data.rules.smallerThanOrEqual)) {
-        data.error = `The ${property} must be minimum than or equal to ${data.rules.smallerThanOrEqual}.`;
+        data.error = `The ${property} field must not be greater than ${data.rules.smallerThanOrEqual}.`;
         return false;
     }
     if ("max" in data.rules && !max(data.content, data.rules.max)) {
