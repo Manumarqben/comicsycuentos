@@ -56,13 +56,20 @@ class Save extends Component
     public function mount($workSlug, $chapterNumber = null)
     {
         $this->work = Work::where('slug', $workSlug)->firstOrFail();
+
         if ($chapterNumber) {
             $chapter = $this->work->chapters()->where('number', $chapterNumber)->firstOrFail();
+
+            if ($chapter->text) {
+                $this->contentType = 'text';
+            } elseif ($chapter->images) {
+                $this->contentType = 'image';
+            }
         }
+
         $this->fill([
             $this->chapter = $chapter ?? new Chapter(),
-            $this->contentType = '',
-            $this->chapterText = '',
+            $this->chapterText = $chapter->text->content ?? '',
             $this->chapterImages = [],
         ]);
     }
@@ -76,7 +83,7 @@ class Save extends Component
 
         $this->validate();
 
-        // $this->chapter->save();
+        $this->chapter->save();
 
         if ($this->contentType == 'text') {
             $this->saveText();
@@ -91,7 +98,10 @@ class Save extends Component
 
     private function saveText()
     {
-        $this->chapter->text()->updateOrCreate(['content' => $this->chapterText]);
+        $this->chapter->text()->updateOrCreate(
+            ['chapter_id' => $this->chapter->id],
+            ['content' => $this->chapterText]
+        );
     }
 
     private function saveImages()

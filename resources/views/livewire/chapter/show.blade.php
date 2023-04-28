@@ -1,7 +1,7 @@
 <div class="container">
     @if ($typeContent == 'text')
         <div>
-            {{ $chapter->text->content }}
+            {!! $chapter->text->content !!}
         </div>
     @endif
 

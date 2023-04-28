@@ -61,22 +61,30 @@
                             </div>
                         </div>
                         <div id="chapterContent">
-                            @if ($contentType == 'text')
-                                <div>
-                                    text
-                                    <x-input-error for="chapterText" />
-
-                                    {{-- * Parte encargada de crear contenido del capítulo cuando es texto --}}
+                            <div x-show="data.type.content == 'text'">
+                                <div class="w-full flex justify-center" wire:ignore>
+                                    <div class="w-full md:w-3/4">
+                                        <textarea id="ckcontent">
+                                            {!! $chapterText !!}
+                                        </textarea>
+                                        <x-input-error-client
+                                            message="data.text.error"
+                                            x-show="!validContent" />
+                                        <x-input-error for="chapterText" />
+                                    </div>
                                 </div>
-                            @endif
-                            @if ($contentType == 'image')
+
+
+                                {{-- * Parte encargada de crear contenido del capítulo cuando es texto --}}
+                            </div>
+                            <div x-show="data.type.content == 'image'">
                                 <div>
                                     imágenes
                                     <x-input-error for="chapterImages" />
 
                                     {{-- * Parte encargada de crear contenido del capítulo cuando son imágenes --}}
                                 </div>
-                            @endif
+                            </div>
                         </div>
                     </div>
                 @endslot
@@ -91,6 +99,7 @@
 
             @pushOnce('customScripts')
                 <script src="{{ asset('js/validator.js') }}"></script>
+                <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
             @endPushOnce
             <script>
                 function form() {
@@ -126,14 +135,14 @@
                                 error: '',
                             },
                             type: {
-                                content: @entangle('contentType'),
+                                content: @entangle('contentType').defer,
                                 rules: {
                                     require: true,
                                 },
                                 error: '',
                             },
                             text: {
-                                content: @entangle('chapterText'),
+                                content: @entangle('chapterText').defer,
                                 rules: {
                                     require: true,
                                 },
@@ -151,6 +160,41 @@
                             this.$watch('data.type', value => {
                                 this.validType = validation(value, 'content type');
                             })
+                            this.$watch('data.text', value => {
+                                this.validContent = validation(value, 'text');
+                            })
+
+                            if (document.querySelector('#ckcontent')) {
+                                ClassicEditor.create(document.querySelector('#ckcontent'), {
+                                        toolbar: {
+                                            items: [
+                                                'bold', 'italic', '|',
+                                                'heading', '|',
+                                                'bulletedList', 'numberedList', '|',
+                                                'blockQuote', '|',
+                                                'undo', 'redo'
+                                            ],
+                                            shouldNotGroupWhenFull: false,
+                                        },
+                                    })
+                                    .then(editor => {
+                                        editor.model.document.on('change:data', () => {
+                                            this.data.text.content = editor
+                                                .getData()
+                                        });
+                                        let interiorToolbar = document.querySelector(
+                                            '.ck-sticky-panel__content');
+                                        interiorToolbar.style.top = '4rem';
+
+                                        let outdoorToolbar = document.querySelector(
+                                            '.ck-editor__top');
+                                        outdoorToolbar.style.position = 'sticky';
+                                        outdoorToolbar.style.top = '4rem';
+                                    })
+                                    .catch(error => {
+                                        console.error(error);
+                                    });
+                            }
                         },
 
                         validateAllFields() {
