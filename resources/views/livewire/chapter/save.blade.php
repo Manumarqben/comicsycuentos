@@ -69,7 +69,7 @@
                                         </textarea>
                                         <x-input-error-client
                                             message="data.text.error"
-                                            x-show="!validContent" />
+                                            x-show="!validText" />
                                         <x-input-error for="chapterText" />
                                     </div>
                                 </div>
@@ -79,9 +79,28 @@
                             </div>
                             <div x-show="data.type.content == 'image'">
                                 <div>
-                                    imágenes
-                                    <x-input-error for="chapterImages" />
-
+                                    <x-input type="file"
+                                        wire:model="chapterImages" multiple />
+                                    <span wire:loading>Uploading...</span>
+                                    <x-input-error for="chapterImages.*" />
+                                    @if (!$chapter->images->isEmpty() && $chapterImages == [])
+                                        <div class="flex gap-1">
+                                            @foreach ($chapter->images as $image)
+                                                <img
+                                                    src="{{ Storage::url($image->url) }}"
+                                                    class="w-64 sm:w-72">
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    @if ($chapterImages != [])
+                                        <p>images Preview:</p>
+                                        <div class="flex gap-1">
+                                            @foreach ($chapterImages as $image)
+                                                <img src="{{ $image->temporaryUrl() }}"
+                                                    class="w-64 sm:w-72">
+                                            @endforeach
+                                        </div>
+                                    @endif
                                     {{-- * Parte encargada de crear contenido del capítulo cuando son imágenes --}}
                                 </div>
                             </div>
@@ -107,13 +126,14 @@
                         validNumber: true,
                         validTitle: true,
                         validType: true,
-                        validContent: true,
+                        validText: true,
+                        validImages: @entangle('validImages'),
 
                         get valid() {
                             return this.validNumber &&
                                 this.validTitle &&
                                 this.validType &&
-                                this.validContent;
+                                (this.validText || this.validImages);
                         },
 
                         data: {
@@ -161,7 +181,7 @@
                                 this.validType = validation(value, 'content type');
                             })
                             this.$watch('data.text', value => {
-                                this.validContent = validation(value, 'text');
+                                this.validText = validation(value, 'text');
                             })
 
                             if (document.querySelector('#ckcontent')) {
@@ -206,7 +226,6 @@
 
                         setContentType(value) {
                             this.data.type.content = value;
-                            this.validContent = true;
                             this.$refs.contentTypeServerError.classList.add(
                                 'hidden');
                         },

@@ -7,10 +7,12 @@ use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Save extends Component
 {
     use AuthorizesRequests;
+    use WithFileUploads;
 
     public Work $work;
     public Chapter $chapter;
@@ -18,6 +20,8 @@ class Save extends Component
     public $contentType;
     public $chapterText;
     public $chapterImages;
+
+    public $validImages;
 
     protected function rules()
     {
@@ -71,6 +75,7 @@ class Save extends Component
             $this->chapter = $chapter ?? new Chapter(),
             $this->chapterText = $chapter->text->content ?? '',
             $this->chapterImages = [],
+            $this->validImages = true,
         ]);
     }
 
@@ -106,7 +111,17 @@ class Save extends Component
 
     private function saveImages()
     {
-        dd('images');
+        $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
+        foreach ($this->chapterImages as $image) {
+            $order = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $path = $image->store($storage, 'public');
+
+            $this->chapter->images()->updateOrCreate([
+                'chapter_id' => $this->chapter->id,
+                'order' => $order,
+                'url' => $path,
+            ]);
+        }
     }
 
     public function render()
