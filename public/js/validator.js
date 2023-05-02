@@ -26,6 +26,14 @@ function validation(data, property = "property") {
         data.error = `The ${property} must be an integer.`;
         return false;
     }
+    if ("greaterThanOrEqual" in data.rules && !greaterThanOrEqual(data.content, data.rules.greaterThanOrEqual)) {
+        data.error = `The ${property} field must be at least ${data.rules.greaterThanOrEqual}.`;
+        return false;
+    }
+    if ("smallerThanOrEqual" in data.rules && !smallerThanOrEqual(data.content, data.rules.smallerThanOrEqual)) {
+        data.error = `The ${property} field must not be greater than ${data.rules.smallerThanOrEqual}.`;
+        return false;
+    }
     if ("max" in data.rules && !max(data.content, data.rules.max)) {
         data.error = `The ${property} must not be greater than ${data.rules.max} characters.`;
         return false;
@@ -90,4 +98,31 @@ function max(text, maxLength) {
 function min(text, minLength) {
     const regex = new RegExp(`^[\\s\\S]{${minLength},}$`);
     return regex.test(text);
+}
+
+/**
+ * Validate if the value of a text is greater than or equal to the past value.
+ * 
+ * @param {string|number} text - The text to validate.
+ * @param {number} minValue - Number to represent the minimum value allowed for the text.
+ * @returns {boolean} - True if the value of the past text is greater than or equal to the Minvalue, false otherwise.
+ */
+function greaterThanOrEqual(text, minValue) {
+    if (number(minValue)) {
+        return text >= minValue;
+    }
+    return false;
+}
+
+/**
+ * 
+ * @param {string|number} text - The text to validate.
+ * @param {number} maxValue - Number to represent the greate value allowed for the text.
+ * @returns {boolean} - True if the value of the past text is minimum than or equal to the Minvalue, false otherwise.
+ */
+function smallerThanOrEqual(text, maxValue) {
+    if (number(minValue)) {
+        return text <= minValue;
+    }
+    return false;
 }

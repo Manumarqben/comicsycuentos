@@ -1,14 +1,15 @@
 <div class="container">
     @if ($typeContent == 'text')
         <div>
-            {{ $chapter->text->content }}
+            {!! $chapter->text->content !!}
         </div>
     @endif
 
     @if ($typeContent == 'images')
         @foreach ($content as $image)
             <div class="flex justify-center pb-1">
-                <img src="{{ $image->url }}" alt="{{ $image->order }}">
+                <img src="{{ asset(Storage::url($image->url)) }}"
+                    alt="{{ $image->order }}">
             </div>
         @endforeach
     @endif
