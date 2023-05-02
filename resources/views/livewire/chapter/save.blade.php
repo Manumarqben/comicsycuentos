@@ -73,9 +73,6 @@
                                         <x-input-error for="chapterText" />
                                     </div>
                                 </div>
-
-
-                                {{-- * Parte encargada de crear contenido del capítulo cuando es texto --}}
                             </div>
                             <div x-show="data.type.content == 'image'">
                                 <div>
@@ -87,8 +84,7 @@
                                     @if (!$chapter->images->isEmpty() && $temporalImages == [])
                                         <div class="flex gap-1">
                                             @foreach ($chapter->images as $image)
-                                                <img
-                                                    src="{{ Storage::url($image->url) }}"
+                                                <img src="{{ Storage::url($image->url) }}"
                                                     class="w-64 sm:w-72">
                                             @endforeach
                                         </div>
@@ -97,7 +93,6 @@
                                         <p>images Preview:</p>
                                         <div class="flex gap-1">
                                             @foreach ($temporalImages as $image)
-
                                                 <img src="{{ $image->temporaryUrl() }}"
                                                     class="w-64 sm:w-72">
                                             @endforeach
@@ -108,8 +103,7 @@
                                     @if (!$chapter->images->isEmpty() && $chapterImages == [])
                                         <div class="flex gap-1">
                                             @foreach ($chapter->images as $image)
-                                                <img
-                                                    src="{{ Storage::url($image->url) }}"
+                                                <img src="{{ Storage::url($image->url) }}"
                                                     class="w-64 sm:w-72">
                                             @endforeach
                                         </div>
@@ -118,14 +112,13 @@
                                         <p>images Preview:</p>
                                         <div class="flex flex-wrap gap-1">
                                             @foreach ($chapterImages as $image)
-                                            <div>
-                                                <img src="{{ $image->temporaryUrl() }}"
-                                                    class="w-64 sm:w-72">
-                                            </div>
+                                                <div>
+                                                    <img src="{{ $image->temporaryUrl() }}"
+                                                        class="w-64 sm:w-72">
+                                                </div>
                                             @endforeach
                                         </div>
                                     @endif
-                                    {{-- * Parte encargada de crear contenido del capítulo cuando son imágenes --}}
                                 </div>
                             </div>
                         </div>

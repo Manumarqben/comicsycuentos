@@ -54,21 +54,6 @@ class Save extends Component
         ];
     }
 
-    public function updatedTemporalImages()
-    {
-        $this->validate([
-            'temporalImages.*' => [
-                'image',
-                'max:1024',
-            ],
-        ]);
-
-        foreach ($this->temporalImages as $image) {
-            $key = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
-            $this->chapterImages[$key] = $image;
-        }
-    }
-
     protected $messages = [
         'contentType.required' => 'You need to select a valid content type.',
     ];
@@ -80,6 +65,7 @@ class Save extends Component
         if ($chapterNumber) {
             $chapter = $this->work->chapters()->where('number', $chapterNumber)->firstOrFail();
 
+            // TODO: añadir campo tipo al capítulo.
             if ($chapter->text) {
                 $this->contentType = 'text';
             } elseif ($chapter->images) {
@@ -93,6 +79,24 @@ class Save extends Component
             $this->chapterImages = [],
             $this->validImages = true,
         ]);
+    }
+
+    public function updatedTemporalImages()
+    {
+        $this->validate([
+            'temporalImages.*' => [
+                'image',
+                'max:1024',
+            ],
+        ]);
+        foreach ($this->temporalImages as $image) {
+            $key = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            if (ctype_digit($key)) {
+                $this->chapterImages[$key] = $image;
+            } else {
+                $this->addError('temporalImages.*', 'The name of an image does not correspond to a correct page number.');
+            }
+        }
     }
 
     public function submit()
