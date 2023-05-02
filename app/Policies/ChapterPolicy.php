@@ -46,9 +46,11 @@ class ChapterPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Chapter $chapter): bool
+    public function delete(User $user, Chapter $chapter): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->author->id == $chapter->work->author_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**

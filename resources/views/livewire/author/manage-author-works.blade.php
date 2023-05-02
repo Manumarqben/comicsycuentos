@@ -57,7 +57,8 @@
                                                 class="button-secondary">
                                                 <x-icon.edit />
                                             </a>
-                                            <x-danger-button wire:click="">
+                                            <x-danger-button
+                                                wire:click="$emitTo('chapter.delete-chapter-modal', 'open', [{{ $chapter->id }}])">
                                                 <x-icon.trash />
                                             </x-danger-button>
                                         </div>
@@ -75,4 +76,5 @@
         </x-slot>
     </x-action-section>
     @livewire('work.delete-work-modal')
+    @livewire('chapter.delete-chapter-modal')
 </div>
