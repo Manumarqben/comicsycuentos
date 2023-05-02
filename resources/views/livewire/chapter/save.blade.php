@@ -78,7 +78,8 @@
                                 <div>
                                     <x-input type="file"
                                         wire:model="temporalImages" multiple />
-                                    <span wire:loading>Uploading...</span>
+                                    <span wire:loading
+                                        wire:tarjet="temporalImages">Uploading...</span>
                                     <x-input-error for="temporalImages.*" />
                                     <p class="h2">temporal</p>
                                     @if (!$chapter->images->isEmpty() && $temporalImages == [])
@@ -109,12 +110,21 @@
                                         </div>
                                     @endif
                                     @if ($chapterImages != [])
-                                        <p>images Preview:</p>
+                                        <div>
+                                            images Preview:
+                                            <span wire:loading
+                                                wire:tarjet="deleteImage">Updating...</span>
+                                        </div>
                                         <div class="flex flex-wrap gap-1">
-                                            @foreach ($chapterImages as $image)
-                                                <div>
+                                            @foreach ($chapterImages as $key => $image)
+                                                <div
+                                                    class="relative w-64 sm:w-72 max-h-96">
                                                     <img src="{{ $image->temporaryUrl() }}"
-                                                        class="w-64 sm:w-72">
+                                                        class="max-h-96">
+                                                    <x-danger-button class="absolute top-1 right-1 z-10"
+                                                        wire:click="deleteImage({{ $key }})">
+                                                        X
+                                                    </x-danger-button>
                                                 </div>
                                             @endforeach
                                         </div>

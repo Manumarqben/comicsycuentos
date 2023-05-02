@@ -143,6 +143,11 @@ class Save extends Component
         }
     }
 
+    public function deleteImage($key)
+    {
+        unset($this->chapterImages[$key]);
+    }
+
     public function render()
     {
         $this->authorize('create', $this->work);
