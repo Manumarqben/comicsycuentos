@@ -80,9 +80,31 @@
                             <div x-show="data.type.content == 'image'">
                                 <div>
                                     <x-input type="file"
-                                        wire:model="chapterImages" multiple />
+                                        wire:model="temporalImages" multiple />
                                     <span wire:loading>Uploading...</span>
-                                    <x-input-error for="chapterImages.*" />
+                                    <x-input-error for="temporalImages.*" />
+                                    <p class="h2">temporal</p>
+                                    @if (!$chapter->images->isEmpty() && $temporalImages == [])
+                                        <div class="flex gap-1">
+                                            @foreach ($chapter->images as $image)
+                                                <img
+                                                    src="{{ Storage::url($image->url) }}"
+                                                    class="w-64 sm:w-72">
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    @if ($temporalImages != [])
+                                        <p>images Preview:</p>
+                                        <div class="flex gap-1">
+                                            @foreach ($temporalImages as $image)
+
+                                                <img src="{{ $image->temporaryUrl() }}"
+                                                    class="w-64 sm:w-72">
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    <p class="h2">chapter</p>
+
                                     @if (!$chapter->images->isEmpty() && $chapterImages == [])
                                         <div class="flex gap-1">
                                             @foreach ($chapter->images as $image)
@@ -94,10 +116,12 @@
                                     @endif
                                     @if ($chapterImages != [])
                                         <p>images Preview:</p>
-                                        <div class="flex gap-1">
+                                        <div class="flex flex-wrap gap-1">
                                             @foreach ($chapterImages as $image)
+                                            <div>
                                                 <img src="{{ $image->temporaryUrl() }}"
                                                     class="w-64 sm:w-72">
+                                            </div>
                                             @endforeach
                                         </div>
                                     @endif

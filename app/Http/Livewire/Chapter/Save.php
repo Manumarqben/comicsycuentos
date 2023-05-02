@@ -20,6 +20,7 @@ class Save extends Component
     public $contentType;
     public $chapterText;
     public $chapterImages;
+    public $temporalImages;
 
     public $validImages;
 
@@ -51,6 +52,21 @@ class Save extends Component
                 'required',
             ],
         ];
+    }
+
+    public function updatedTemporalImages()
+    {
+        $this->validate([
+            'temporalImages.*' => [
+                'image',
+                'max:1024',
+            ],
+        ]);
+
+        foreach ($this->temporalImages as $image) {
+            $key = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+            $this->chapterImages[$key] = $image;
+        }
     }
 
     protected $messages = [
@@ -112,13 +128,12 @@ class Save extends Component
     private function saveImages()
     {
         $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
-        foreach ($this->chapterImages as $image) {
-            $order = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+        foreach ($this->chapterImages as $key => $image) {
             $path = $image->store($storage, 'public');
 
             $this->chapter->images()->updateOrCreate([
                 'chapter_id' => $this->chapter->id,
-                'order' => $order,
+                'order' => $key,
                 'url' => $path,
             ]);
         }
