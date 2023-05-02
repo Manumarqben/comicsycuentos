@@ -118,12 +118,12 @@
                                         <div class="flex flex-wrap gap-1">
                                             @foreach ($chapterImages as $key => $image)
                                                 <div
-                                                    class="relative w-64 sm:w-72 max-h-96">
+                                                    class="relative w-64 sm:w-72">
                                                     <img src="{{ $image->temporaryUrl() }}"
                                                         class="max-h-96">
                                                     <x-danger-button class="absolute top-1 right-1 z-10"
                                                         wire:click="deleteImage({{ $key }})">
-                                                        X
+                                                        <x-icon.x-mark />
                                                     </x-danger-button>
                                                 </div>
                                             @endforeach
