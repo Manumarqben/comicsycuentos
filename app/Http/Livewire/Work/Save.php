@@ -123,6 +123,7 @@ class Save extends Component
 
         if ($this->work->created_at == $this->work->updated_at) {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
+            // TODO: abrir modal preguntando si quire crear un capítulo para la obra capítulo de la obra.
         } else {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
         }
