@@ -28,7 +28,15 @@ class DeleteChapterModal extends Component
     {
         $this->authorize('delete', $this->chapter);
 
+        $chapterNumberThatWillBeDeleted = $this->chapter->number;
+        $work_id = $this->chapter->work_id;
+
         $this->chapter->delete();
+
+        $chapters = Chapter::where('work_id', $work_id)
+            ->where('number', '>', $chapterNumberThatWillBeDeleted);
+
+        $chapters->decrement('number', 1);
 
         $this->emit('refresh-manege-author-works');
         $this->dispatchBrowserEvent('alert', ['message' => 'Chapter deleted successfully']);

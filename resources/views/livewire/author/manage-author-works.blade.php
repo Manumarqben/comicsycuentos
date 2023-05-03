@@ -16,6 +16,7 @@
                 <div
                     class="w-full flex flex-col max-h-[500px] overflow-y-auto mt-4">
                     @foreach ($author->works->sortBy('title') as $work)
+                        {{-- TODO: crear componente para manejo de obra --}}
                         <div id="{{ 'work-' . $work->id }}"
                             x-data="{ open: false }">
                             <div
@@ -42,7 +43,7 @@
                                 </div>
                             </div>
                             <div class="px-10 py-4" x-show="open">
-                                @forelse ($work->chapters->reverse() as $chapter)
+                                @forelse ($work->chapters->sortBy('number')->reverse() as $chapter)
                                     <div
                                         class="flex flex-col sm:flex-row justify-center rounded-lg hover:drop-shadow-xl">
                                         <div
