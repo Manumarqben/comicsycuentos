@@ -16,6 +16,7 @@ class Chapter extends Model
     protected $fillable = [
         'number',
         'title',
+        'type',
         'work_id',
     ];
 

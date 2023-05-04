@@ -44,6 +44,7 @@ class Save extends Component
             ],
             'contentType' => [
                 'required',
+                'in:text,image',
             ],
         ];
     }
@@ -58,19 +59,13 @@ class Save extends Component
 
         if ($chapterId) {
             $chapter = $this->work->chapters()->where('id', $chapterId)->firstOrFail();
-
-            // TODO: añadir campo tipo al capítulo.
-            if ($chapter->text) {
-                $this->contentType = 'text';
-            } elseif ($chapter->images) {
-                $this->contentType = 'image';
-            }
         }
 
         $this->fill([
             $this->chapterImages = isset($chapter) ? $chapter->images->pluck('url', 'order')->toArray() : [],
             $this->chapterText = $chapter->text->content ?? '',
             $this->chapter = $chapter ?? new Chapter(),
+            $this->contentType = isset($chapter) ? $chapter->type : '',
         ]);
     }
 
@@ -94,10 +89,15 @@ class Save extends Component
 
     public function submit()
     {
-        $this->authorize('create', $this->chapter);
+        if ($this->chapter->id) {
+            $this->authorize('update', $this->chapter);
+        } else {
+            $this->chapter->work_id = $this->work->id;
+            $this->authorize('create', $this->chapter);
+        }
 
         $this->chapter->title = trim($this->chapter->title);
-        $this->chapter->work_id = $this->work->id;
+        $this->chapter->type = $this->contentType;
 
         $this->validate();
 

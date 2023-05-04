@@ -31,6 +31,7 @@ class ChapterFactory extends Factory
         return [
             'number' => $this->faker->unique()->randomNumber(),
             'title' => $this->faker->sentence(),
+            'type' => $this->faker->randomElement(['text', 'image']),
             'work_id' => Work::inRandomOrder()->first()->id,
         ];
     }
@@ -45,7 +46,7 @@ class ChapterFactory extends Factory
                 $user->votedChapters()->attach([$chapter->id => ['like' => $vote]]);
             }
         })->afterCreating(function (Chapter $chapter) {
-            if (rand(0, 1)) {
+            if ($chapter->type == 'image') {
                 $order = 1;
                 ChapterImage::factory(rand(1, 5))->state(function () use (&$order) {
                     return [
@@ -54,7 +55,7 @@ class ChapterFactory extends Factory
                 })->create([
                     'chapter_id' => $chapter->id,
                 ]);
-            } else {
+            } elseif ($chapter->type == 'text') {
                 ChapterText::factory()->create([
                     'chapter_id' => $chapter->id,
                 ]);
