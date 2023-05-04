@@ -25,5 +25,5 @@ Route::group([
   ]
 ], function () {
   Route::get('/works/work/{workSlug}/chapter/create', ChapterSave::class)->name('chapter.create');
-  Route::get('/works/work/{workSlug}/chapter-{chapterNumber}/update', ChapterSave::class)->name('chapter.update');
+  Route::get('/works/work/{workSlug}/chapter-{chapterId}/update', ChapterSave::class)->name('chapter.update');
 });

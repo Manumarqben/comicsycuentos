@@ -22,8 +22,6 @@ class Save extends Component
     public $chapterImages;
     public $temporalImages;
 
-    public $validImages;
-
     protected function rules()
     {
         return  $rules = [
@@ -44,10 +42,6 @@ class Save extends Component
             'chapterImages' => [
                 'required_if:contentType,image',
             ],
-            'chapterImages.*' => [
-                'image',
-                'max:1024',
-            ],
             'contentType' => [
                 'required',
             ],
@@ -58,12 +52,12 @@ class Save extends Component
         'contentType.required' => 'You need to select a valid content type.',
     ];
 
-    public function mount($workSlug, $chapterNumber = null)
+    public function mount($workSlug, $chapterId = null)
     {
         $this->work = Work::where('slug', $workSlug)->firstOrFail();
 
-        if ($chapterNumber) {
-            $chapter = $this->work->chapters()->where('number', $chapterNumber)->firstOrFail();
+        if ($chapterId) {
+            $chapter = $this->work->chapters()->where('id', $chapterId)->firstOrFail();
 
             // TODO: añadir campo tipo al capítulo.
             if ($chapter->text) {
@@ -74,10 +68,9 @@ class Save extends Component
         }
 
         $this->fill([
-            $this->chapter = $chapter ?? new Chapter(),
+            $this->chapterImages = isset($chapter) ? $chapter->images->pluck('url', 'order')->toArray() : [],
             $this->chapterText = $chapter->text->content ?? '',
-            $this->chapterImages = [],
-            $this->validImages = true,
+            $this->chapter = $chapter ?? new Chapter(),
         ]);
     }
 
@@ -101,10 +94,10 @@ class Save extends Component
 
     public function submit()
     {
+        $this->authorize('create', $this->chapter);
+
         $this->chapter->title = trim($this->chapter->title);
         $this->chapter->work_id = $this->work->id;
-
-        $this->authorize('create', $this->chapter);
 
         $this->validate();
 
@@ -133,13 +126,20 @@ class Save extends Component
     {
         $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
         foreach ($this->chapterImages as $key => $image) {
+            if (is_string($image)) {
+                continue;
+            }
             $path = $image->store($storage, 'public');
 
-            $this->chapter->images()->updateOrCreate([
-                'chapter_id' => $this->chapter->id,
-                'order' => $key,
-                'url' => $path,
-            ]);
+            $this->chapter->images()->updateOrCreate(
+                [
+                    'chapter_id' => $this->chapter->id,
+                    'order' => $key,
+                ],
+                [
+                    'url' => $path,
+                ]
+            );
         }
     }
 

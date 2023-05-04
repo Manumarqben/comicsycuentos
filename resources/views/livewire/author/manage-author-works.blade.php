@@ -54,7 +54,7 @@
                                         </div>
                                         <div
                                             class="flex flex-row justify-center">
-                                            <a href=""
+                                            <a href="{{ route('chapter.update', ['workSlug' => $work->slug, 'chapterId' => $chapter->id]) }}"
                                                 class="button-secondary">
                                                 <x-icon.edit />
                                             </a>
