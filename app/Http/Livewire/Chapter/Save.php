@@ -99,7 +99,7 @@ class Save extends Component
             if ($this->chapter->type != $this->contentType) {
                 if ($this->chapter->type == 'text') {
                     $this->chapter->text()->delete();
-                } elseif ($this->chapter->type == 'image'){
+                } elseif ($this->chapter->type == 'image') {
                     $this->chapter->images()->delete();
                 }
             }
@@ -120,7 +120,11 @@ class Save extends Component
             $this->saveImages();
         }
 
-        $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
+        if ($this->chapter->created_at == $this->chapter->updated_at) {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
+        } else {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter updated successfully']);
+        }
     }
 
     private function saveText()
@@ -162,9 +166,8 @@ class Save extends Component
     {
         if (is_string($this->chapterImages[$key])) {
             Storage::delete($this->chapterImages[$key]);
-        } else {
-            unset($this->chapterImages[$key]);
         }
+        unset($this->chapterImages[$key]);
     }
 
     public function render()
