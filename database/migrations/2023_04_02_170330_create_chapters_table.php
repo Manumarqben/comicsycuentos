@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('number');
             $table->string('title', 255);
+            $table->string('type', 50);
             $table->foreignId('work_id')->constrained()->cascadeOnDelete();
             $table->unique(['number', 'work_id']);
             $table->timestamps();

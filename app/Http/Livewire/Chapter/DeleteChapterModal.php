@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chapter;
 
 use App\Models\Chapter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class DeleteChapterModal extends Component
@@ -30,6 +31,8 @@ class DeleteChapterModal extends Component
 
         $chapterNumberThatWillBeDeleted = $this->chapter->number;
         $work_id = $this->chapter->work_id;
+
+        $prueba = Storage::deleteDirectory('images/' . $this->chapter->work->id . '/' . $this->chapter->id);
 
         $this->chapter->delete();
 

@@ -38,9 +38,11 @@ class ChapterPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Chapter $chapter): bool
+    public function update(User $user, Chapter $chapter): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->author->id == $chapter->work->author_id
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**

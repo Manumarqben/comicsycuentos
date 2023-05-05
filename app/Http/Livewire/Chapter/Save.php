@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Chapter;
 use App\Models\Chapter;
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -21,8 +22,6 @@ class Save extends Component
     public $chapterText;
     public $chapterImages;
     public $temporalImages;
-
-    public $validImages;
 
     protected function rules()
     {
@@ -44,12 +43,9 @@ class Save extends Component
             'chapterImages' => [
                 'required_if:contentType,image',
             ],
-            'chapterImages.*' => [
-                'image',
-                'max:1024',
-            ],
             'contentType' => [
                 'required',
+                'in:text,image',
             ],
         ];
     }
@@ -58,26 +54,19 @@ class Save extends Component
         'contentType.required' => 'You need to select a valid content type.',
     ];
 
-    public function mount($workSlug, $chapterNumber = null)
+    public function mount($workSlug, $chapterId = null)
     {
         $this->work = Work::where('slug', $workSlug)->firstOrFail();
 
-        if ($chapterNumber) {
-            $chapter = $this->work->chapters()->where('number', $chapterNumber)->firstOrFail();
-
-            // TODO: añadir campo tipo al capítulo.
-            if ($chapter->text) {
-                $this->contentType = 'text';
-            } elseif ($chapter->images) {
-                $this->contentType = 'image';
-            }
+        if ($chapterId) {
+            $chapter = $this->work->chapters()->where('id', $chapterId)->firstOrFail();
         }
 
         $this->fill([
-            $this->chapter = $chapter ?? new Chapter(),
+            $this->chapterImages = isset($chapter) ? $chapter->images->pluck('url', 'order')->toArray() : [],
             $this->chapterText = $chapter->text->content ?? '',
-            $this->chapterImages = [],
-            $this->validImages = true,
+            $this->chapter = $chapter ?? new Chapter(),
+            $this->contentType = isset($chapter) ? $chapter->type : '',
         ]);
     }
 
@@ -101,10 +90,23 @@ class Save extends Component
 
     public function submit()
     {
-        $this->chapter->title = trim($this->chapter->title);
-        $this->chapter->work_id = $this->work->id;
+        if ($this->chapter->id) {
+            $this->authorize('update', $this->chapter);
+        } else {
+            $this->chapter->work_id = $this->work->id;
+            $this->authorize('create', $this->chapter);
 
-        $this->authorize('create', $this->chapter);
+            if ($this->chapter->type != $this->contentType) {
+                if ($this->chapter->type == 'text') {
+                    $this->chapter->text()->delete();
+                } elseif ($this->chapter->type == 'image') {
+                    $this->chapter->images()->delete();
+                }
+            }
+        }
+
+        $this->chapter->title = trim($this->chapter->title);
+        $this->chapter->type = $this->contentType;
 
         $this->validate();
 
@@ -118,7 +120,11 @@ class Save extends Component
             $this->saveImages();
         }
 
-        $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
+        if ($this->chapter->created_at == $this->chapter->updated_at) {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
+        } else {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter updated successfully']);
+        }
     }
 
     private function saveText()
@@ -133,18 +139,34 @@ class Save extends Component
     {
         $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
         foreach ($this->chapterImages as $key => $image) {
+            if (is_string($image)) {
+                continue;
+            }
+
+            $previousImage = $this->chapter->images()->where('order', $key)->first();
+            if ($previousImage) {
+                Storage::delete($previousImage->url);
+            }
+
             $path = $image->store($storage, 'public');
 
-            $this->chapter->images()->updateOrCreate([
-                'chapter_id' => $this->chapter->id,
-                'order' => $key,
-                'url' => $path,
-            ]);
+            $this->chapter->images()->updateOrCreate(
+                [
+                    'chapter_id' => $this->chapter->id,
+                    'order' => $key,
+                ],
+                [
+                    'url' => $path,
+                ]
+            );
         }
     }
 
     public function deleteImage($key)
     {
+        if (is_string($this->chapterImages[$key])) {
+            Storage::delete($this->chapterImages[$key]);
+        }
         unset($this->chapterImages[$key]);
     }
 

@@ -117,11 +117,11 @@
                                         </div>
                                         <div class="flex flex-wrap gap-1">
                                             @foreach ($chapterImages as $key => $image)
-                                                <div
-                                                    class="relative w-64 sm:w-72">
-                                                    <img src="{{ $image->temporaryUrl() }}"
+                                                <div class="relative w-64 sm:w-72">
+                                                    <img src="{{ is_string($image) ? Storage::url($image) : $image->temporaryUrl() }}"
                                                         class="max-h-96">
-                                                    <x-danger-button class="absolute top-1 right-1 z-10"
+                                                    <x-danger-button
+                                                        class="absolute top-1 right-1 z-10"
                                                         wire:click="deleteImage({{ $key }})">
                                                         <x-icon.x-mark />
                                                     </x-danger-button>
@@ -154,13 +154,12 @@
                         validTitle: true,
                         validType: true,
                         validText: true,
-                        validImages: @entangle('validImages'),
 
                         get valid() {
                             return this.validNumber &&
                                 this.validTitle &&
                                 this.validType &&
-                                (this.validText || this.validImages);
+                                this.validText;
                         },
 
                         data: {
