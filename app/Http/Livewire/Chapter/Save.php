@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Chapter;
 use App\Models\Chapter;
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -94,6 +95,14 @@ class Save extends Component
         } else {
             $this->chapter->work_id = $this->work->id;
             $this->authorize('create', $this->chapter);
+
+            if ($this->chapter->type != $this->contentType) {
+                if ($this->chapter->type == 'text') {
+                    $this->chapter->text()->delete();
+                } elseif ($this->chapter->type == 'image'){
+                    $this->chapter->images()->delete();
+                }
+            }
         }
 
         $this->chapter->title = trim($this->chapter->title);
@@ -129,6 +138,12 @@ class Save extends Component
             if (is_string($image)) {
                 continue;
             }
+
+            $previousImage = $this->chapter->images()->where('order', $key)->first();
+            if ($previousImage) {
+                Storage::delete($previousImage->url);
+            }
+
             $path = $image->store($storage, 'public');
 
             $this->chapter->images()->updateOrCreate(
@@ -145,7 +160,11 @@ class Save extends Component
 
     public function deleteImage($key)
     {
-        unset($this->chapterImages[$key]);
+        if (is_string($this->chapterImages[$key])) {
+            Storage::delete($this->chapterImages[$key]);
+        } else {
+            unset($this->chapterImages[$key]);
+        }
     }
 
     public function render()
