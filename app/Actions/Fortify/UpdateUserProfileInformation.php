@@ -19,10 +19,14 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
-            'birthdate' => ['nullable', 'date', 'before_or_equal:today'],
+            'birthdate' => ['nullable', 'date', 'date_format:Y-m-d', 'before_or_equal:today'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
+
+        if ($input['birthdate'] == "") {
+            $input['birthdate'] = null;
+        }
 
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
