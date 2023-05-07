@@ -10,13 +10,23 @@
 
         <x-slot name="form">
             <div class="col-span-6 sm:col-span-4">
-                <x-label for="current_password"
-                    value="{{ __('Current Password') }}" />
-                <x-input id="current_password" type="password"
-                    class="mt-1 block w-full {{ $errors->has('password') ? 'is-invalid' : '' }}"
-                    wire:model.defer="state.current_password"
-                    autocomplete="current-password" />
-                <x-input-error for="current_password" class="mt-2" />
+                <div>
+                    <x-label for="current_password"
+                        value="{{ __('Current Password') }}" />
+                    <x-input id="current_password" type="password"
+                        class="mt-1 block w-full {{ $errors->has('password') ? 'is-invalid' : '' }}"
+                        wire:model.defer="state.current_password"
+                        autocomplete="current-password"
+                        x-model.debounce.500ms="data.current.content"
+                        @input="$refs.currentServerError.classList.add('hidden')" />
+                </div>
+                <div>
+                    <x-input-error-client message="data.current.error"
+                        x-show="!validCurrent" />
+                    <div x-ref="currentServerError">
+                        <x-input-error for="current_password" class="mt-2" />
+                    </div>
+                </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
@@ -61,7 +71,8 @@
                 {{ __('Saved.') }}
             </x-action-message>
 
-            <x-button>
+            <x-button wire:loading.attr="disabled" @click.prevent="submit"
+                x-bind:disabled="!valid">
                 {{ __('Save') }}
             </x-button>
         </x-slot>
@@ -72,15 +83,24 @@
     <script>
         function passwordForm() {
             return {
+                validCurrent: true,
                 validPassword: true,
                 validPasswordConfirmation: true,
 
                 get valid() {
-                    return this.validPassword &&
+                    return this.validCurrent &&
+                        this.validPassword &&
                         this.validPasswordConfirmation;
                 },
 
                 data: {
+                    current: {
+                        content: '',
+                        rules: {
+                            require: true,
+                        },
+                        error: '',
+                    },
                     password: {
                         content: '',
                         rules: {
@@ -108,6 +128,11 @@
                 },
 
                 init() {
+                    this.$watch('data.current', value => {
+                        this.validCurrent = validation(
+                            value, 'current password'
+                        );
+                    })
                     this.$watch('data.password', value => {
                         this.validPassword = validation(value, 'password');
                         if (this.data.passwordConfirmation.content != '') {
@@ -124,6 +149,9 @@
                 },
 
                 validateAllFields() {
+                    this.validCurrent = validation(
+                        this.data.current, 'current password'
+                    );
                     this.validPassword = validation(this.data.password, 'password');
                     this.validPasswordConfirmation = validation(
                         this.data.passwordConfirmation, 'password'
@@ -134,6 +162,8 @@
                     this.validateAllFields();
                     if (this.valid) {
                         this.$wire.updatePassword().then(() => {
+                            this.$refs.currentServerError.classList
+                                .remove('hidden');
                             this.$refs.passwordServerError.classList
                                 .remove('hidden');
                             this.$refs.passwordConfirmationServerError
