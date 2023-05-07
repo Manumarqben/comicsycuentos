@@ -38,6 +38,8 @@
         this.validateAllFields();
         if (this.valid) {
             this.$wire.submit().then(() => {
+                this.$refs.aliasServerError.classList
+                    .remove('hidden');
                 this.focusInError();
             });
         }
