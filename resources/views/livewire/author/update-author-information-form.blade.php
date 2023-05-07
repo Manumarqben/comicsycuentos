@@ -128,7 +128,7 @@
                 submit() {
                     this.validateAllFields();
                     if (this.valid) {
-                        this.$wire.submit().then(() => {
+                        this.$wire.updateAuthorInformation().then(() => {
                             this.$refs.aliasServerError.classList.remove(
                                 'hidden');
                             this.$refs.biographyServerError.classList
