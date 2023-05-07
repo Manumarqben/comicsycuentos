@@ -1,4 +1,4 @@
-<div x-data="form()" id="updateProfileInformationForm">
+<div x-data="informationForm()" id="updateProfileInformationForm">
     <x-form-section submit="updateProfileInformation">
         <x-slot name="title">
             {{ __('Profile Information') }}
@@ -150,7 +150,7 @@
         <script src="{{ asset('js/validator.js') }}"></script>
     @endPushOnce
     <script>
-        function form() {
+        function informationForm() {
             return {
                 validName: true,
                 validEmail: true,
@@ -198,7 +198,6 @@
                 },
 
                 init() {
-                    this.focusInError();
                     this.$watch('data.name', value => {
                         this.validName = validation(value, 'name');
                     })
@@ -228,6 +227,7 @@
                                 'hidden');
                             this.$refs.birthdateServerError.classList
                                 .remove('hidden');
+                            this.focusInError();
                         });
                     }
                 },
