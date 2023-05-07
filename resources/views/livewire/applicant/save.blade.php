@@ -1,4 +1,10 @@
 <div x-data="{
+    validAlias: true,
+
+    get valid() {
+        return this.validAlias;
+    },
+
     data: {
         alias: {
             content: @entangle('applicant.alias').defer,
@@ -10,15 +16,31 @@
         },
     },
 
+    focusInError() {
+        let firstError = document.querySelector('.is-invalid');
+        if (firstError) {
+            firstError.focus();
+            firstError.scrollIntoView(false);
+        }
+    },
+
     init() {
         this.$watch('data.alias', value => {
-            validation(value, 'alias')
+            this.validAlias = validation(value, 'alias');
         })
     },
 
-    get valid() {
-        return this.data.alias.content == '' ||
-            validation(this.data.alias);
+    validateAllFields() {
+        this.validAlias = validation(this.data.alias, 'alias');
+    },
+
+    submit() {
+        this.validateAllFields();
+        if (this.valid) {
+            this.$wire.submit().then(() => {
+                this.focusInError();
+            });
+        }
     },
 }">
     <x-button wire:click.prevent="$toggle('show')">Be author</x-button>
@@ -30,19 +52,24 @@
             <x-form submit="submit">
                 @slot('form')
                     <div class="col-span-6">
-                        <x-input-error for="applicant.alias" />
-                        <x-input-error for="applicant.user_id" />
-                        @if (!$errors->has('applicant.alias'))
-                            <x-input-error for="applicant.slug" />
-                        @endif
-                    </div>
-                    <div class="col-span-6">
-                        <x-label for="alias">Alias</x-label>
-                        <x-input id="alias" type="text" name="alias"
-                            :value="old('applicant.alias')" class="block w-full"
-                            x-model.debounce.500ms="data.alias.content" />
-                        <x-input-error-client message="data.alias.error"
-                            x-show="!valid" />
+                        <div>
+                            <x-label for="alias">Alias</x-label>
+                            <x-input id="alias" type="text" name="alias"
+                                class="block w-full {{ $errors->any() ? 'is-invalid' : '' }}"
+                                x-model.debounce.500ms="data.alias.content"
+                                @input="$refs.aliasServerError.classList.add('hidden')" />
+                        </div>
+                        <div>
+                            <x-input-error-client message="data.alias.error"
+                                x-show="!validAlias" />
+                            <div x-ref="aliasServerError">
+                                <x-input-error for="applicant.alias" />
+                                <x-input-error for="applicant.user_id" />
+                                @if (!$errors->has('applicant.alias'))
+                                    <x-input-error for="applicant.slug" />
+                                @endif
+                            </div>
+                        </div>
                     </div>
                 @endslot
             </x-form>
@@ -55,7 +82,7 @@
                 {{ __('Cancel') }}
             </x-secondary-button>
             {{-- TODO: no cambia de aspecto cuando esta disabled --}}
-            <x-button wire:click="submit" wire:loading.attr="disabled"
+            <x-button @click.prevent="submit" wire:loading.attr="disabled"
                 x-bind:disabled="!valid">
                 {{ __('Submit') }}
             </x-button>
