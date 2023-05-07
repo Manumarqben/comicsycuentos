@@ -12,7 +12,6 @@
                         <x-label for="name" value="{{ __('Name') }}" />
                         <x-input id="name"
                             class="block mt-1 w-full {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                            x-bind:class="{ 'is-invalid': !validName }"
                             type="text" name="name" :value="old('name')"
                             required autofocus autocomplete="name"
                             x-model.debounce.500ms="data.name.content"
