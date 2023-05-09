@@ -6,6 +6,7 @@ use App\Models\Age;
 use App\Models\State;
 use App\Models\Type;
 use App\Models\Work;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -91,7 +92,9 @@ class Save extends Component
     public function getFrontPagePathProperty()
     {
         if ($this->frontPage) {
-            return $this->frontPage->temporaryUrl();
+            try {
+                return $this->frontPage->temporaryUrl();
+            } catch (Exception $e) {}
         }
 
         if ($this->work->front_page) {

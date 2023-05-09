@@ -13,7 +13,8 @@
                             <div>
                                 <x-label for="number">{{ __('Number') }}</x-label>
                                 <x-input id="number" type="number" name="number"
-                                    :value="old('chapter.number')" class="block w-20"
+                                    :value="old('chapter.number')"
+                                    class="block w-20 {{ $errors->has('chapter.number') ? 'is-invalid' : '' }}"
                                     x-model.debounce.500ms="data.number.content"
                                     @input="$refs.numberServerError.classList.add('hidden')" />
                             </div>
@@ -21,7 +22,7 @@
                                 <x-label for="title">Title</x-label>
                                 <x-input id="title" type="text"
                                     name="title" :value="old('chapter.title')"
-                                    class="block w-full"
+                                    class="block w-full {{ $errors->has('chapter.title') ? 'is-invalid' : '' }}"
                                     x-model.debounce.500ms="data.title.content"
                                     @input="$refs.titleServerError.classList.add('hidden')" />
                             </div>
@@ -62,22 +63,27 @@
                         </div>
                         <div id="chapterContent">
                             <div x-show="data.type.content == 'text'">
-                                <div class="w-full flex justify-center" wire:ignore>
+                                <div class="w-full flex justify-center">
                                     <div class="w-full md:w-3/4">
-                                        <textarea id="ckcontent">
-                                            {!! $chapterText !!}
-                                        </textarea>
+                                        <div wire:ignore>
+                                            <textarea id="ckcontent">
+                                                {!! $chapterText !!}
+                                            </textarea>
+                                        </div>
                                         <x-input-error-client
                                             message="data.text.error"
                                             x-show="!validText" />
-                                        <x-input-error for="chapterText" />
+                                        <div x-ref="chapterTextServerError">
+                                            <x-input-error for="chapterText" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div x-show="data.type.content == 'image'">
                                 <div>
                                     <x-input type="file"
-                                        wire:model="temporalImages" multiple />
+                                        wire:model="temporalImages" multiple
+                                        class=" {{ $errors->has('temporalImages.*') || $errors->has('chapterImages') ? 'is-invalid' : '' }}" />
                                     <span wire:loading
                                         wire:tarjet="temporalImages">Uploading...</span>
                                     <x-input-error for="temporalImages.*" />
@@ -90,9 +96,10 @@
                                         </div>
                                         <div class="flex flex-wrap gap-1">
                                             @foreach ($chapterImages as $key => $image)
-                                                <div class="relative w-64 sm:w-72">
-                                                    <img src="{{ is_string($image) ? Storage::url($image) : $image->temporaryUrl() }}"
-                                                        class="max-h-96">
+                                                <div
+                                                    class="relative w-64 sm:w-72 max-h-96 overflow-y-hidden">
+                                                    <img
+                                                        src="{{ is_string($image) ? Storage::url($image) : $image->temporaryUrl() }}">
                                                     <x-danger-button
                                                         class="absolute top-1 right-1 z-10"
                                                         wire:click="deleteImage({{ $key }})">
@@ -169,6 +176,14 @@
                             },
                         },
 
+                        focusInError() {
+                            let firstError = document.querySelector('.is-invalid');
+                            if (firstError) {
+                                firstError.focus();
+                                firstError.scrollIntoView(false);
+                            }
+                        },
+
                         init() {
                             this.$watch('data.number', value => {
                                 this.validNumber = validation(value, 'number');
@@ -199,7 +214,9 @@
                                     .then(editor => {
                                         editor.model.document.on('change:data', () => {
                                             this.data.text.content = editor
-                                                .getData()
+                                                .getData();
+                                            this.$refs.chapterTextServerError
+                                                .classList.add('hidden');
                                         });
                                         let interiorToolbar = document.querySelector(
                                             '.ck-sticky-panel__content');
@@ -225,8 +242,8 @@
 
                         setContentType(value) {
                             this.data.type.content = value;
-                            this.$refs.contentTypeServerError.classList.add(
-                                'hidden');
+                            this.$refs.contentTypeServerError.classList
+                                .add('hidden');
                             this.validText = true;
                         },
 
@@ -240,6 +257,7 @@
                                         .remove('hidden');
                                     this.$refs.contentTypeServerError
                                         .classList.remove('hidden');
+                                    this.focusInError();
                                 });
                             }
                         },

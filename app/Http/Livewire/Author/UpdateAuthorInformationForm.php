@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Author;
 
 use App\Models\Author;
+use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -61,7 +62,9 @@ class UpdateAuthorInformationForm extends Component
     public function getProfilePhotoPathProperty()
     {
         if($this->photo) {
-            return $this->photo->temporaryUrl();
+            try {
+                return $this->photo->temporaryUrl();
+            } catch (Exception $e) {}
         }
 
         if ($this->author->profilePhoto) {
