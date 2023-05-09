@@ -294,4 +294,20 @@
             }
         </script>
     </div>
+    <x-dialog-modal id="redirect-after-creating-work" wire:model="show">
+        @slot('title')
+            {{ __('Add a chapter to the work') }}
+        @endslot
+        @slot('content')
+            <p>{{ __('Do you want to add the first chapter of your new work?') }}</p>
+        @endslot
+        @slot('footer')
+            <x-secondary-button wire:click="$set('show', false)">
+                {{ __('Cancel') }}
+            </x-secondary-button>
+            <x-button wire:click="redirectToCreateChapter()" wire:loading.attr="disabled">
+                {{ __('Accept') }}
+            </x-button>
+        @endslot
+    </x-dialog-modal>
 </div>
