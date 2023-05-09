@@ -23,6 +23,8 @@ class Save extends Component
     public $chapterImages;
     public $temporalImages;
 
+    public $imagesToDelete = [];
+
     protected function rules()
     {
         return  $rules = [
@@ -52,6 +54,8 @@ class Save extends Component
 
     protected $messages = [
         'contentType.required' => 'You need to select a valid content type.',
+        'temporalImages.*.image' => 'Some of the files are not images.',
+        'temporalImages.*.max' => 'The images cannot overcome 1024Mb each.',
     ];
 
     public function mount($workSlug, $chapterId = null)
@@ -90,11 +94,10 @@ class Save extends Component
 
     public function submit()
     {
+        $isUpdate = false;
+
         if ($this->chapter->id) {
             $this->authorize('update', $this->chapter);
-        } else {
-            $this->chapter->work_id = $this->work->id;
-            $this->authorize('create', $this->chapter);
 
             if ($this->chapter->type != $this->contentType) {
                 if ($this->chapter->type == 'text') {
@@ -103,6 +106,10 @@ class Save extends Component
                     $this->chapter->images()->delete();
                 }
             }
+            $isUpdate = true;
+        } else {
+            $this->chapter->work_id = $this->work->id;
+            $this->authorize('create', $this->chapter);
         }
 
         $this->chapter->title = trim($this->chapter->title);
@@ -120,10 +127,10 @@ class Save extends Component
             $this->saveImages();
         }
 
-        if ($this->chapter->created_at == $this->chapter->updated_at) {
-            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
-        } else {
+        if ($isUpdate) {
             $this->dispatchBrowserEvent('alert', ['message' => 'Chapter updated successfully']);
+        } else {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
         }
     }
 
@@ -137,6 +144,8 @@ class Save extends Component
 
     private function saveImages()
     {
+        $this->chapter->images()->whereIn('order', $this->imagesToDelete)->delete();
+
         $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
         foreach ($this->chapterImages as $key => $image) {
             if (is_string($image)) {
@@ -165,6 +174,7 @@ class Save extends Component
     public function deleteImage($key)
     {
         if (is_string($this->chapterImages[$key])) {
+            array_push($this->imagesToDelete, $key);
             Storage::delete($this->chapterImages[$key]);
         }
         unset($this->chapterImages[$key]);

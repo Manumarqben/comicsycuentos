@@ -9,16 +9,6 @@
         </x-slot>
 
         <x-slot name="form">
-            @if ($errors->any())
-                <div class="col-span-6 sm:col-span-4">
-                    <x-input-error for="author.alias" />
-                    @if (!$errors->has('author.alias'))
-                        <x-input-error for="author.slug" />
-                    @endif
-                    <x-input-error for="author.biography" />
-                </div>
-            @endif
-
             <div class="col-span-6 sm:col-span-4">
                 <div id="preview" class="flex justify-center sm:mb-4">
                     <x-author-profile-photo :path="$this->profilePhotoPath"
@@ -33,26 +23,47 @@
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <x-label for="alias" value="{{ __('Alias') }}" />
-                <x-input id="alias" type="text" autocomplete="alias"
-                    class="mt-1 block w-full"
-                    x-model.debounce.500ms="data.alias.content" />
-                <x-input-error-client message="data.alias.error" />
+                <div>
+                    <x-label for="alias" value="{{ __('Alias') }}" />
+                    <x-input id="alias" type="text" autocomplete="alias"
+                        class="mt-1 block w-full {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                        x-model.debounce.500ms="data.alias.content"
+                        @input="$refs.aliasServerError.classList.add('hidden')" />
+                </div>
+                <div>
+                    <x-input-error-client message="data.alias.error"
+                        x-show="!validAlias" />
+                    <div x-ref="aliasServerError">
+                        <x-input-error for="author.alias" />
+                        @if (!$errors->has('author.alias'))
+                            <x-input-error for="author.slug" />
+                        @endif
+                    </div>
+                </div>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <x-label for="biography" value="{{ __('Biography') }}" />
-                <x-textarea name="biography" id="biography"
-                    class="mt-1 block w-full h-32"
-                    x-model.debounce.500ms="data.biography.content">
-                </x-textarea>
-                <x-input-error-client message="data.biography.error" />
+                <div>
+                    <x-label for="biography" value="{{ __('Biography') }}" />
+                    <x-textarea name="biography" id="biography"
+                        class="mt-1 block w-full h-32  {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                        x-model.debounce.500ms="data.biography.content"
+                        @input="$refs.biographyServerError.classList.add('hidden')">
+                    </x-textarea>
+                </div>
+                <div>
+                    <x-input-error-client message="data.biography.error"
+                        x-show="!validBiography" />
+                    <div x-ref="biographyServerError">
+                        <x-input-error for="author.biography" />
+                    </div>
+                </div>
             </div>
         </x-slot>
 
         <x-slot name="actions">
             <x-button wire:loading.attr="disabled" wire:target="photo"
-                x-bind:disabled="!valid">
+                @click.prevent="submit" x-bind:disabled="!valid">
                 {{ __('Save') }}
             </x-button>
         </x-slot>
@@ -63,6 +74,14 @@
     <script>
         function info() {
             return {
+                validAlias: true,
+                validBiography: true,
+
+                get valid() {
+                    return this.validAlias &&
+                        this.validBiography;
+                },
+
                 data: {
                     alias: {
                         content: @entangle('author.alias').defer,
@@ -82,19 +101,42 @@
                     },
                 },
 
+                focusInError() {
+                    let firstError = document.querySelector('.is-invalid');
+                    if (firstError) {
+                        firstError.focus();
+                        firstError.scrollIntoView(false);
+                    }
+                },
+
                 init() {
                     this.$watch('data.alias', value => {
-                        validation(value, 'alias');
+                        this.validAlias = validation(value, 'alias');
                     })
                     this.$watch('data.biography', value => {
-                        validation(value, 'biography');
+                        this.validBiography = validation(value,
+                            'biography');
                     })
                 },
 
-                get valid() {
-                    return validation(this.data.alias) &&
-                        validation(this.data.biography)
-                }
+                validateAllFields() {
+                    this.validAlias = validation(this.data.alias, 'alias');
+                    this.validBiography = validation(this.data.biography,
+                        'biography');
+                },
+
+                submit() {
+                    this.validateAllFields();
+                    if (this.valid) {
+                        this.$wire.updateAuthorInformation().then(() => {
+                            this.$refs.aliasServerError.classList.remove(
+                                'hidden');
+                            this.$refs.biographyServerError.classList
+                                .remove('hidden');
+                            this.focusInError();
+                        });
+                    }
+                },
             }
         }
     </script>
