@@ -21,6 +21,8 @@ class Save extends Component
     public Work $work;
     public $frontPage;
 
+    public $show = false;
+
     protected function rules()
     {
         return    $rules = [
@@ -78,6 +80,13 @@ class Save extends Component
         ]);
     }
 
+    public function updatedShow()
+    {
+        if (!$this->show) {
+            redirect()->route('author.manage', ['slug' => auth()->user()->author->slug]);
+        }
+    }
+
     public function mount($slug = null)
     {
         if ($slug != null) {
@@ -124,10 +133,15 @@ class Save extends Component
 
         if ($this->work->created_at == $this->work->updated_at) {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
-            // TODO: abrir modal preguntando si quire crear un capítulo para la obra capítulo de la obra.
+            $this->show = true;
         } else {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
         }
+    }
+
+    public function redirectToCreateChapter()
+    {
+        redirect()->route('chapter.create', ['workSlug' => $this->work->slug]);
     }
 
     public function render()
