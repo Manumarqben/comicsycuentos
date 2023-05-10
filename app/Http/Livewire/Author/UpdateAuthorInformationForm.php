@@ -71,7 +71,7 @@ class UpdateAuthorInformationForm extends Component
             return asset(Storage::url($this->author->profilePhoto->path));
         }
 
-        return 'https://upload.wikimedia.org/wikipedia/commons/0/09/Cervantes_J%C3%A1uregui.jpg';
+        return asset(Storage::url('author_profile_photos/cervantes.jpg'));
     }
 
     public function updateAuthorInformation()

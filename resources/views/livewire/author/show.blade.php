@@ -5,7 +5,7 @@
             <x-author-profile-photo
                 path="{{ $author->profilePhoto
                     ? asset(Storage::url($author->profilePhoto->path))
-                    : 'https://upload.wikimedia.org/wikipedia/commons/0/09/Cervantes_J%C3%A1uregui.jpg' }}"
+                    : asset(Storage::url('author_profile_photos/cervantes.jpg')); }}"
                 alt="{{ $author->alias }}" />
         </div>
         <div id="info" class="grow space-y-2 px-5">
