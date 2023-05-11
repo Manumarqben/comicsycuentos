@@ -14,13 +14,14 @@ class LikeButton extends Component
     {
         $this->fill([
             $this->chapter = $chapter,
-            $this->like = $this->vote,
+            $this->like = $this->vote == null ? $this->vote : $this->vote->like ,
         ]);
     }
 
     public function getVoteProperty()
     {
-        return $this->chapter->votes()->where('user_id', auth()->user()->id)->first();
+        return $this->chapter->votes()->where('user_id', auth()->user()->id)->select('like')->first();
+
     }
 
     public function voted($vote = null)
