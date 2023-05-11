@@ -2,7 +2,8 @@
     <div id="data"
         class="flex flex-col sm:flex-row gap-3 items-center sm:items-start">
         <div id="card">
-            <x-work-information-card frontPage="{{ asset(Storage::url($work->front_page)) }}"
+            <x-work-information-card
+                frontPage="{{ asset(Storage::url($work->front_page)) }}"
                 imgAlt="{{ $work->title }}">
                 @slot('type')
                     {{ strToUpper($work->type->name) }}
@@ -65,17 +66,17 @@
                 </x-button>
             </div>
             @foreach ($this->chapters as $chapter)
-                <div id="chapter-{{ $loop->iteration }}"
+                <div id="chapter-{{ $chapter->id }}"
                     class="flex justify-between">
                     <a
                         href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}">
                         {{ "$chapter->number. $chapter->title" }}
                     </a>
                     @auth
-                        @if ($chapter->number > 5)
-                            <x-button>No Visto</x-button>
+                        @if ($chapter->number > $bookmark)
+                            <x-icon.eye-slash />
                         @else
-                            <x-button>Visto</x-button>
+                            <x-icon.eye />
                         @endif
                     @endauth
                 </div>

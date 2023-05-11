@@ -14,6 +14,7 @@ class Show extends Component
 
     public Work $work;
     public $sortDirection = 'desc';
+    public $bookmark;
 
     protected $queryString = [
         'sortDirection' => ['except' => 'desc', 'as' => 'sort'],
@@ -23,6 +24,7 @@ class Show extends Component
     {
         $this->fill([
             $this->work = Work::where('slug', $slug)->firstOrFail(),
+            $this->bookmark = $this->checkBookmark(),
         ]);
     }
 
@@ -34,6 +36,15 @@ class Show extends Component
     public function setSortDirection()
     {
         $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
+    }
+
+    public function checkBookmark()
+    {
+        $bookmark = $this->work->userBookmark();
+        if ($bookmark) {
+            return $bookmark->number;
+        }
+        return 0;
     }
 
     public function render()

@@ -95,4 +95,14 @@ class Work extends Model
     {
         return $this->hasMany(Chapter::class);
     }
+
+    public function bookmarks(): BelongsToMany
+    {
+        return $this->belongsToMany(Chapter::class, 'bookmarks');
+    }
+
+    public function userBookmark()
+    {
+        return $this->bookmarks()->where('user_id', auth()->user()->id)->first();
+    }
 }
