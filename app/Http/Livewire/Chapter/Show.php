@@ -19,6 +19,14 @@ class Show extends Component
                 })
                 ->firstOrFail(),
         ]);
+
+        if (auth()->check()) {
+            $lastChapterRead = auth()->user()->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id)->first()->number;
+    
+            if ($this->chapter->number > $lastChapterRead) {
+                auth()->user()->bookmarks()->sync([$this->chapter->work_id => ['chapter_id' => $this->chapter->id]], false);
+            }
+        }
     }
 
     public function render()

@@ -125,4 +125,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Work::class, 'bookmarks');
     }
+
+        /**
+     * Get works related to this instance through the 'bookmarks' table.
+     */
+    public function chapterBookmarks()
+    {
+        return $this->belongsToMany(Chapter::class, 'bookmarks');
+    }
 }
