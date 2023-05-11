@@ -14,7 +14,11 @@ class Show extends Component
 
     public Work $work;
     public $sortDirection = 'desc';
-    public $bookmark;
+    public $lastChapterRead;
+
+    protected $listeners = [
+        'refresh-work-show' => '$refresh',
+    ];
 
     protected $queryString = [
         'sortDirection' => ['except' => 'desc', 'as' => 'sort'],
@@ -24,7 +28,7 @@ class Show extends Component
     {
         $this->fill([
             $this->work = Work::where('slug', $slug)->firstOrFail(),
-            $this->bookmark = $this->checkBookmark(),
+            $this->lastChapterRead = $this->checkLastChapterRead(),
         ]);
     }
 
@@ -38,13 +42,26 @@ class Show extends Component
         $this->sortDirection = $this->sortDirection === 'desc' ? 'asc' : 'desc';
     }
 
-    public function checkBookmark()
+    public function checkLastChapterRead()
     {
-        $bookmark = $this->work->userBookmark();
-        if ($bookmark) {
-            return $bookmark->number;
+        
+        if (auth()->check()) {
+            $bookmark = $this->work->userBookmark();
+            if ($bookmark) {
+                return $bookmark->number;
+            }
         }
         return 0;
+    }
+
+    public function bookmarkTo($chapterId)
+    {
+        $chapter = $this->work->chapters()->where('id', $chapterId);
+        if ($chapter->exists()) {
+            auth()->user()->bookmarks()->sync([$this->work->id => ['chapter_id' => $chapterId]], false);
+            $this->lastChapterRead = $chapter->first()->number;
+            $this->emitSelf('refresh-work-show');
+        }
     }
 
     public function render()

@@ -59,9 +59,9 @@
             <div class="ml-auto pb-5">
                 <x-button wire:click="setSortDirection" class="text-red-800">
                     @if ($sortDirection == 'desc')
-                        desc
+                        <x-icon.bars-arrow-down />
                     @else
-                        asc
+                        <x-icon.bars-arrow-up />
                     @endif
                 </x-button>
             </div>
@@ -73,11 +73,19 @@
                         {{ "$chapter->number. $chapter->title" }}
                     </a>
                     @auth
-                        @if ($chapter->number > $bookmark)
-                            <x-icon.eye-slash />
-                        @else
-                            <x-icon.eye />
-                        @endif
+                        <div
+                            wire:click="bookmarkTo({{ $chapter->id }})">
+                            @if ($chapter->number <= $lastChapterRead)
+                                <div title="Marcar como ultimo capítulo leido">
+                                    <x-icon.eye />
+                                </div>
+                            @else
+                                <div wire:click="bookmarkTo({{ $chapter->id }})"
+                                    title="Marcar como leido">
+                                    <x-icon.eye-slash />
+                                </div>
+                            @endif
+                        </div>
                     @endauth
                 </div>
             @endforeach
