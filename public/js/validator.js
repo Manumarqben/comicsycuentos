@@ -23,6 +23,12 @@ function validation(data, property = "property") {
         data.rules.require
     ) {
         if (
+            !require(data.content)
+        ) {
+            data.error = `The ${property} field is required.`;
+            return false;
+        }
+        if (
             "number" in data.rules &&
             data.rules.number &&
             !number(data.content)
@@ -64,12 +70,6 @@ function validation(data, property = "property") {
             !date(data.content)
         ) {
             data.error = `The ${property} must be a valid date.`;
-            return false;
-        }
-        if (
-            !require(data.content)
-        ) {
-            data.error = `The ${property} field is required.`;
             return false;
         }
     }

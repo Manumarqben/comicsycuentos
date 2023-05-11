@@ -13,4 +13,9 @@
             </div>
         @endforeach
     @endif
+    @auth
+        <div class="w-full flex justify-center">
+            @livewire('chapter.like-button', ['chapter' => $chapter], key('like-button'))
+        </div>
+    @endauth
 </div>
