@@ -14,16 +14,25 @@ class ListWorks extends Component
     public $author;
     public $state;
     public $marker;
+    public $search;
 
     protected $queryString = [
         'state' => ['except' => ''],
         'marker' => ['except' => 'following'],
+        'search' => ['except' => ''],
     ];
 
     protected $listeners = [
         'setState',
         'setMarker',
+        'setSearch',
+        'resetPagination',
     ];
+
+    public function resetPagination()
+    {
+        $this->resetPage();
+    }
 
     public function setState($state)
     {
@@ -33,6 +42,11 @@ class ListWorks extends Component
     public function setMarker($marker)
     {
         $this->marker = $marker;
+    }
+
+    public function setSearch($search)
+    {
+        $this->search = $search;
     }
 
     private function childrenFilter()
@@ -73,6 +87,10 @@ class ListWorks extends Component
             $works->whereHas('state', function ($query) {
                 $query->where('slug', $this->state);
             });
+        }
+
+        if ($this->search) {
+            $works->whereRaw('lower(title) like lower(?)', '%' . $this->search . '%');
         }
 
         $works = $works->paginate(12);

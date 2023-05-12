@@ -10,5 +10,7 @@
             </div>
         @endforelse
     </div>
-    {{ $works->links('livewire.paginator') }}
+    <div class="pt-2">
+        {{ $works->links('livewire.paginator') }}
+    </div>
 </div>
