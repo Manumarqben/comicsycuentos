@@ -151,4 +151,12 @@ class User extends Authenticatable
         }
         return false;
     }
+
+    /**
+     * Delete a user's bookmark for a work.
+     */
+    public function deleteBookmark($workId)
+    {
+        $this->bookmarks()->detach($workId);
+    }
 }

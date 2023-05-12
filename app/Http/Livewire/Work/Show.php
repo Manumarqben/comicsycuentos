@@ -20,6 +20,7 @@ class Show extends Component
 
     protected $listeners = [
         'refresh-work-show' => '$refresh',
+        'setLastChapterRead',
     ];
 
     protected $queryString = [
@@ -66,13 +67,25 @@ class Show extends Component
                 $changeBookmark = $user->addBookmark($this->work->id, $chapter->first()->id);
 
                 if ($changeBookmark) {
-                    $this->lastChapterRead = $chapter->first()->number;
+                    $this->setLastChapterRead($chapter->first()->number);
                     $this->emitSelf('refresh-work-show');
                 }
             }
         } else {
             $this->markerInfoModal = true;
         }
+    }
+
+    public function deleteBookmark()
+    {
+        auth()->user()->deleteBookmark($this->work->id);
+        $this->setLastChapterRead(0);
+        $this->emitSelf('refresh-work-show');
+    }
+
+    public function setLastChapterRead($number)
+    {
+        $this->lastChapterRead = $number;
     }
 
     public function render()
