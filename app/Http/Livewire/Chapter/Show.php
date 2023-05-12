@@ -23,15 +23,12 @@ class Show extends Component
         if (auth()->check()) {
             $user = auth()->user();
             if ($user->works->contains($this->chapter->work)) {
-                $lastChapterRead = $user->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id)->first()->number;
-                
-                //TODO: Solución para el bug si la obra no tiene un marcapáginas previo.
-                // $lastChapterRead = $user->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id);
-                // if ($lastChapterRead->exists()) {
-                //     $lastChapterRead = $lastChapterRead->first()->number;
-                // }else {
-                //     $lastChapterRead = 0;
-                // }
+                $lastChapterRead = $user->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id);
+                if ($lastChapterRead->exists()) {
+                    $lastChapterRead = $lastChapterRead->first()->number;
+                }else {
+                    $lastChapterRead = 0;
+                }
                 
                 if ($this->chapter->number > $lastChapterRead) {
                     $user->addBookmark($this->chapter->work_id, $this->chapter->id);
