@@ -30,6 +30,9 @@ class MarkerSelector extends Component
     {
         if ($this->marker == '') {
             $this->work->usersMarkers()->detach(auth()->user()->id);
+            auth()->user()->deleteBookmark($this->work->id);
+            $this->emitTo('work.show', 'setLastChapterRead', 0);
+            $this->emitTo('work.show', 'refresh-work-show');
             $this->dispatchBrowserEvent('alert', ['message' => 'Work removed from library successfully']);
         } else {
             $marker = Marker::where('slug', $this->marker)->first();
