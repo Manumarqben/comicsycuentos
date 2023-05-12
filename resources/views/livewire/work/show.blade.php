@@ -1,8 +1,9 @@
 <div class="container">
     <div id="data"
         class="flex flex-col sm:flex-row gap-3 items-center sm:items-start">
-        <div id="card">
-            <x-work-information-card frontPage="{{ asset(Storage::url($work->front_page)) }}"
+        <div id="card" class="rounded border-4 ">
+            <x-work-information-card
+                frontPage="{{ asset(Storage::url($work->front_page)) }}"
                 imgAlt="{{ $work->title }}">
                 @slot('type')
                     {{ strToUpper($work->type->name) }}
@@ -58,29 +59,60 @@
             <div class="ml-auto pb-5">
                 <x-button wire:click="setSortDirection" class="text-red-800">
                     @if ($sortDirection == 'desc')
-                        desc
+                        <x-icon.bars-arrow-down />
                     @else
-                        asc
+                        <x-icon.bars-arrow-up />
                     @endif
                 </x-button>
             </div>
             @foreach ($this->chapters as $chapter)
-                <div id="chapter-{{ $loop->iteration }}"
-                    class="flex justify-between">
-                    <a
-                        href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}">
+                <div id="chapter-{{ $chapter->id }}"
+                    class="flex justify-between items-center p-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded">
+                    <a href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}"
+                        class="line-clamp-2">
                         {{ "$chapter->number. $chapter->title" }}
                     </a>
                     @auth
-                        @if ($chapter->number > 5)
-                            <x-button>No Visto</x-button>
-                        @else
-                            <x-button>Visto</x-button>
-                        @endif
+                        <div wire:click="bookmarkTo({{ $chapter->id }})">
+                            @if ($chapter->number <= $lastChapterRead)
+                                <div title="Marcar como ultimo capítulo leido"
+                                    class="cursor-pointer text-blue-700 dark:text-blue-300">
+                                    <x-icon.eye />
+                                </div>
+                            @else
+                                <div wire:click="bookmarkTo({{ $chapter->id }})"
+                                    title="Marcar como leido"
+                                    class="cursor-pointer text-gray-500 ">
+                                    <x-icon.eye-slash />
+                                </div>
+                            @endif
+                        </div>
                     @endauth
                 </div>
             @endforeach
         @endif
-        {{ $this->chapters->links('livewire.paginator') }}
+        @if ($this->chapters)
+            <div class="pt-4">
+                {{ $this->chapters->links('livewire.paginator') }}
+            </div>
+        @endif
     </div>
+    @auth
+        <x-dialog-modal id="info-bookmark-modal" wire:model="markerInfoModal">
+            @slot('title')
+                {{ __("You can't add bookmark") }}
+            @endslot
+
+            @slot('content')
+                <p>{{ __('To use the bookmark, you must first have added the work to your library.') }}
+                </p>
+            @endslot
+            @slot('footer')
+                <x-button wire:click="$toggle('markerInfoModal')"
+                    wire:loading.attr="disabled">
+                    {{ __('Accept') }}
+                </x-button>
+            @endslot
+        </x-dialog-modal>
+    @endauth
 </div>
