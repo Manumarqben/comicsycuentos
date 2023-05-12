@@ -21,10 +21,13 @@ class Show extends Component
         ]);
 
         if (auth()->check()) {
-            $lastChapterRead = auth()->user()->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id)->first()->number;
-    
-            if ($this->chapter->number > $lastChapterRead) {
-                auth()->user()->bookmarks()->sync([$this->chapter->work_id => ['chapter_id' => $this->chapter->id]], false);
+            $user = auth()->user();
+            if ($user->works->contains($this->chapter->work)) {
+                $lastChapterRead = $user->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id)->first()->number;
+
+                if ($this->chapter->number > $lastChapterRead) {
+                    $user->addBookmark($this->chapter->work_id, $this->chapter->id);
+                }
             }
         }
     }

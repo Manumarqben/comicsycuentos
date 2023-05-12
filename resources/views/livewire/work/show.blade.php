@@ -97,4 +97,22 @@
             </div>
         @endif
     </div>
+    @auth
+        <x-dialog-modal id="info-bookmark-modal" wire:model="markerInfoModal">
+            @slot('title')
+                {{ __("You can't add bookmark") }}
+            @endslot
+
+            @slot('content')
+                <p>{{ __('To use the bookmark, you must first have added the work to your library.') }}
+                </p>
+            @endslot
+            @slot('footer')
+                <x-button wire:click="$toggle('markerInfoModal')"
+                    wire:loading.attr="disabled">
+                    {{ __('Accept') }}
+                </x-button>
+            @endslot
+        </x-dialog-modal>
+    @endauth
 </div>

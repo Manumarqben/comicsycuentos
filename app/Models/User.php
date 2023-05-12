@@ -126,11 +126,29 @@ class User extends Authenticatable
         return $this->belongsToMany(Work::class, 'bookmarks');
     }
 
-        /**
+    /**
      * Get works related to this instance through the 'bookmarks' table.
      */
     public function chapterBookmarks()
     {
         return $this->belongsToMany(Chapter::class, 'bookmarks');
+    }
+
+    /**
+     * Add or update a user's bookmark for a work if the work and chapter exist and if the chapter belongs to the work.
+     */
+    public function addBookmark($workId, $chapterId): bool
+    {
+        $work = Work::where('id', $workId);
+        $chapter = Chapter::where('id', $chapterId);
+
+        if ($work->exists() && $chapter->exists()) {
+            $chapterBelongsToTheWork = $work->first()->chapters->contains($chapter->first());
+            if ($chapterBelongsToTheWork) {
+                $this->bookmarks()->sync([$workId => ['chapter_id' => $chapterId]], false);
+            }
+            return true;
+        }
+        return false;
     }
 }

@@ -16,6 +16,8 @@ class Show extends Component
     public $sortDirection = 'desc';
     public $lastChapterRead;
 
+    public $markerInfoModal = false;
+
     protected $listeners = [
         'refresh-work-show' => '$refresh',
     ];
@@ -44,7 +46,6 @@ class Show extends Component
 
     public function checkLastChapterRead()
     {
-        
         if (auth()->check()) {
             $bookmark = $this->work->userBookmark();
             if ($bookmark) {
@@ -56,11 +57,21 @@ class Show extends Component
 
     public function bookmarkTo($chapterId)
     {
-        $chapter = $this->work->chapters()->where('id', $chapterId);
-        if ($chapter->exists()) {
-            auth()->user()->bookmarks()->sync([$this->work->id => ['chapter_id' => $chapterId]], false);
-            $this->lastChapterRead = $chapter->first()->number;
-            $this->emitSelf('refresh-work-show');
+        $user = auth()->user();
+
+        if ($user->works->contains($this->work)) {
+            $chapter = $this->work->chapters()->where('id', $chapterId);
+
+            if ($chapter->exists()) {
+                $changeBookmark = $user->addBookmark($this->work->id, $chapter->first()->id);
+
+                if ($changeBookmark) {
+                    $this->lastChapterRead = $chapter->first()->number;
+                    $this->emitSelf('refresh-work-show');
+                }
+            }
+        } else {
+            $this->markerInfoModal = true;
         }
     }
 
