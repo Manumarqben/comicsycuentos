@@ -1,7 +1,7 @@
 <div class="container">
     <div id="data"
         class="flex flex-col sm:flex-row gap-3 items-center sm:items-start">
-        <div id="card">
+        <div id="card" class="rounded border-4 ">
             <x-work-information-card
                 frontPage="{{ asset(Storage::url($work->front_page)) }}"
                 imgAlt="{{ $work->title }}">
@@ -67,21 +67,22 @@
             </div>
             @foreach ($this->chapters as $chapter)
                 <div id="chapter-{{ $chapter->id }}"
-                    class="flex justify-between">
-                    <a
-                        href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}">
+                    class="flex justify-between items-center p-4 hover:bg-gray-200 dark:hover:bg-gray-600 rounded">
+                    <a href="{{ route('chapter.viewer', ['workSlug' => $work->slug, 'chapterNumber' => $chapter->number]) }}"
+                        class="line-clamp-2">
                         {{ "$chapter->number. $chapter->title" }}
                     </a>
                     @auth
-                        <div
-                            wire:click="bookmarkTo({{ $chapter->id }})">
+                        <div wire:click="bookmarkTo({{ $chapter->id }})">
                             @if ($chapter->number <= $lastChapterRead)
-                                <div title="Marcar como ultimo capítulo leido">
+                                <div title="Marcar como ultimo capítulo leido"
+                                    class="cursor-pointer text-blue-700 dark:text-blue-300">
                                     <x-icon.eye />
                                 </div>
                             @else
                                 <div wire:click="bookmarkTo({{ $chapter->id }})"
-                                    title="Marcar como leido">
+                                    title="Marcar como leido"
+                                    class="cursor-pointer text-gray-500 ">
                                     <x-icon.eye-slash />
                                 </div>
                             @endif
@@ -90,6 +91,10 @@
                 </div>
             @endforeach
         @endif
-        {{ $this->chapters->links('livewire.paginator') }}
+        @if ($this->chapters)
+            <div class="pt-4">
+                {{ $this->chapters->links('livewire.paginator') }}
+            </div>
+        @endif
     </div>
 </div>

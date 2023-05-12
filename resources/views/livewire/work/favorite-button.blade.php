@@ -1,4 +1,4 @@
-<div wire:click="fav">
+<div wire:click="fav" class="bg-gray-50">
     @if ($isFavorite)
         <x-icon.heart-solid class="w-12 h-12 text-red-500" />
     @else
