@@ -15,17 +15,21 @@ class ListWorks extends Component
     public $state;
     public $marker;
     public $search;
+    
+    public $genres;
 
     protected $queryString = [
         'state' => ['except' => ''],
         'marker' => ['except' => 'following'],
         'search' => ['except' => ''],
+        'genres' => ['except' => '', 'as' => 'genre'],
     ];
 
     protected $listeners = [
         'setState',
         'setMarker',
         'setSearch',
+        'setGenres',
         'resetPagination',
     ];
 
@@ -47,6 +51,11 @@ class ListWorks extends Component
     public function setSearch($search)
     {
         $this->search = $search;
+    }
+
+    public function setGenres($genres)
+    {
+        $this->genres = $genres;
     }
 
     private function childrenFilter()
@@ -91,6 +100,13 @@ class ListWorks extends Component
 
         if ($this->search) {
             $works->whereRaw('lower(title) like lower(?)', '%' . $this->search . '%');
+        }
+
+        if ($this->genres) {
+            // TODO: mirar si es posible quitar del queryString que cuando se filtra por género aparezca "genre[$]=**********"
+            $works->whereHas('genres', function ($query) {
+                $query->whereIn('slug', $this->genres);
+            }, '=', count($this->genres));
         }
 
         $works = $works->paginate(12);
