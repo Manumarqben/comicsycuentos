@@ -57,9 +57,12 @@
             </div>
         @else
             <div class="ml-auto pb-5 flex">
-                <x-danger-button wire:click="deleteBookmark" class="mr-2" title="Eliminar marcapáginas">
-                    <x-icon.eye-slash />
-                </x-danger-button>
+                @auth
+                    <x-danger-button wire:click="deleteBookmark" class="mr-2"
+                        title="Eliminar marcapáginas">
+                        <x-icon.eye-slash />
+                    </x-danger-button>
+                @endauth
                 <x-button wire:click="setSortDirection" class="text-red-800">
                     @if ($sortDirection == 'desc')
                         <x-icon.bars-arrow-down />
