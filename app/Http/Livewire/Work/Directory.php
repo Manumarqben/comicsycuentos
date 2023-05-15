@@ -16,13 +16,21 @@ class Directory extends Component
     public $age;
     public $selectedGenres = [];
 
+    public $sortDirection = 'asc';
+
     protected $queryString = [
         'search' => ['except' => ''],
         'state' => ['except' => ''],
         'age' => ['except' => ''],
         'type' => ['except' => ''],
         'selectedGenres' => ['except' => '', 'as' => 'genre'],
+        'sortDirection' => ['except' => 'asc', 'as' => 'sortDirection'],
     ];
+
+    public function updatedSortDirection()
+    {
+        $this->emitTo('work.list-works', 'setSort', 'title', $this->sortDirection);
+    }
 
     public function submitSearch()
     {
@@ -40,6 +48,7 @@ class Directory extends Component
     {
         $this->reset();
 
+        $this->emitTo('work.list-works', 'setSort', 'title', 'asc');
         $this->submitSearch();
     }
 

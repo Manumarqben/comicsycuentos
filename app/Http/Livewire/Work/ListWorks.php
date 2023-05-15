@@ -20,6 +20,9 @@ class ListWorks extends Component
 
     public $genres;
 
+    public $sortBy = 'title';
+    public $sortDirection = 'asc';
+
     protected $queryString = [
         'state' => ['except' => ''],
         'type' => ['except' => ''],
@@ -27,6 +30,8 @@ class ListWorks extends Component
         'marker' => ['except' => 'following'],
         'search' => ['except' => ''],
         'genres' => ['except' => '', 'as' => 'genre'],
+        'sortBy' => ['except' => 'title'],
+        'sortDirection' => ['except' => 'asc', 'as' => 'sortDirection'],
     ];
 
     protected $listeners = [
@@ -36,6 +41,7 @@ class ListWorks extends Component
         'setMarker',
         'setSearch',
         'setGenres',
+        'setSort',
         'resetPagination',
     ];
 
@@ -72,6 +78,12 @@ class ListWorks extends Component
     public function setGenres($genres)
     {
         $this->genres = $genres;
+    }
+
+    public function setSort($by = 'title', $direction = 'asc')
+    {
+        $this->sortBy = $by;
+        $this->sortDirection = $direction;
     }
 
     private function childrenFilter()
@@ -136,6 +148,8 @@ class ListWorks extends Component
                 $query->whereIn('slug', $this->genres);
             }, '=', count($this->genres));
         }
+
+        $works->orderBy($this->sortBy, $this->sortDirection);
 
         $works = $works->paginate(12);
 

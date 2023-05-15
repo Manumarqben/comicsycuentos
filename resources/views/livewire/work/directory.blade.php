@@ -9,11 +9,32 @@
             <x-form submit="submitSearch">
                 @slot('form')
                     <div class="col-span-6">
-                        <x-input type="text" placeholder="Search..."
-                            wire:model.defer="search" class="w-full"
-                            wire:keydown.enter="submitSearch" />
+                        <div class="flex gap-2">
+                            <x-input type="text" placeholder="Search..."
+                                wire:model.defer="search" class="w-full"
+                                wire:keydown.enter="submitSearch" />
+                            <div>
+                                <div class="cursor-pointer">
+                                    @if ($sortDirection == 'asc')
+                                        <div class="button"
+                                            wire:click="$set('sortDirection', 'desc')"
+                                            title="Ordenar descendente">
+                                            <x-icon.bars-arrow-up />
+                                        </div>
+                                    @endif
+                                    @if ($sortDirection == 'desc')
+                                        <div class="button"
+                                            wire:click="$set('sortDirection', 'asc')"
+                                            title="Ordenar ascendente">
+                                            <x-icon.bars-arrow-down />
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
                         <div x-data="{ open: false }" class="pt-1">
-                            <div class="w-full flex justify-end items-center">
+                            <div
+                                class="w-full flex justify-end items-center cursor-pointer">
                                 <span @click="open = !open">Busqueda avanzada</span>
                                 <template x-if="open">
                                     <x-icon.chevron-up type="mini" />
