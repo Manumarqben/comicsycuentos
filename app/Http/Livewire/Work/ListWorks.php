@@ -19,6 +19,7 @@ class ListWorks extends Component
     public $search;
 
     public $genres;
+    public $urlGenres;
 
     public $sortBy = 'title';
     public $sortDirection = 'asc';
@@ -29,7 +30,7 @@ class ListWorks extends Component
         'age' => ['except' => ''],
         'marker' => ['except' => 'following'],
         'search' => ['except' => ''],
-        'genres' => ['except' => '', 'as' => 'genre'],
+        'urlGenres' => ['except' => '', 'as' => 'genres'],
         'sortBy' => ['except' => 'title'],
         'sortDirection' => ['except' => 'asc', 'as' => 'sortDirection'],
     ];
@@ -44,6 +45,13 @@ class ListWorks extends Component
         'setSort',
         'resetPagination',
     ];
+
+    public function mount()
+    {
+        if ($this->urlGenres) {
+            $this->genres = explode(',', $this->urlGenres);
+        }
+    }
 
     public function resetPagination()
     {
@@ -78,6 +86,7 @@ class ListWorks extends Component
     public function setGenres($genres)
     {
         $this->genres = $genres;
+        $this->urlGenres = implode(',', $genres);
     }
 
     public function setSort($by = 'title', $direction = 'asc')
@@ -132,7 +141,7 @@ class ListWorks extends Component
             });
         }
 
-        if ($this->age != null) {
+        if ($this->age != '') {
             $works->whereHas('age', function ($query) {
                 $query->where('year', $this->age);
             });
@@ -143,10 +152,9 @@ class ListWorks extends Component
         }
 
         if ($this->genres) {
-            // TODO: mirar si es posible quitar del queryString que cuando se filtra por género aparezca "genre[$]=**********"
             $works->whereHas('genres', function ($query) {
                 $query->whereIn('slug', $this->genres);
-            }, '=', count($this->genres));
+            }, '>=', count($this->genres));
         }
 
         $works->orderBy($this->sortBy, $this->sortDirection);
