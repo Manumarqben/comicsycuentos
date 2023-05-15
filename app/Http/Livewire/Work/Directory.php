@@ -14,7 +14,9 @@ class Directory extends Component
     public $state;
     public $type;
     public $age;
+
     public $selectedGenres = [];
+    public $urlGenres;
 
     public $sortDirection = 'asc';
 
@@ -23,13 +25,25 @@ class Directory extends Component
         'state' => ['except' => ''],
         'age' => ['except' => ''],
         'type' => ['except' => ''],
-        'selectedGenres' => ['except' => '', 'as' => 'genre'],
+        'urlGenres' => ['except' => '', 'as' => 'genres'],
         'sortDirection' => ['except' => 'asc', 'as' => 'sortDirection'],
     ];
 
     public function updatedSortDirection()
     {
         $this->emitTo('work.list-works', 'setSort', 'title', $this->sortDirection);
+    }
+
+    public function updatedSelectedGenres()
+    {
+        $this->urlGenres = implode(',', $this->selectedGenres);
+    }
+
+    public function mount()
+    {
+        if ($this->urlGenres) {
+            $this->selectedGenres = explode(',', $this->urlGenres);
+        }
     }
 
     public function submitSearch()
