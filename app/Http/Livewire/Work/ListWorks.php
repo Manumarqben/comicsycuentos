@@ -13,13 +13,15 @@ class ListWorks extends Component
 
     public $author;
     public $state;
+    public $type;
     public $marker;
     public $search;
-    
+
     public $genres;
 
     protected $queryString = [
         'state' => ['except' => ''],
+        'type' => ['except' => ''],
         'marker' => ['except' => 'following'],
         'search' => ['except' => ''],
         'genres' => ['except' => '', 'as' => 'genre'],
@@ -27,6 +29,7 @@ class ListWorks extends Component
 
     protected $listeners = [
         'setState',
+        'setType',
         'setMarker',
         'setSearch',
         'setGenres',
@@ -41,6 +44,11 @@ class ListWorks extends Component
     public function setState($state)
     {
         $this->state = $state;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
     }
 
     public function setMarker($marker)
@@ -95,6 +103,12 @@ class ListWorks extends Component
         if ($this->state) {
             $works->whereHas('state', function ($query) {
                 $query->where('slug', $this->state);
+            });
+        }
+
+        if ($this->type) {
+            $works->whereHas('type', function ($query) {
+                $query->where('slug', $this->type);
             });
         }
 
