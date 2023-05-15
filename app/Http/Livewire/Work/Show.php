@@ -78,9 +78,11 @@ class Show extends Component
 
     public function deleteBookmark()
     {
-        auth()->user()->deleteBookmark($this->work->id);
-        $this->setLastChapterRead(0);
-        $this->emitSelf('refresh-work-show');
+        if (auth()->check()) {
+            auth()->user()->deleteBookmark($this->work->id);
+            $this->setLastChapterRead(0);
+            $this->emitSelf('refresh-work-show');
+        }
     }
 
     public function setLastChapterRead($number)
