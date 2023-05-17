@@ -26,6 +26,9 @@
             {{ __('There are no pending applications.') }}
         </div>
     @endforelse
+    <div class="pt-4">
+        {{ $applicants->links('livewire.paginator') }}
+    </div>
 
     <x-dialog-modal id="delete" wire:model="showDeleteModal">
         @slot('title')

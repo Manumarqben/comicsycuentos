@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\Admin\ManageApplicant;
+use App\Http\Livewire\Admin\ManageAuthor;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,4 +23,5 @@ Route::group([
   ],
 ], function () {
   Route::get('/applicants', ManageApplicant::class)->name('admin.applicants');
+  Route::get('/authors', ManageAuthor::class)->name('admin.authors');
 });
