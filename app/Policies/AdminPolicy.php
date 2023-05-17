@@ -64,9 +64,9 @@ class AdminPolicy
         //
     }
 
-    public function manageApplicant(User $user): bool
+    public function manageApplicant(User $user): \Illuminate\Auth\Access\Response|bool
     {
-        $user->admin
+        return $user->admin
             ? Response::allow()
             : Response::denyWithStatus(403);
     }
