@@ -76,6 +76,8 @@ class ManageApplicant extends Component
         $this->applicantTo->delete();
 
         $this->showAcceptModal = false;
+
+        $this->emit('refresh-navigation-menu');
         $this->dispatchBrowserEvent('alert', ['message' => 'Applicant accepted']);
     }
 
