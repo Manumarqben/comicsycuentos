@@ -49,6 +49,7 @@ class ManageApplicant extends Component
 
         $this->showDeleteModal = false;
 
+        $this->emit('refresh-navigation-menu');
         $this->dispatchBrowserEvent('alert', ['message' => 'Rejected applicant']);
     }
 

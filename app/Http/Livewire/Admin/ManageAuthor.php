@@ -33,6 +33,7 @@ class ManageAuthor extends Component
 
         $this->showDeleteModal = false;
 
+        $this->emit('refresh-navigation-menu');
         $this->dispatchBrowserEvent('alert', ['message' => 'Author removed successfully.']);
     }
 
