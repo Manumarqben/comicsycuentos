@@ -3,7 +3,7 @@
 use App\Http\Livewire\Admin\ManageApplicant;
 use App\Http\Livewire\Admin\ManageAuthor;
 use App\Http\Livewire\Admin\ManageAuthorList;
-use App\Http\Livewire\Admin\ManageUserInformationForm;
+use App\Http\Livewire\Admin\ManageUser;
 use App\Http\Livewire\Admin\ManageUserList;
 use App\Http\Livewire\Admin\ManageWork;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +31,5 @@ Route::group([
   Route::get('/authors/{id}', ManageAuthor::class)->name('admin.author');
   Route::get('/works/{id}', ManageWork::class)->name('admin.work');
   Route::get('/user', ManageUserList::class)->name('admin.users');
-  Route::get('/user/{id}', ManageUserInformationForm::class)->name('admin.user');
+  Route::get('/user/{id}', ManageUser::class)->name('admin.user');
 });

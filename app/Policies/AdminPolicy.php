@@ -27,9 +27,11 @@ class AdminPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->admin
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**
@@ -43,9 +45,11 @@ class AdminPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, admin $admin): bool
+    public function delete(User $user, admin $admin): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->admin
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**

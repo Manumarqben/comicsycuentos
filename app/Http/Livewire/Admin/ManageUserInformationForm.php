@@ -36,10 +36,10 @@ class ManageUserInformationForm extends Component
         ];
     }
 
-    public function mount($id)
+    public function mount($user)
     {
         $this->fill([
-            'user' => User::findOrFail($id),
+            'user' => $user,
         ]);
     }
 
