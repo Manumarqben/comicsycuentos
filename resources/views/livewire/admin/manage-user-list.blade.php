@@ -1,44 +1,40 @@
 <div class="container">
     <x-slot name="header">
         <h2 class="h2">
-            {{ __('Authors administration') }}
+            {{ __('User administration') }}
         </h2>
     </x-slot>
-    @forelse ($authors as $author)
+    @foreach ($users as $user)
         <x-admin-row @class([
             'bg-gray-300' => $loop->index % 2 === 0,
             'dark:bg-gray-600' => $loop->index % 2 === 0,
         ])
-            wire:key="author-{{ $author->id }}">
-            {{ $author->alias }}
+            wire:key="user-{{ $user->id }}">
+            {{ $user->name }}
             @slot('actions')
                 <x-button
-                    wire:click.prevent="redirectToAdminAuthor('{{ $author->id }}')">
+                    wire:click.prevent="redirectToAdminUser('{{ $user->id }}')">
                     <x-icon.edit />
                 </x-button>
                 <x-danger-button
-                    wire:click.prevent="openDeleteModal({{ $author->id }})">
+                    wire:click.prevent="openDeleteModal({{ $user->id }})">
                     <x-icon.trash />
                 </x-danger-button>
             @endslot
         </x-admin-row>
-    @empty
-        <div class="flex justify-center h2">
-            {{ __('There are no authors in the application.') }}
-        </div>
-    @endforelse
+    @endforeach
     <div class="pt-4">
-        {{ $authors->links('livewire.paginator') }}
+        {{ $users->links('livewire.paginator') }}
     </div>
 
     <x-dialog-modal id="delete" wire:model="showDeleteModal">
         @slot('title')
-            {{ __('Delete author') }}
+            {{ __('Delete user') }}
         @endslot
 
         @slot('content')
             <p>
-                {{ __("Are you sure you want to eliminate author $alias?") }}
+                {{ __("Are you sure you want to eliminate user $name?") }}
             </p>
         @endslot
         @slot('footer')

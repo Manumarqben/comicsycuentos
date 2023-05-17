@@ -43,6 +43,9 @@
                                         <x-dropdown-link href="{{ route('admin.authors') }}" >
                                             {{ __('Authors panel') }}
                                         </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('admin.users') }}" >
+                                            {{ __('Users panel') }}
+                                        </x-dropdown-link>
                                     </x-slot>
                                 </x-dropdown>
                             </div>

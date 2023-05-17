@@ -13,7 +13,6 @@ class ManageAuthorList extends Component
     use WithPagination;
 
     public $showDeleteModal = false;
-    public $showEditModal = false;
 
     public Author $authorTo;
     public $alias = '';
