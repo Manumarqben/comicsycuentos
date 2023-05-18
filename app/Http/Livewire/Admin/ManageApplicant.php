@@ -77,7 +77,6 @@ class ManageApplicant extends Component
 
         $this->showAcceptModal = false;
 
-        $this->emit('refresh-navigation-menu');
         $this->dispatchBrowserEvent('alert', ['message' => 'Applicant accepted']);
     }
 
