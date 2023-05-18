@@ -34,7 +34,8 @@
             @livewire('admin.app.manage-states')
         @endif
         @if ($manage == 'types')
-        @endif
+            @livewire('admin.app.manage-types')
+            @endif
         @if ($manage == 'ages')
         @endif
         @if ($manage == 'markers')
