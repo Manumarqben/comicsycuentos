@@ -4,20 +4,34 @@
             {{ __('Library') }}
         </h2>
     </x-slot>
-    <div>
-        <x-button wire:click="$emitTo('work.list-works', 'setMarker', 'finished')">
+    <div class="flex flex-wrap sm:flex-nowrap justify-around p-2">
+        <x-tab-option
+            wire:click="setMarker('finished')"
+            :active="$marker == 'finished'"
+            class="sm:w-full">
             {{ __('Finished') }}
-        </x-button>
-        <x-button wire:click="$emitTo('work.list-works', 'setMarker', 'following')">
+        </x-tab-option>
+        <x-tab-option
+            wire:click="setMarker('following')"
+            :active="$marker == 'following'"
+            class="sm:w-full">
             {{ __('Following') }}
-        </x-button>
-        <x-button wire:click="$emitTo('work.list-works', 'setMarker', 'pending')">
+        </x-tab-option>
+        <x-tab-option
+            wire:click="setMarker('pending')"
+            :active="$marker == 'pending'"
+            class="sm:w-full">
             {{ __('Pending') }}
-        </x-button>
-        <x-button wire:click="$emitTo('work.list-works', 'setMarker', 'favorite')">
+        </x-tab-option>
+        <x-tab-option
+            wire:click="setMarker('favorite')"
+            :active="$marker == 'favorite'"
+            class="sm:w-full">
             {{ __('Favorites') }}
-        </x-button>
+        </x-tab-option>
     </div>
 
-    @livewire('work.list-works', ['marker' => $marker], key('list-library'))
+    <div class="pt-4">
+        @livewire('work.list-works', ['marker' => $marker], key('list-library'))
+    </div>
 </div>
