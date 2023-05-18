@@ -66,6 +66,7 @@ class ManageStates extends Component
 
     public function openSaveModal($id = null)
     {
+        $this->resetErrorBag();
         $this->stateTo = State::find($id) ?? new State();
         $this->showSaveModal = true;
     }

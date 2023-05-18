@@ -66,6 +66,7 @@ class ManageTypes extends Component
 
     public function openSaveModal($id = null)
     {
+        $this->resetErrorBag();
         $this->typeTo = Type::find($id) ?? new Type();
         $this->showSaveModal = true;
     }

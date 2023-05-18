@@ -66,6 +66,7 @@ class ManageGenres extends Component
 
     public function openSaveModal($id = null)
     {
+        $this->resetErrorBag();
         $this->genreTo = Genre::find($id) ?? new Genre();
         $this->showSaveModal = true;
     }

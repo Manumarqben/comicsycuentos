@@ -66,6 +66,7 @@ class ManageMarkers extends Component
 
     public function openSaveModal($id = null)
     {
+        $this->resetErrorBag();
         $this->markerTo = Marker::find($id) ?? new Marker();
         $this->showSaveModal = true;
     }
