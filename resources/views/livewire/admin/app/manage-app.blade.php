@@ -1,7 +1,7 @@
 <div class="container">
     <x-slot name="header">
         <h2 class="h2">
-            {{ __('Genres administration') }}
+            {{ __('App administration') }}
         </h2>
     </x-slot>
     <div class="flex flex-wrap sm:flex-nowrap justify-around p-2">

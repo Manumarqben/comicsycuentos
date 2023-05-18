@@ -49,6 +49,10 @@
         </table>
     @endempty
 
+    <div class="pt-4">
+        {{ $genres->links('livewire.paginator') }}
+    </div>
+
     <x-dialog-modal id="delete" wire:model="showDeleteModal">
         @slot('title')
             {{ __('Delete genre') }}

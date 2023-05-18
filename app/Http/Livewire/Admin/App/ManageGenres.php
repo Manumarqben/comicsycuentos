@@ -19,7 +19,7 @@ class ManageGenres extends Component
     public Genre $genreTo;
     public $name;
 
-    public function rules()
+    protected function rules()
     {
         return [
             'genreTo.name' => [
