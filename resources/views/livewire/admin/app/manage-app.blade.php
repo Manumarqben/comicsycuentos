@@ -39,6 +39,7 @@
         @if ($manage == 'ages')
         @endif
         @if ($manage == 'markers')
-        @endif
+            @livewire('admin.app.manage-markers')
+            @endif
     </div>
 </div>

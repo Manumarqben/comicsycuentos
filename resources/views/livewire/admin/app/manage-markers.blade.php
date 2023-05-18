@@ -1,12 +1,12 @@
 <div>
     <div class="flex justify-end">
         <x-button wire:click.prevent="openSaveModal">
-            {{ __('Create new type') }}
+            {{ __('Create new marker') }}
         </x-button>
     </div>
-    @empty($types)
+    @empty($markers)
     <div class="flex justify-center h2">
-        {{ __('There are no types in the app.') }}
+        {{ __('There are no markers in the app.') }}
     </div>
     @else
     <table class="w-full">
@@ -18,27 +18,27 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($types as $type)
+            @foreach ($markers as $marker)
                 <x-admin-row row="{{ $loop->index }}"
-                    wire:key="type-{{ $type->id }}">
+                    wire:key="marker-{{ $marker->id }}">
                     <td class="p-4">
                         <div class="flex justify-center sm:justify-start w-full">
-                            {{ $type->name }}
+                            {{ $marker->name }}
                         </div>
                     </td>
                     <td class="hidden sm:table-cell p-4 w-full">
                         <span class="line-clamp-1">
-                            {{ $type->description }}
+                            {{ $marker->description }}
                         </span>
                     </td>
                     <td class="p-4">
                         <div class="flex flex-row justify-center">
                             <x-button
-                                wire:click.prevent="openSaveModal({{ $type->id }})">
+                                wire:click.prevent="openSaveModal({{ $marker->id }})">
                                 <x-icon.edit />
                             </x-button>
                             <x-danger-button
-                                wire:click.prevent="openDeleteModal({{ $type->id }})">
+                                wire:click.prevent="openDeleteModal({{ $marker->id }})">
                                 <x-icon.trash />
                             </x-danger-button>
                         </div>
@@ -50,17 +50,17 @@
     @endempty
 
     <div class="pt-4">
-        {{ $types->links('livewire.paginator') }}
+        {{ $markers->links('livewire.paginator') }}
     </div>
 
     <x-dialog-modal id="delete" wire:model="showDeleteModal">
         @slot('title')
-            {{ __('Delete type') }}
+            {{ __('Delete marker') }}
         @endslot
 
         @slot('content')
             <p>
-                {{ __("Are you sure you want to eliminate type $name?") }}
+                {{ __("Are you sure you want to eliminate marker $name?") }}
             </p>
         @endslot
         @slot('footer')
@@ -76,7 +76,7 @@
 
     <x-dialog-modal id="save" wire:model="showSaveModal">
         @slot('title')
-            {{ __('Save type') }}
+            {{ __('Save marker') }}
         @endslot
         @slot('content')
             <x-form submit="save">
@@ -86,18 +86,18 @@
                             <x-label for="name">Name</x-label>
                             <x-input id="name" type="text" name="name"
                                 class="block w-full {{ $errors->any() ? 'is-invalid' : '' }}"
-                                wire:model.defer="typeTo.name" />
-                            <x-input-error for="typeTo.name" />
-                            @if (!$errors->has('typeTo.name'))
-                                <x-input-error for="typeTo.slug" />
+                                wire:model.defer="markerTo.name" />
+                            <x-input-error for="markerTo.name" />
+                            @if (!$errors->has('markerTo.name'))
+                                <x-input-error for="markerTo.slug" />
                             @endif
                         </div>
                         <div>
                             <x-label for="description">Description</x-label>
                             <x-input id="description" type="text" name="description"
                                 class="block w-full {{ $errors->any() ? 'is-invalid' : '' }}"
-                                wire:model.defer="typeTo.description" />
-                            <x-input-error for="typeTo.description" />
+                                wire:model.defer="markerTo.description" />
+                            <x-input-error for="markerTo.description" />
                         </div>
                     </div>
                 @endslot
