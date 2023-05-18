@@ -56,7 +56,7 @@ class ManageUserList extends Component
 
         $this->userTo->admin()->create();
         $this->showCreateAdminModal = false;
-        $this->dispatchBrowserEvent('alert', ['message' => 'Admin degrade successfully.']);
+        $this->dispatchBrowserEvent('alert', ['message' => 'Admin ascend successfully.']);
     }
 
     public function openDeleteAdminModal($id)

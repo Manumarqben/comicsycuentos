@@ -102,4 +102,11 @@ class AdminPolicy
             ? Response::allow()
             : Response::denyWithStatus(403);
     }
+
+    public function manageApp(User $user): \Illuminate\Auth\Access\Response|bool
+    {
+        return $user->admin
+            ? Response::allow()
+            : Response::denyWithStatus(403);
+    }
 }
