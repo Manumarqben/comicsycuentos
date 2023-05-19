@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Admin\App\ManageApp;
 use App\Http\Livewire\Admin\ManageApplicant;
 use App\Http\Livewire\Admin\ManageAuthor;
 use App\Http\Livewire\Admin\ManageAuthorList;
@@ -32,4 +33,5 @@ Route::group([
   Route::get('/works/{id}', ManageWork::class)->name('admin.work');
   Route::get('/user', ManageUserList::class)->name('admin.users');
   Route::get('/user/{id}', ManageUser::class)->name('admin.user');
+  Route::get('/app', ManageApp::class)->name('admin.app');
 });

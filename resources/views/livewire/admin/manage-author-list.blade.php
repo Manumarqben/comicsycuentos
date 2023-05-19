@@ -4,29 +4,44 @@
             {{ __('Authors administration') }}
         </h2>
     </x-slot>
-    @forelse ($authors as $author)
-        <x-admin-row @class([
-            'bg-gray-300' => $loop->index % 2 === 0,
-            'dark:bg-gray-600' => $loop->index % 2 === 0,
-        ])
-            wire:key="author-{{ $author->id }}">
-            {{ $author->alias }}
-            @slot('actions')
-                <x-button
-                    wire:click.prevent="redirectToAdminAuthor('{{ $author->id }}')">
-                    <x-icon.edit />
-                </x-button>
-                <x-danger-button
-                    wire:click.prevent="openDeleteModal({{ $author->id }})">
-                    <x-icon.trash />
-                </x-danger-button>
-            @endslot
-        </x-admin-row>
-    @empty
+
+    @empty($authors)
         <div class="flex justify-center h2">
             {{ __('There are no authors in the application.') }}
         </div>
-    @endforelse
+    @else
+        <table class="w-full">
+            <thead>
+                <th class="sm:text-left sm:px-4">{{ __('Alias') }}</th>
+                <th>{{ __('Actions') }}</th>
+            </thead>
+            <tbody>
+                @foreach ($authors as $author)
+                    <x-admin-row row="{{ $loop->index }}"
+                        wire:key="author-{{ $author->id }}">
+                        <td class="p-4 w-full">
+                            <div class="flex justify-center sm:justify-start w-full">
+                                {{ $author->alias }}
+                            </div>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex flex-row justify-center">
+                                <x-button
+                                    wire:click.prevent="redirectToAdminAuthor('{{ $author->id }}')">
+                                    <x-icon.edit />
+                                </x-button>
+                                <x-danger-button
+                                    wire:click.prevent="openDeleteModal({{ $author->id }})">
+                                    <x-icon.trash />
+                                </x-danger-button>
+                            </div>
+                        </td>
+                    </x-admin-row>
+                @endforeach
+            </tbody>
+        </table>
+    @endempty
+
     <div class="pt-4">
         {{ $authors->links('livewire.paginator') }}
     </div>

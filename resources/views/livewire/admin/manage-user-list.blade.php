@@ -4,38 +4,51 @@
             {{ __('User administration') }}
         </h2>
     </x-slot>
-    @foreach ($users as $user)
-        <x-admin-row @class([
-            'bg-gray-300' => $loop->index % 2 === 0,
-            'dark:bg-gray-600' => $loop->index % 2 === 0,
-        ])
-            wire:key="user-{{ $user->id }}">
-            {{ $user->name }}
-            @slot('actions')
-                <x-button
-                    wire:click.prevent="redirectToAdminUser('{{ $user->id }}')">
-                    <x-icon.edit />
-                </x-button>
-                <x-danger-button
-                    wire:click.prevent="openDeleteModal({{ $user->id }})">
-                    <x-icon.trash />
-                </x-danger-button>
-                @if ($user->admin)
-                    <x-secondary-button
-                        wire:click.prevent="openDeleteAdminModal({{ $user->id }})"
-                        title="Degradar de administrador">
-                        <x-icon.arrow-down-circle />
-                    </x-secondary-button>
-                @else
-                    <x-secondary-button
-                        wire:click.prevent="openCreateAdminModal({{ $user->id }})"
-                        title="Ascender a administrador">
-                        <x-icon.arrow-up-circle />
-                    </x-secondary-button>
-                @endif
-            @endslot
-        </x-admin-row>
-    @endforeach
+
+    <table class="w-full">
+        <thead>
+            <th class="sm:text-left sm:px-4">{{ __('Name') }}</th>
+            <th>{{ __('Actions') }}</th>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
+                <x-admin-row row="{{ $loop->index }}"
+                    wire:key="user-{{ $user->id }}">
+                    <td class="p-4 w-full">
+                        <div class="flex justify-center sm:justify-start w-full">
+                            {{ $user->name }}
+                        </div>
+                    </td>
+                    <td class="p-4">
+                        <div class="flex flex-row justify-center">
+                            <x-button
+                                wire:click.prevent="redirectToAdminUser('{{ $user->id }}')">
+                                <x-icon.edit />
+                            </x-button>
+                            <x-danger-button
+                                wire:click.prevent="openDeleteModal({{ $user->id }})">
+                                <x-icon.trash />
+                            </x-danger-button>
+                            @if ($user->admin)
+                                <x-secondary-button
+                                    wire:click.prevent="openDeleteAdminModal({{ $user->id }})"
+                                    title="Degradar de administrador">
+                                    <x-icon.arrow-down-circle />
+                                </x-secondary-button>
+                            @else
+                                <x-secondary-button
+                                    wire:click.prevent="openCreateAdminModal({{ $user->id }})"
+                                    title="Ascender a administrador">
+                                    <x-icon.arrow-up-circle />
+                                </x-secondary-button>
+                            @endif
+                        </div>
+                    </td>
+                </x-admin-row>
+            @endforeach
+        </tbody>
+    </table>
+
     <div class="pt-4">
         {{ $users->links('livewire.paginator') }}
     </div>
