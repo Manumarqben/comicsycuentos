@@ -26,7 +26,14 @@
             Markers
         </x-tab-option>
     </div>
-    <div>
+
+    <div class="flex justify-center items-center w-full">
+        <div wire:loading class="p-3">
+            <x-loading-spin wire:loading wire:target="manage" />
+        </div>
+    </div>
+
+    <div wire:loading.remove>
         @if ($manage == 'genres')
             @livewire('admin.app.manage-genres')
         @endif
