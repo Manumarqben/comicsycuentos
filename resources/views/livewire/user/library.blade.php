@@ -4,29 +4,29 @@
             {{ __('Library') }}
         </h2>
     </x-slot>
-    <div class="flex flex-wrap sm:flex-nowrap justify-around p-2">
+    <div class="flex justify-around p-2">
         <x-tab-option
             wire:click="setMarker('finished')"
             :active="$marker == 'finished'"
-            class="sm:w-full">
+            class="w-full">
             {{ __('Finished') }}
         </x-tab-option>
         <x-tab-option
             wire:click="setMarker('following')"
             :active="$marker == 'following'"
-            class="sm:w-full">
+            class="w-full">
             {{ __('Following') }}
         </x-tab-option>
         <x-tab-option
             wire:click="setMarker('pending')"
             :active="$marker == 'pending'"
-            class="sm:w-full">
+            class="w-full">
             {{ __('Pending') }}
         </x-tab-option>
         <x-tab-option
             wire:click="setMarker('favorite')"
             :active="$marker == 'favorite'"
-            class="sm:w-full">
+            class="w-full">
             {{ __('Favorites') }}
         </x-tab-option>
     </div>

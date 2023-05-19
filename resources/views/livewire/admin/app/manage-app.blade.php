@@ -35,11 +35,12 @@
         @endif
         @if ($manage == 'types')
             @livewire('admin.app.manage-types')
-            @endif
+        @endif
         @if ($manage == 'ages')
+            @livewire('admin.app.manage-ages')
         @endif
         @if ($manage == 'markers')
             @livewire('admin.app.manage-markers')
-            @endif
+        @endif
     </div>
 </div>
