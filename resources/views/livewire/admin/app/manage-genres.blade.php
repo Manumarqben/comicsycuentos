@@ -94,7 +94,7 @@
                         </div>
                         <div>
                             <x-label for="description">Description</x-label>
-                            <x-input id="description" type="text" name="description"
+                            <x-textarea id="description" type="text" name="description"
                                 class="block w-full {{ $errors->any() ? 'is-invalid' : '' }}"
                                 wire:model.defer="genreTo.description" />
                             <x-input-error for="genreTo.description" />

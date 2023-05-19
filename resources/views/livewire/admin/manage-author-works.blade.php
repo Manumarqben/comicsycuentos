@@ -11,7 +11,6 @@
                 <div
                     class="w-full flex flex-col max-h-[500px] overflow-y-auto mt-4">
                     @foreach ($author->works->sortBy('title') as $work)
-                        {{-- TODO: crear componente para manejo de obra --}}
                         <div id="{{ 'work-' . $work->id }}"
                             x-data="{ open: false }">
                             <div
