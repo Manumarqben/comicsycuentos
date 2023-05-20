@@ -141,6 +141,26 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div>
+                                <span
+                                    class="block font-medium text-sm text-gray-700 dark:text-gray-300">
+                                    {{ __('Genres') }}
+                                </span>
+                                @foreach ($genres as $id => $genre)
+                                    <label for="{{ $genre }}"
+                                        wire:key="{{ "genre-$id" }}">
+                                        <input type="checkbox"
+                                            value="{{ $id }}"
+                                            x-model="genresActive">
+                                        <span>{{ $genre }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                            <div>
+                                <x-input-error for="genresActive.*" />
+                            </div>
+                        </div>
                     </div>
                     <div class="w-full flex justify-center" id="preview">
                         <x-work-information-card :frontPage="$this->frontPagePath"
@@ -170,6 +190,7 @@
                 return {
                     types: @json($types),
                     ages: @json($ages),
+                    genresActive: @entangle('genresActive').defer,
 
                     validTitle: true,
                     validSynopsis: true,
