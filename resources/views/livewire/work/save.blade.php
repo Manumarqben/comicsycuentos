@@ -52,8 +52,9 @@
                                 {{ __('Front page') }}
                             </x-label>
                             <x-input id="frontPage" type="file" name="frontPage"
-                                :value="old('frontPage')" 
-                                class="{{ $errors->has('frontPage') ? 'is-invalid' : '' }}" wire:model="frontPage" />
+                                :value="old('frontPage')"
+                                class="{{ $errors->has('frontPage') ? 'is-invalid' : '' }}"
+                                wire:model="frontPage" />
                             <span wire:loading wire:target="frontPage">
                                 {{ __('Uploading') }}...
                             </span>
@@ -147,15 +148,21 @@
                                     class="block font-medium text-sm text-gray-700 dark:text-gray-300">
                                     {{ __('Genres') }}
                                 </span>
-                                @foreach ($genres as $id => $genre)
-                                    <label for="{{ $genre }}"
-                                        wire:key="{{ "genre-$id" }}">
-                                        <input type="checkbox"
-                                            value="{{ $id }}"
-                                            x-model="genresActive">
-                                        <span>{{ $genre }}</span>
-                                    </label>
-                                @endforeach
+                                <div
+                                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-h-36 overflow-y-auto">
+                                    @foreach ($genres as $id => $genre)
+                                        <div class="flex flex-row items-center gap-2">
+                                            <input type="checkbox"
+                                                id="{{ $genre }}"
+                                                value="{{ $id }}"
+                                                x-model="genresActive" />
+                                            <label for="{{ $genre }}"
+                                                wire:key="{{ "genre-$id" }}">
+                                                <span>{{ $genre }}</span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                             <div>
                                 <x-input-error for="genresActive.*" />
@@ -320,13 +327,15 @@
             {{ __('Add a chapter to the work') }}
         @endslot
         @slot('content')
-            <p>{{ __('Do you want to add the first chapter of your new work?') }}</p>
+            <p>{{ __('Do you want to add the first chapter of your new work?') }}
+            </p>
         @endslot
         @slot('footer')
             <x-secondary-button wire:click="$set('show', false)">
                 {{ __('Cancel') }}
             </x-secondary-button>
-            <x-button wire:click="redirectToCreateChapter()" wire:loading.attr="disabled">
+            <x-button wire:click="redirectToCreateChapter()"
+                wire:loading.attr="disabled">
                 {{ __('Accept') }}
             </x-button>
         @endslot
