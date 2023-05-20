@@ -52,8 +52,9 @@
                                 {{ __('Front page') }}
                             </x-label>
                             <x-input id="frontPage" type="file" name="frontPage"
-                                :value="old('frontPage')" 
-                                class="{{ $errors->has('frontPage') ? 'is-invalid' : '' }}" wire:model="frontPage" />
+                                :value="old('frontPage')"
+                                class="{{ $errors->has('frontPage') ? 'is-invalid' : '' }}"
+                                wire:model="frontPage" />
                             <span wire:loading wire:target="frontPage">
                                 {{ __('Uploading') }}...
                             </span>
@@ -141,6 +142,32 @@
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div>
+                                <span
+                                    class="block font-medium text-sm text-gray-700 dark:text-gray-300">
+                                    {{ __('Genres') }}
+                                </span>
+                                <div
+                                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-h-36 overflow-y-auto">
+                                    @foreach ($genres as $id => $genre)
+                                        <div class="flex flex-row items-center gap-2">
+                                            <input type="checkbox"
+                                                id="{{ $genre }}"
+                                                value="{{ $id }}"
+                                                x-model="genresActive" />
+                                            <label for="{{ $genre }}"
+                                                wire:key="{{ "genre-$id" }}">
+                                                <span>{{ $genre }}</span>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div>
+                                <x-input-error for="genresActive.*" />
+                            </div>
+                        </div>
                     </div>
                     <div class="w-full flex justify-center" id="preview">
                         <x-work-information-card :frontPage="$this->frontPagePath"
@@ -170,6 +197,7 @@
                 return {
                     types: @json($types),
                     ages: @json($ages),
+                    genresActive: @entangle('genresActive').defer,
 
                     validTitle: true,
                     validSynopsis: true,
@@ -299,13 +327,15 @@
             {{ __('Add a chapter to the work') }}
         @endslot
         @slot('content')
-            <p>{{ __('Do you want to add the first chapter of your new work?') }}</p>
+            <p>{{ __('Do you want to add the first chapter of your new work?') }}
+            </p>
         @endslot
         @slot('footer')
             <x-secondary-button wire:click="$set('show', false)">
                 {{ __('Cancel') }}
             </x-secondary-button>
-            <x-button wire:click="redirectToCreateChapter()" wire:loading.attr="disabled">
+            <x-button wire:click="redirectToCreateChapter()"
+                wire:loading.attr="disabled">
                 {{ __('Accept') }}
             </x-button>
         @endslot

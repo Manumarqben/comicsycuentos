@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Work;
 
 use App\Models\Age;
+use App\Models\Genre;
 use App\Models\State;
 use App\Models\Type;
 use App\Models\Work;
@@ -20,6 +21,7 @@ class Save extends Component
 
     public Work $work;
     public $frontPage;
+    public $genresActive = [];
 
     public $show = false;
 
@@ -59,6 +61,7 @@ class Save extends Component
             'frontPage' => [
                 Rule::requiredIf(!$this->work->front_page),
             ],
+            'genresActive.*' => ['exists:genres,id'],
         ];
     }
 
@@ -68,7 +71,23 @@ class Save extends Component
         'type_id' => "type",
         'state_id' => "state",
         'age_id' => "age",
+        'genresActive.*' => "genre",
     ];
+
+    public function updatedGenresActive()
+    {
+        try {
+            $this->validate([
+                'genresActive.*' => ['exists:genres,id']
+            ]);
+        } catch (\Throwable $th) {
+            $genreIds = Genre::pluck('id')->toArray();
+
+            $this->genresActive = array_filter($this->genresActive, function ($id) use ($genreIds) {
+                return in_array($id, $genreIds);
+            });
+        }
+    }
 
     public function updatedFrontPage()
     {
@@ -95,6 +114,7 @@ class Save extends Component
 
         $this->fill([
             $this->work = $work ?? new Work(),
+            $this->genresActive = $this->work->genres()->pluck('genres.id'),
         ]);
     }
 
@@ -131,6 +151,8 @@ class Save extends Component
 
         $this->work->save();
 
+        $this->work->genres()->sync($this->genresActive);
+
         if ($this->work->created_at == $this->work->updated_at) {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
             $this->show = true;
@@ -146,10 +168,11 @@ class Save extends Component
 
     public function render()
     {
-        $types = Type::pluck('name', 'id');
-        $states = State::pluck('name', 'id');
-        $ages = Age::pluck('year', 'id');
+        $types = Type::orderBy('name')->pluck('name', 'id');
+        $states = State::orderBy('name')->pluck('name', 'id');
+        $ages = Age::orderBy('year')->pluck('year', 'id');
+        $genres = Genre::orderBy('name')->pluck('name', 'id');
 
-        return view('livewire.work.save', compact('types', 'states', 'ages'));
+        return view('livewire.work.save', compact('types', 'states', 'ages', 'genres'));
     }
 }
