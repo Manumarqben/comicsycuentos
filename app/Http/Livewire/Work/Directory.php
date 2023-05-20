@@ -68,10 +68,10 @@ class Directory extends Component
 
     public function render()
     {
-        $states = State::orderBy('name')->pluck('name', 'id');
-        $types = Type::orderBy('name')->pluck('name', 'id');
+        $states = State::orderBy('name')->pluck('name', 'slug');
+        $types = Type::orderBy('name')->pluck('name', 'slug');
         $ages = Age::orderBy('year')->pluck('year', 'id');
-        $genres = Genre::orderBy('name')->pluck('name', 'id');
+        $genres = Genre::orderBy('name')->pluck('name', 'slug');
 
         return view('livewire.work.directory', compact('states', 'types', 'ages', 'genres'));
     }
