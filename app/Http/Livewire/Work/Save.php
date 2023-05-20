@@ -168,10 +168,10 @@ class Save extends Component
 
     public function render()
     {
-        $types = Type::pluck('name', 'id');
-        $states = State::pluck('name', 'id');
-        $ages = Age::pluck('year', 'id');
-        $genres = Genre::pluck('name', 'id');
+        $types = Type::orderBy('name')->pluck('name', 'id');
+        $states = State::orderBy('name')->pluck('name', 'id');
+        $ages = Age::orderBy('year')->pluck('year', 'id');
+        $genres = Genre::orderBy('name')->pluck('name', 'id');
 
         return view('livewire.work.save', compact('types', 'states', 'ages', 'genres'));
     }
