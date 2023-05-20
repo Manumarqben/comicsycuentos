@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Livewire\Work;
+namespace App\Http\Livewire\Admin;
 
+use App\Models\Admin;
 use App\Models\Age;
 use App\Models\State;
 use App\Models\Type;
@@ -13,7 +14,7 @@ use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class Save extends Component
+class ManageWork extends Component
 {
     use AuthorizesRequests;
     use WithFileUploads;
@@ -21,11 +22,9 @@ class Save extends Component
     public Work $work;
     public $frontPage;
 
-    public $show = false;
-
     protected function rules()
     {
-        return    $rules = [
+        return $rules = [
             'work.title' => [
                 Rule::unique('works', 'title')->ignore($this->work->id),
                 'max:200',
@@ -80,21 +79,10 @@ class Save extends Component
         ]);
     }
 
-    public function updatedShow()
+    public function mount($id)
     {
-        if (!$this->show) {
-            redirect()->route('author.manage', ['slug' => auth()->user()->author->slug]);
-        }
-    }
-
-    public function mount($slug = null)
-    {
-        if ($slug != null) {
-            $work = Work::where('slug', $slug)->firstOrFail();
-        }
-
         $this->fill([
-            $this->work = $work ?? new Work(),
+            'work' => Work::findOrFail($id),
         ]);
     }
 
@@ -113,14 +101,12 @@ class Save extends Component
 
     public function submit()
     {
-        $this->work->id ?
-            $this->authorize('update', $this->work) :
-            $this->authorize('create', Work::class);
+
+        $this->authorize('manageWorks', Admin::class);
 
         $this->work->title = trim($this->work->title);
         $this->work->slug = str($this->work->title)->slug();
         $this->work->synopsis = trim($this->work->synopsis);
-        $this->work->author_id = auth()->user()->author->id;
 
         $this->validate();
 
@@ -131,17 +117,7 @@ class Save extends Component
 
         $this->work->save();
 
-        if ($this->work->created_at == $this->work->updated_at) {
-            $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
-            $this->show = true;
-        } else {
-            $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
-        }
-    }
-
-    public function redirectToCreateChapter()
-    {
-        redirect()->route('chapter.create', ['workSlug' => $this->work->slug]);
+        $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
     }
 
     public function render()
@@ -150,6 +126,6 @@ class Save extends Component
         $states = State::pluck('name', 'id');
         $ages = Age::pluck('year', 'id');
 
-        return view('livewire.work.save', compact('types', 'states', 'ages'));
+        return view('livewire.admin.manage-work', compact('types', 'states', 'ages'));
     }
 }

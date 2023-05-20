@@ -86,7 +86,7 @@
                                     <x-icon.eye />
                                 </div>
                             @else
-                                <div wire:click="bookmarkTo({{ $chapter->id }})"
+                                <div
                                     title="Marcar como leido"
                                     class="cursor-pointer text-gray-500 ">
                                     <x-icon.eye-slash />

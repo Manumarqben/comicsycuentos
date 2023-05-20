@@ -27,9 +27,11 @@ class AuthorPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): \Illuminate\Auth\Access\Response|bool
     {
-        //
+        return $user->admin
+            ? Response::allow()
+            : Response::denyWithStatus(403);
     }
 
     /**
