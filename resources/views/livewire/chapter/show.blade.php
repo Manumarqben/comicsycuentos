@@ -1,12 +1,10 @@
 <div class="container">
-    @if ($typeContent == 'text')
-        <div>
-            {!! $chapter->text->content !!}
-        </div>
+    @if ($chapter->type == 'text')
+        @livewire('chapter.reader-text', ['chapterId' => $chapter->id,'text' => $chapter->text->content])
     @endif
 
-    @if ($typeContent == 'images')
-        @foreach ($content as $image)
+    @if ($chapter->type == 'image')
+        @foreach ($chapter->images as $image)
             <div class="flex justify-center pb-1">
                 <img src="{{ asset(Storage::url($image->url)) }}"
                     alt="{{ $image->order }}">
