@@ -40,7 +40,7 @@
 
 /* CSS para lector y editor de texto */
 
-.text-content {
+.text-content * {
   @apply text-justify px-3;
 }
 

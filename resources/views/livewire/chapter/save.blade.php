@@ -227,8 +227,12 @@
                                         outdoorToolbar.style.position = 'sticky';
                                         outdoorToolbar.style.top = '4rem';
 
-                                        let content = document.querySelector('.ck-content');
-                                        content.classList.add('text-content', 'text-gray-700');
+                                        let content = document.querySelector(
+                                            '.ck-editor__main');
+                                        content.classList.add(
+                                            'text-content',
+                                            'text-gray-700',
+                                        );
                                     })
                                     .catch(error => {
                                         console.error(error);
