@@ -1,22 +1,25 @@
 <div x-data="readerText()">
     <div id="text" class="text-content">
-        {!! $text !!}
+        <div>
+            {!! $text !!}
+        </div>
     </div>
-    <div class="fixed bottom-2 right-2">
+    <div class="fixed bottom-2 right-5 md:right-24">
         <x-button @click.prevent="play" x-show="!playingAudio"
-            class="!rounded-full">
+            class="!rounded-full aspect-square">
             <x-icon.play />
         </x-button>
         <div x-show="playingAudio" class="flex gap-1">
             <x-secondary-button @click.prevent="pause" x-show="!pauseAudio"
-                class="!rounded-full">
+                class="!rounded-full aspect-square">
                 <x-icon.pause />
             </x-secondary-button>
             <x-button @click.prevent="resume" x-show="pauseAudio"
-                class="!rounded-full">
+                class="!rounded-full aspect-square">
                 <x-icon.play />
             </x-button>
-            <x-danger-button @click.prevent="finish" class="!rounded-full">
+            <x-danger-button @click.prevent="finish"
+                class="!rounded-full aspect-square">
                 <x-icon.x-mark />
             </x-danger-button>
         </div>
@@ -43,7 +46,14 @@
                     this.getDataFromCookie(`user-${this.user}`);
 
                     window.addEventListener("beforeunload", () => {
-                        this.synth.cancel();
+                        this.speech.removeEventListener('end', () => {
+                            this.finish();
+                        })
+
+                        if (navigator.userAgent.indexOf('Firefox') == -1) {
+                            this.synth.cancel();
+                        }
+
 
                         if (this.charIndex != 0) {
                             let data = {
@@ -112,7 +122,7 @@
 
                 deleteCookie(name) {
                     document.cookie =
-                        `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC`;
+                        `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict`;
                 },
 
                 getDataFromCookie(name) {

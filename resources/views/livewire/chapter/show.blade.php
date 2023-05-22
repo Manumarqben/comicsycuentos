@@ -4,14 +4,14 @@
             {{ "$chapter->number. $chapter->title" }}
         </h2>
     </x-slot>
-    <div>
+    <div class="flex justify-between">
         {{-- cabecera del capítulo --}}
         <a href="{{ route('work.show', ['slug' => $chapter->work->slug]) }}"
             class="button">
             {{ __('Back to work') }}
         </a>
         @if ($chapter->type == 'image')
-        <x-button wire:click.prevent="">Cascada</x-button>
+            <x-button wire:click.prevent="">Cascada</x-button>
         @endif
     </div>
     <div>
