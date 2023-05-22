@@ -37,3 +37,41 @@
 .button-secondary {
   @apply inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150
 }
+
+/* CSS para lector y editor de texto */
+
+.text-content {
+  @apply text-justify px-3;
+}
+
+.text-content p {
+  @apply p-1
+}
+
+.text-content strong {
+  @apply font-bold;
+}
+.text-content i {
+  @apply italic;
+}
+
+.text-content h2 {
+  @apply text-2xl text-center;
+}
+.text-content h3 {
+  @apply text-xl text-center;
+}
+.text-content h4 {
+  @apply text-lg text-center;
+}
+
+.text-content ul {
+  @apply list-disc px-5;
+}
+.text-content ol {
+  @apply list-decimal px-5;
+}
+
+.text-content blockquote {
+  @apply border-l-4 border-gray-400 ml-5 pl-3 italic;
+}

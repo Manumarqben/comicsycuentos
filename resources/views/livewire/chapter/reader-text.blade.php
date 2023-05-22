@@ -1,5 +1,5 @@
 <div x-data="readerText()">
-    <div id="text" class="text-justify px-3">
+    <div id="text" class="text-content">
         {!! $text !!}
     </div>
     <div class="fixed bottom-2 right-2">
@@ -52,7 +52,8 @@
                                 initialCharacter: this.charIndex,
                             };
 
-                            document.cookie = `user-${this.user}=${JSON.stringify(data)}; max-age= ${(60 * 60 * 24 * 7)}; SameSite=Strict`;
+                            document.cookie =
+                                `user-${this.user}=${JSON.stringify(data)}; max-age= ${(60 * 60 * 24 * 7)}; SameSite=Strict`;
                         }
                     });
 
