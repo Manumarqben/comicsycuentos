@@ -4,20 +4,27 @@
     @else
         <div class="flex flex-row justify-center pb-2 w-full"
             x-bind:class="playingAudio ? 'sticky top-16' : ''">
-            <x-button @click.prevent="play" x-show="!playingAudio"
-                class="!rounded-full aspect-square">
-                <x-icon.play />
-            </x-button>
-            <div x-show="playingAudio"
-                class="flex gap-3 border border-gray-300 bg-gray-600 bg-opacity-95 rounded-full py-2 px-3">
-                <x-secondary-button @click.prevent="pause" x-show="!pauseAudio"
-                    class="!rounded-full aspect-square">
-                    <x-icon.pause />
-                </x-secondary-button>
-                <x-button @click.prevent="resume" x-show="pauseAudio"
-                    class="!rounded-full aspect-square">
+            <div class="flex gap-3 border border-gray-800 dark:border-gray-300 bg-gray-500 bg-opacity-95 rounded-full py-2 px-2"
+                x-show="!playingAudio" x-transition:enter.duration.200ms>
+                <x-button @click.prevent="play" class="!rounded-full aspect-square">
                     <x-icon.play />
                 </x-button>
+            </div>
+            <div x-show="playingAudio"
+                class="flex gap-3 border border-gray-800 dark:border-gray-300 bg-gray-500 bg-opacity-95 rounded-full py-2 px-2"
+                x-transition:enter.duration.200ms>
+                <div x-show="!pauseAudio" x-transition:enter.duration.100ms>
+                    <x-secondary-button @click.prevent="pause"
+                        class="!rounded-full aspect-square">
+                        <x-icon.pause />
+                    </x-secondary-button>
+                </div>
+                <div x-show="pauseAudio" x-transition:enter.duration.100ms>
+                    <x-button @click.prevent="resume"
+                        class="!rounded-full aspect-square">
+                        <x-icon.play />
+                    </x-button>
+                </div>
                 <x-danger-button @click.prevent="finish"
                     class="!rounded-full aspect-square">
                     <x-icon.x-mark />
@@ -61,7 +68,6 @@
                             this.synth.cancel();
                         }
 
-
                         if (this.charIndex != 0) {
                             let data = {
                                 user: this.user,
@@ -84,6 +90,21 @@
                     this.speech.addEventListener('end', () => {
                         this.finish();
                     })
+
+                    document.addEventListener("keydown", (event) => {
+                        if (event.code === "Space") {
+                            event.preventDefault();
+                            if (this.playingAudio) {
+                                if (this.pauseAudio) {
+                                    this.resume();
+                                } else {
+                                    this.pause();
+                                }
+                            } else {
+                                this.play();
+                            }
+                        }
+                    });
                 },
 
                 play() {
