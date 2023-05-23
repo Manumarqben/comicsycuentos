@@ -41,12 +41,34 @@
             @endforeach --}}
         @endif
     </div>
-    <div class="flex justify-between px-4">
+    <div class="flex flex-row px-4">
         {{-- pie del capítulo --}}
-        @auth
-            <div class="w-full flex justify-center">
+        <div class="w-full felx justify-start">
+            @if ($chapter->hasPreviousChapter())
+                <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number - 1]) }}"
+                    class="button">
+                    <x-icon.chevron-double-left type="mini" />
+                    <span class="hidden sm:block pl-1">
+                        {{ __('Prev') }}
+                    </span>
+                </a>
+            @endif
+        </div>
+        <div class="w-full flex justify-center">
+            @auth
                 @livewire('chapter.like-button', ['chapter' => $chapter], key('like-button'))
-            </div>
-        @endauth
+            @endauth
+        </div>
+        <div class="w-full flex justify-end">
+            @if ($chapter->hasNextChapter())
+                <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number + 1]) }}"
+                    class="button">
+                    <span class="hidden sm:block pr-1">
+                        {{ __('Next') }}
+                    </span>
+                    <x-icon.chevron-double-right type="mini" />
+                </a>
+            @endif
+        </div>
     </div>
 </div>

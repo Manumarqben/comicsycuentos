@@ -51,4 +51,24 @@ class Chapter extends Model
     {
         return $this->hasOne(ChapterText::class);
     }
+
+    /**
+     * Check if the chapter has a previous chapter
+     */
+    public function hasPreviousChapter(): bool
+    {
+        return $this->where('work_id', $this->work_id)
+            ->where('number', '<', $this->number)
+            ->exists();
+    }
+
+    /**
+     * Check if there is a next chapter
+     */
+    public function hasNextChapter(): bool
+    {
+        return $this->where('work_id', $this->work_id)
+            ->where('number', '>', $this->number)
+            ->exists();
+    }
 }
