@@ -60,13 +60,9 @@
                     this.getDataFromCookie(`user-${this.user}`);
 
                     window.addEventListener("beforeunload", () => {
-                        this.speech.removeEventListener('end', () => {
-                            this.finish();
-                        })
+                        this.speech.removeEventListener('end', this.finish);
 
-                        if (navigator.userAgent.indexOf('Firefox') == -1) {
-                            this.synth.cancel();
-                        }
+                        this.synth.cancel();
 
                         if (this.charIndex != 0) {
                             let data = {
@@ -87,9 +83,7 @@
                         }
                     });
 
-                    this.speech.addEventListener('end', () => {
-                        this.finish();
-                    })
+                    this.speech.addEventListener('end', this.finish);
 
                     document.addEventListener("keydown", (event) => {
                         if (event.code === "Space") {
