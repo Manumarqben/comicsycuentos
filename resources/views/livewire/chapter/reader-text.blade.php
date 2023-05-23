@@ -1,29 +1,36 @@
 <div x-data="readerText()">
-    <div id="text" class="text-content">
-        <div>
-            {!! $text !!}
-        </div>
-    </div>
-    <div class="fixed bottom-2 right-5 md:right-24">
-        <x-button @click.prevent="play" x-show="!playingAudio"
-            class="!rounded-full aspect-square">
-            <x-icon.play />
-        </x-button>
-        <div x-show="playingAudio" class="flex gap-1">
-            <x-secondary-button @click.prevent="pause" x-show="!pauseAudio"
-                class="!rounded-full aspect-square">
-                <x-icon.pause />
-            </x-secondary-button>
-            <x-button @click.prevent="resume" x-show="pauseAudio"
+    @empty($text)
+        {{ __('The chapter still has no content') }}
+    @else
+        <div class="flex flex-row justify-center pb-2 w-full"
+            x-bind:class="playingAudio ? 'sticky top-16' : ''">
+            <x-button @click.prevent="play" x-show="!playingAudio"
                 class="!rounded-full aspect-square">
                 <x-icon.play />
             </x-button>
-            <x-danger-button @click.prevent="finish"
-                class="!rounded-full aspect-square">
-                <x-icon.x-mark />
-            </x-danger-button>
+            <div x-show="playingAudio"
+                class="flex gap-3 border border-gray-300 bg-gray-600 bg-opacity-95 rounded-full py-2 px-3">
+                <x-secondary-button @click.prevent="pause" x-show="!pauseAudio"
+                    class="!rounded-full aspect-square">
+                    <x-icon.pause />
+                </x-secondary-button>
+                <x-button @click.prevent="resume" x-show="pauseAudio"
+                    class="!rounded-full aspect-square">
+                    <x-icon.play />
+                </x-button>
+                <x-danger-button @click.prevent="finish"
+                    class="!rounded-full aspect-square">
+                    <x-icon.x-mark />
+                </x-danger-button>
+            </div>
+
         </div>
-    </div>
+        <div id="text" class="text-content">
+            <div>
+                {!! $text !!}
+            </div>
+        </div>
+    @endempty
 
     <script>
         function readerText() {
@@ -32,7 +39,7 @@
 
                 user: @entangle('user'),
                 chapterId: @entangle('chapterId'),
-                initialCharacter: 0,
+                initialCharacter: -20,
 
                 synth: window.speechSynthesis,
                 speech: new SpeechSynthesisUtterance(),
@@ -132,7 +139,7 @@
 
                         if (cookie['user'] == this.user &&
                             cookie['chapter'] == this.chapterId) {
-                            this.initialCharacter = cookie['initialCharacter'];
+                            this.initialCharacter += cookie['initialCharacter'];
                         }
                     }
                 },
