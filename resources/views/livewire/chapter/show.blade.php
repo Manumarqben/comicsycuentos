@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="flex justify-between px-4">
+    <div class="flex justify-between items-center px-4">
         <a href="{{ route('work.show', ['slug' => $chapter->work->slug]) }}"
             class="button">
             <x-icon.arrow-left type="mini" />
@@ -34,12 +34,6 @@
     </div>
 
     <div class="my-3 py-3 bg-gray-50 dark:bg-gray-800 rounded">
-        <div class="flex justify-center items-center w-full">
-            <div wire:loading class="p-3">
-                <x-loading-spin wire:loading />
-            </div>
-        </div>
-        <div wire:loading.remove>
         @if ($chapter->type == 'text')
             @livewire('chapter.reader-text', ['chapterId' => $chapter->id, 'text' => $chapter->text->content])
         @endif
@@ -48,7 +42,6 @@
             @livewire('chapter.reader-image', ['images' => $chapter->images, 'view' => $view])
         @endif
     </div>
-</div>
 
     <div class="flex flex-row px-4">
         <div class="w-full felx justify-start">

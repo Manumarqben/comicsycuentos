@@ -34,6 +34,7 @@ class ReaderImage extends Component
 
     public function setView($value)
     {
+        $this->navPageTransition = $value == 'paginate';
         $this->view = $value;
     }
 
@@ -48,7 +49,7 @@ class ReaderImage extends Component
 
     public function prevPage()
     {
-        if ($this->page > 1 ) {
+        if ($this->page > 1) {
             $this->page--;
         } else {
             $this->dispatchBrowserEvent('alert', ['type' => 'info' ,'message' => 'It is on the first page.']);
