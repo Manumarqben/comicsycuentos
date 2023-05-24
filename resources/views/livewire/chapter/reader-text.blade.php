@@ -57,10 +57,12 @@
                 pauseAudio: false,
 
                 init() {
+                    const eventoEnd = this.dataAndCookieReset.bind(this);
+
                     this.getDataFromCookie(`user-${this.user}`);
 
                     window.addEventListener("beforeunload", () => {
-                        this.speech.removeEventListener('end', this.finish);
+                        this.speech.removeEventListener('end', eventoEnd);
 
                         this.synth.cancel();
 
@@ -83,7 +85,7 @@
                         }
                     });
 
-                    this.speech.addEventListener('end', this.finish);
+                    this.speech.addEventListener('end', eventoEnd);
 
                     document.addEventListener("keydown", (event) => {
                         if (event.code === "Space") {
@@ -127,12 +129,7 @@
 
                 finish() {
                     this.synth.cancel();
-
-                    this.initialCharacter = 0;
-                    this.charIndex = 0;
-                    this.deleteCookie(`user-${this.user}`);
-
-                    this.playingAudio = false;
+                    this.dataAndCookieReset();
                 },
 
                 getCookie(name) {
@@ -140,11 +137,6 @@
                         `(?:(?:^|.*;\\s*)${name}\\s*=\\s*([^;]*).*$)|^.*$`
                     );
                     return document.cookie.replace(regex, "$1");
-                },
-
-                deleteCookie(name) {
-                    document.cookie =
-                        `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict`;
                 },
 
                 getDataFromCookie(name) {
@@ -157,6 +149,15 @@
                             this.initialCharacter += cookie['initialCharacter'];
                         }
                     }
+                },
+
+                dataAndCookieReset() {
+                    this.initialCharacter = 0;
+                    this.charIndex = 0;
+                    document.cookie =
+                        `user-${this.user}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Strict`;
+
+                    this.playingAudio = false;
                 },
             }
         }
