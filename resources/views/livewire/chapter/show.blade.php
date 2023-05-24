@@ -4,45 +4,53 @@
             {{ "$chapter->number. $chapter->title" }}
         </h2>
     </x-slot>
+
     <div class="flex justify-between px-4">
-        {{-- cabecera del capítulo --}}
         <a href="{{ route('work.show', ['slug' => $chapter->work->slug]) }}"
             class="button">
             <x-icon.arrow-left type="mini" />
             <span class="hidden sm:block pl-1">{{ __('Back to work') }}</span>
         </a>
         @if ($chapter->type == 'image')
-            <x-button wire:click.prevent="">
-                <span class="hidden sm:block pr-1">
-                    {{ __('Cascade') }}
-                </span>
-                <x-icon.document-duplicate type="solid" />
-            </x-button>
-            <x-button wire:click.prevent="">
-                <span class="hidden sm:block pr-1">
-                    {{ __('Paginate') }}
-                </span>
-                <x-icon.document type="solid" />
-            </x-button>
+            @if ($view == 'paginate')
+                <x-button wire:click.prevent="$set('view', 'cascade')"
+                    wire:loading.attr="disabled">
+                    <span class="hidden sm:block pr-1">
+                        {{ __('Cascade') }}
+                    </span>
+                    <x-icon.document-duplicate type="solid" />
+                </x-button>
+            @endif
+            @if ($view == 'cascade')
+                <x-button wire:click.prevent="$set('view', 'paginate')"
+                    wire:loading.attr="disabled">
+                    <span class="hidden sm:block pr-1">
+                        {{ __('Paginate') }}
+                    </span>
+                    <x-icon.document type="solid" />
+                </x-button>
+            @endif
         @endif
     </div>
+
     <div class="my-3 py-3 bg-gray-50 dark:bg-gray-800 rounded">
-        {{-- contenido del capítulo --}}
+        <div class="flex justify-center items-center w-full">
+            <div wire:loading class="p-3">
+                <x-loading-spin wire:loading />
+            </div>
+        </div>
+        <div wire:loading.remove>
         @if ($chapter->type == 'text')
             @livewire('chapter.reader-text', ['chapterId' => $chapter->id, 'text' => $chapter->text->content])
         @endif
 
         @if ($chapter->type == 'image')
-            {{-- @foreach ($chapter->images as $image)
-                <div class="flex justify-center pb-1">
-                    <img src="{{ asset(Storage::url($image->url)) }}"
-                        alt="{{ $image->order }}">
-                </div>
-            @endforeach --}}
+            @livewire('chapter.reader-image', ['images' => $chapter->images, 'view' => $view])
         @endif
     </div>
+</div>
+
     <div class="flex flex-row px-4">
-        {{-- pie del capítulo --}}
         <div class="w-full felx justify-start">
             @if ($chapter->hasPreviousChapter())
                 <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number - 1]) }}"

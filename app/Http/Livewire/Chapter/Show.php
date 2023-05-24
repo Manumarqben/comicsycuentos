@@ -8,6 +8,16 @@ use Livewire\Component;
 class Show extends Component
 {
     public $chapter;
+    public $view;
+
+    protected $queryString = [
+        'view' => ['except' => ''],
+    ];
+
+    public function updatedView($value)
+    {
+        $this->emitTo('chapter.reader-image', 'setView', $value);
+    }
 
     public function mount($workSlug, $chapterNumber)
     {
@@ -17,6 +27,7 @@ class Show extends Component
                     $query->where('slug', $workSlug);
                 })
                 ->firstOrFail(),
+            'view' => $this->chapter->type == 'image' ? $this->view ?? 'paginate' : '',
         ]);
 
         if (auth()->check()) {
