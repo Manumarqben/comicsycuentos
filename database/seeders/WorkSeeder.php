@@ -79,6 +79,53 @@ class WorkSeeder extends Seeder
         $genres = Genre::where('slug', 'action')->get();
         $work->genres()->attach($genres);
 
+        $chapter = Chapter::create([
+            'number' => 1,
+            'title' => 'Capítulo 1',
+            'type' => 'image',
+            'work_id' => $work->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $urls = [
+            'images/2/3/xM8dkDzSGX5MCy0AoLjRFO3hYuYQsgu9PLsN9yWl.png',
+            'images/2/3/ESd4sba1LzH6xRejQx9Gah4BPmcKh6FGqEtnDCFb.png',
+            'images/2/3/uHLD7yMBQJIscegAoARnHHG53fxSPtyHbWcWqdXp.png',
+            'images/2/3/XDoCQPLKzWRljZFKUi15KIJ7qw5I1xJHLXH3vHau.png',
+        ];
+
+        foreach ($urls as $key => $url) {
+            $chapter->images()->create([
+                'order' => $key + 1,
+                'url' => $url,
+            ]);
+        }
+
+        $chapter = Chapter::create([
+            'number' => 2,
+            'title' => 'Capítulo 2',
+            'type' => 'image',
+            'work_id' => $work->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        $urls = [
+            'images/2/4/tLKbg18M1MrnC51r2Dqcv2L8YLDWMR9fladX0ElF.png',
+            'images/2/4/dv2h7OnKQQV1T4P7KMoaaDIgpfNfcdJvg1lZcbDK.png',
+            'images/2/4/OqDMVpaiFoYZvq172CeV0W686WDaOHnne7iPEGu3.png',
+            'images/2/4/K9gyVgBlDY5WggndDuI6i5V6O4Ij7KEOvXVXJdFg.png',
+            'images/2/4/01wv8qG2tpkcu0pu0aYD640m17tPgrFJJ0mei0ZQ.png',
+        ];
+
+        foreach ($urls as $key => $url) {
+            $chapter->images()->create([
+                'order' => $key + 1,
+                'url' => $url,
+            ]);
+        }
+
         $work = Work::create([
             'title' => 'El nombre de la rosa',
             'slug' => str('El nombre de la rosa')->slug(),
