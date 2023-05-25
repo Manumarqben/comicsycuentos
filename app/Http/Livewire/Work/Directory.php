@@ -3,9 +3,11 @@
 namespace App\Http\Livewire\Work;
 
 use App\Models\Age;
+use App\Models\AgeRange;
 use App\Models\Genre;
 use App\Models\State;
 use App\Models\Type;
+use Database\Seeders\AgeSeeder;
 use Livewire\Component;
 
 class Directory extends Component
@@ -72,7 +74,8 @@ class Directory extends Component
         $types = Type::orderBy('name')->pluck('name', 'slug');
         $ages = Age::orderBy('year')->pluck('year', 'id');
         $genres = Genre::orderBy('name')->pluck('name', 'slug');
+        $ageRanges = AgeRange::orderBy('name')->get();
 
-        return view('livewire.work.directory', compact('states', 'types', 'ages', 'genres'));
+        return view('livewire.work.directory', compact('states', 'types', 'ages', 'genres', 'ageRanges'));
     }
 }

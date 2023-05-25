@@ -92,10 +92,22 @@
                                             <option value="" selected>
                                                 {{ __('See all ages') }}
                                             </option>
+                                            @foreach ($ageRanges as $range)
+                                                <option value="{{ $range->slug }}"
+                                                    wire:key="type-{{ $range->slug }}">
+                                                    {{ $range->name }} (
+                                                    @if ($range->minAge->year == 18)
+                                                        +18
+                                                    @else
+                                                        {{ $range->minAge->year . ' to ' . $range->maxAge->year }}
+                                                    @endif
+                                                    )
+                                                </option>
+                                            @endforeach
                                             @foreach ($ages as $year)
                                                 <option value="{{ $year }}"
                                                     wire:key="type-{{ $year }}">
-                                                    {{ $year == 0 ? 'TP' : '+' . $year }}
+                                                    {{ $year == 0 ? 'TP' : $year . ' years' }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -103,7 +115,8 @@
                                 </div>
                                 <div id="genres" class="pt-2">
                                     <x-label>Genres</x-label>
-                                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-h-36 overflow-y-auto">
+                                    <div
+                                        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-h-36 overflow-y-auto">
                                         @foreach ($genres as $slug => $genre)
                                             <div>
                                                 <input type="checkbox"
