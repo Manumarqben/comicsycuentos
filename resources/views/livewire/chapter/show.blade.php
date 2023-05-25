@@ -46,7 +46,7 @@
     <div class="flex flex-row px-4">
         <div class="w-full felx justify-start">
             @if ($chapter->hasPreviousChapter())
-                <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number - 1]) }}"
+                <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number - 1, 'view' => $view]) }}"
                     class="button">
                     <x-icon.chevron-double-left type="mini" />
                     <span class="hidden sm:block pl-1">
@@ -62,7 +62,7 @@
         </div>
         <div class="w-full flex justify-end">
             @if ($chapter->hasNextChapter())
-                <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number + 1]) }}"
+                <a href="{{ route('chapter.viewer', ['workSlug' => $chapter->work->slug, 'chapterNumber' => $chapter->number + 1, 'view' => $view]) }}"
                     class="button">
                     <span class="hidden sm:block pr-1">
                         {{ __('Next') }}

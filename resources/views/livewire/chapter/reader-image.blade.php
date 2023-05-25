@@ -4,7 +4,7 @@
             <div
                 class="absolute top-0 left-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-600 dark:bg-gray-800 rounded-r-lg navPage {{ $page <= 1 ? 'hidden' : '' }}">
                 <button wire:click.prevent="prevPage" wire:loading.attr="disabled"
-                    class="w-full h-full">
+                    class="w-full h-full"  title="{{ __('Previous page') }}">
                     prev
                 </button>
             </div>
@@ -17,7 +17,7 @@
             <div
                 class="absolute top-0 right-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-600 dark:bg-gray-800 rounded-l-lg navPage {{ $page >= $images->count() ? 'hidden' : '' }}">
                 <button wire:click.prevent="nextPage"
-                    wire:loading.attr="disabled" class="w-full h-full">
+                    wire:loading.attr="disabled" class="w-full h-full" title="{{ __('Next page') }}">
                     next
                 </button>
             </div>
