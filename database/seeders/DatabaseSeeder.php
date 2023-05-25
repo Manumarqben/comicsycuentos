@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             StateSeeder::class,
             TypeSeeder::class,
             WorkSeeder::class,
+            AgeRangeSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

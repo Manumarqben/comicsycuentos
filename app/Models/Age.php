@@ -22,4 +22,20 @@ class Age extends Model
     {
         return $this->hasMany(Work::class);
     }
+
+    /**
+     * Get all the ranges associated to the instance.
+     */
+    public function minAgeRanges(): HasMany
+    {
+        return $this->hasMany(AgeRange::class, 'age_min');
+    }
+
+    /**
+     * Get all the ranges associated to the instance.
+     */
+    public function maxAgeRanges(): HasMany
+    {
+        return $this->hasMany(AgeRange::class, 'age_max');
+    }
 }
