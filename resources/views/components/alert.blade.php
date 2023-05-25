@@ -26,7 +26,7 @@
             'alert-success': type === 'success',
             'alert-danger': type === 'danger',
             'alert-warning': type === 'warning',
-            'alert-warning': type === 'info',
+            'alert-info': type === 'info',
         }"
         style="display: none;">
         <span class="block sm:inline" x-text="message"></span>

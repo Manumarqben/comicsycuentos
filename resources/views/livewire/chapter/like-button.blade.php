@@ -1,4 +1,4 @@
-<div class="flex ">
+<div class="flex items-center gap-3">
     @if ($like === true)
         <div wire:click="voted()">
             <x-icon.hand-thumb-up-solid />

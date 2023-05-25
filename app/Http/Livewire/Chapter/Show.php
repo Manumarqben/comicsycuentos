@@ -8,7 +8,16 @@ use Livewire\Component;
 class Show extends Component
 {
     public $chapter;
-    public $typeContent;
+    public $view;
+
+    protected $queryString = [
+        'view' => ['except' => ''],
+    ];
+
+    public function updatedView($value)
+    {
+        $this->emitTo('chapter.reader-image', 'setView', $value);
+    }
 
     public function mount($workSlug, $chapterNumber)
     {
@@ -18,6 +27,7 @@ class Show extends Component
                     $query->where('slug', $workSlug);
                 })
                 ->firstOrFail(),
+            'view' => $this->chapter->type == 'image' ? $this->view ?? 'paginate' : '',
         ]);
 
         if (auth()->check()) {
@@ -26,10 +36,10 @@ class Show extends Component
                 $lastChapterRead = $user->chapterBookmarks()->where('bookmarks.work_id', $this->chapter->work_id);
                 if ($lastChapterRead->exists()) {
                     $lastChapterRead = $lastChapterRead->first()->number;
-                }else {
+                } else {
                     $lastChapterRead = 0;
                 }
-                
+
                 if ($this->chapter->number > $lastChapterRead) {
                     $user->addBookmark($this->chapter->work_id, $this->chapter->id);
                 }
@@ -39,17 +49,6 @@ class Show extends Component
 
     public function render()
     {
-        if ($this->chapter->text) {
-            $this->typeContent = 'text';
-            // TODO: vista (o componente?) aparte para lector de texto.
-            return view('livewire.chapter.show');
-        }
-
-        if ($this->chapter->images->isNotEmpty()) {
-            $this->typeContent = 'images';
-            $content = $this->chapter->images()->orderBy('order')->get();
-            // TODO: vista (o componente?) aparte para lector de imagenes, con sus opciones (paginación, cascada, etc...).
-            return view('livewire.chapter.show', compact('content'));
-        }
+        return view('livewire.chapter.show');
     }
 }
