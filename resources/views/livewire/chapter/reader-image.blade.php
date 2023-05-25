@@ -2,10 +2,13 @@
     @if ($view == 'paginate')
         <div x-data="paginate" class="relative w-full">
             <div
-                class="absolute top-0 left-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-600 dark:bg-gray-800 rounded-r-lg navPage {{ $page <= 1 ? 'hidden' : '' }}">
+                class="absolute top-0 left-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-400 dark:bg-gray-600 rounded-r-lg navPage {{ $page <= 1 ? 'hidden' : '' }}">
                 <button wire:click.prevent="prevPage" wire:loading.attr="disabled"
-                    class="w-full h-full"  title="{{ __('Previous page') }}">
-                    prev
+                    class="flex flex-col justify-around items-center w-full h-full"
+                    title="{{ __('Previous page') }}">
+                    <x-icon.chevron-double-left />
+                    <x-icon.chevron-double-left />
+                    <x-icon.chevron-double-left />
                 </button>
             </div>
             <div id="paginated-image"
@@ -15,10 +18,14 @@
                     class="w-full max-w-3xl rounded-md">
             </div>
             <div
-                class="absolute top-0 right-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-600 dark:bg-gray-800 rounded-l-lg navPage {{ $page >= $images->count() ? 'hidden' : '' }}">
+                class="absolute top-0 right-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-400 dark:bg-gray-600 rounded-l-lg navPage {{ $page >= $images->count() ? 'hidden' : '' }}">
                 <button wire:click.prevent="nextPage"
-                    wire:loading.attr="disabled" class="w-full h-full" title="{{ __('Next page') }}">
-                    next
+                    wire:loading.attr="disabled"
+                    class="flex flex-col justify-around items-center w-full h-full"
+                    title="{{ __('Next page') }}">
+                    <x-icon.chevron-double-right />
+                    <x-icon.chevron-double-right />
+                    <x-icon.chevron-double-right />
                 </button>
             </div>
         </div>
