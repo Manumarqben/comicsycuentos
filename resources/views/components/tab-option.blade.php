@@ -7,6 +7,6 @@
 
 @endphp
 
-<div {{ $attributes->merge(['class' => 'h-10 shadow-inner dark:shadow-gray-800 cursor-pointer text-center p-2 ' . $class]) }}>
+<div {{ $attributes->merge(['class' => 'flex justify-center items-center min-h-10 shadow-inner dark:shadow-gray-800 cursor-pointer text-center p-2 ' . $class]) }}>
     {{ $slot }}
 </div>
