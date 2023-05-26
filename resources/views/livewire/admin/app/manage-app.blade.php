@@ -6,23 +6,27 @@
     </x-slot>
     <div class="flex flex-wrap sm:flex-nowrap justify-around p-2">
         <x-tab-option wire:click.prevent="$set('manage', 'genres')"
-            :active="$manage == 'genres'" class="w-1/4 sm:w-full">
+            :active="$manage == 'genres'" class="w-1/2 sm:w-full">
             Genres
         </x-tab-option>
         <x-tab-option wire:click.prevent="$set('manage', 'states')"
-            :active="$manage == 'states'" class="w-1/4 sm:w-full">
+            :active="$manage == 'states'" class="w-1/2 sm:w-full">
             States
         </x-tab-option>
         <x-tab-option wire:click.prevent="$set('manage', 'types')"
-            :active="$manage == 'types'" class="w-1/4 sm:w-full">
+            :active="$manage == 'types'" class="w-1/2 sm:w-full">
             Types
         </x-tab-option>
         <x-tab-option wire:click.prevent="$set('manage', 'ages')"
-            :active="$manage == 'ages'" class="w-1/4 sm:w-full">
+            :active="$manage == 'ages'" class="w-1/2 sm:w-full">
             Ages
         </x-tab-option>
+        <x-tab-option wire:click.prevent="$set('manage', 'ranges')"
+            :active="$manage == 'ranges'" class="w-1/2 sm:w-full">
+            Age ranges
+        </x-tab-option>
         <x-tab-option wire:click.prevent="$set('manage', 'markers')"
-            :active="$manage == 'markers'" class="w-1/4 sm:w-full">
+            :active="$manage == 'markers'" class="w-1/2 sm:w-full">
             Markers
         </x-tab-option>
     </div>
@@ -45,6 +49,9 @@
         @endif
         @if ($manage == 'ages')
             @livewire('admin.app.manage-ages')
+        @endif
+        @if ($manage == 'ranges')
+            @livewire('admin.app.manage-age-ranges')
         @endif
         @if ($manage == 'markers')
             @livewire('admin.app.manage-markers')

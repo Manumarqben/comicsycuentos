@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Work;
 
+use App\Models\AgeRange;
 use App\Models\Work;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -142,9 +143,14 @@ class ListWorks extends Component
         }
 
         if ($this->age != '') {
-            $works->whereHas('age', function ($query) {
-                $query->where('year', $this->age);
-            });
+            $range = AgeRange::where('slug', $this->age)->first();
+            if ($range) {
+                $works->whereBetween('age_id', [$range->age_min, $range->age_max]);
+            } elseif (is_numeric($this->age)) {
+                $works->whereHas('age', function ($query) {
+                    $query->where('year', $this->age);
+                });
+            }
         }
 
         if ($this->search) {
