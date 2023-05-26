@@ -31,7 +31,6 @@ class Save extends Component
             'chapter.number' => [
                 'integer',
                 'min:0',
-                Rule::unique('chapters', 'number')->where('work_id', $this->work->id)->ignore($this->chapter->id),
                 'required',
             ],
             'chapter.title' => [
@@ -116,6 +115,38 @@ class Save extends Component
         $this->chapter->type = $this->contentType;
 
         $this->validate();
+
+        // Reorganización de capítulos en caso de que el number este en uso.
+        if (Chapter::where('number', $this->chapter->number)->where('work_id', $this->work->id)->exists()) {
+            if ($isUpdate) {
+                $newNumber = $this->chapter->number;
+                $originalNumber = $this->chapter->getOriginal()['number'];
+                
+                // Compruebo si el número en uso no es el número del capítulo. 
+                if ($newNumber != $originalNumber) {
+                    $smaller = $newNumber < $originalNumber ? $newNumber : $originalNumber;
+                    $bigger = $newNumber > $originalNumber ? $newNumber : $originalNumber;
+                    $upOrDown = $newNumber > $originalNumber ? 'down' : 'up';
+
+                    $this->chapter->number = -1;
+
+                    $this->chapter->save();
+
+                    $chaptersToOrganize = $this->work->chapters()->where('number', '>=', $smaller)->where('number', '<=', $bigger);
+
+                    if ($upOrDown == 'down') {
+                        $chaptersToOrganize->decrement('number', 1);
+                    } elseif ($upOrDown == 'up') {
+                        $chaptersToOrganize->increment('number', 1);
+                    }
+
+                    $this->chapter->number = $newNumber;
+                }
+            } else {
+                $chaptersToOrganize = $this->work->chapters()->where('number', '>=', $this->chapter->number);
+                $chaptersToOrganize->increment('number', 1);
+            }
+        }
 
         $this->chapter->save();
 
