@@ -43,7 +43,7 @@ class ReaderImage extends Component
         if ($this->page < $this->images->count()) {
             $this->page++;
         } else {
-            $this->dispatchBrowserEvent('alert', ['type' => 'info' ,'message' => 'It is on the last page.']);
+            $this->dispatchBrowserEvent('alert', ['type' => 'info', 'message' => 'It is on the last page.']);
         }
     }
 
@@ -52,7 +52,7 @@ class ReaderImage extends Component
         if ($this->page > 1) {
             $this->page--;
         } else {
-            $this->dispatchBrowserEvent('alert', ['type' => 'info' ,'message' => 'It is on the first page.']);
+            $this->dispatchBrowserEvent('alert', ['type' => 'info', 'message' => 'It is on the first page.']);
         }
     }
 
@@ -62,10 +62,16 @@ class ReaderImage extends Component
             $this->page = 0;
             $imagesList = $this->images->sortBy('order');
         }
-        
+
         if ($this->view == 'paginate') {
             $this->page = $this->page != 0 ? $this->page : 1;
-            $imagesList = $this->images->where('order', $this->page)->first();;
+            $imagesList = $this->images->skip($this->page - 1);
+
+            if ($imagesList->count() > 0) {
+                $imagesList = $imagesList->first();
+            } else {
+                abort(404);
+            }
         }
 
         return view('livewire.chapter.reader-image', compact('imagesList'));
