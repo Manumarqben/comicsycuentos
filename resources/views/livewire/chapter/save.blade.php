@@ -42,17 +42,19 @@
                     </div>
                     <div class="col-span-6">
                         <div id="content-menu">
-                            <div class="flex flex-row">
-                                <x-button @click.prevent="setContentType('text')"
+                            <div class="flex justify-center flex-row">
+                                <x-tab-option @click.prevent="setContentType('text')"
                                     x-bind:disabled="data.type.content == 'text'"
-                                    wire:loading.attr="disabled">
+                                    class="w-full dark:shadow-gray-500"
+                                    :active="$contentType == 'text'">
                                     Text
-                                </x-button>
-                                <x-button @click.prevent="setContentType('image')"
-                                    x-bind:disabled="data.type.content == 'image'"
-                                    wire:loading.attr="disabled">
+                                </x-tab-option>
+                                <x-tab-option @click.prevent="setContentType('image')"
+                                    x-bind:disabled="data.type.content == 'image'" 
+                                    class="w-full dark:shadow-gray-500"
+                                    :active="$contentType == 'image'">
                                     Image
-                                </x-button>
+                                </x-tab-option>
                             </div>
                             <x-input-error-client
                                 message="'You need to select a valid content type.'"
@@ -61,7 +63,7 @@
                                 <x-input-error for="contentType" />
                             </div>
                         </div>
-                        <div id="chapterContent">
+                        <div id="chapterContent" class="pt-3">
                             <div x-show="data.type.content == 'text'">
                                 <div class="w-full flex justify-center">
                                     <div class="w-full md:w-3/4">
@@ -161,7 +163,7 @@
                                 error: '',
                             },
                             type: {
-                                content: @entangle('contentType').defer,
+                                content: @entangle('contentType'),
                                 rules: {
                                     require: true,
                                 },
