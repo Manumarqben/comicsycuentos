@@ -19,15 +19,25 @@
                         {{-- TODO: crear componente para manejo de obra --}}
                         <div id="{{ 'work-' . $work->id }}"
                             x-data="{ open: false }">
-                            <div
-                                class="flex flex-col sm:flex-row justify-center rounded-lg hover:drop-shadow-xl p-3">
-                                <div class="flex items-center justify-center sm:justify-start cursor-pointer w-full"
-                                    @click="open = !open">
-                                    <p class="line-clamp-1">
-                                        {{ $work->title }}
-                                    </p>
+                            <div class="flex flex-col sm:flex-row justify-center rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 p-3">
+                                <div class="flex flex-row justify-center w-full h-14" title="{{ __('Manage chapters') }}" @click="open = !open">
+                                    <div class="flex items-center justify-center sm:justify-start cursor-pointer sm:w-full"
+                                        >
+                                        <span class="line-clamp-1">
+                                            {{ $work->title }}
+                                        </span>
+                                    </div>
+                                    <div
+                                        class="flex justify-center items-center p-2">
+                                        <template x-if="open">
+                                            <x-icon.chevron-up />
+                                        </template>
+                                        <template x-if="!open">
+                                            <x-icon.chevron-down />
+                                        </template>
+                                    </div>
                                 </div>
-                                <div class="flex flex-row justify-center">
+                                <div class="flex flex-row justify-center items-center">
                                     <a href="{{ route('work.update', $work->slug) }}"
                                         class="button-secondary">
                                         <x-icon.edit />
@@ -42,12 +52,12 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="px-10 py-4" x-show="open">
+                            <div class="px-10 py-4 bg-gray-100 dark:bg-gray-500 max-h-52 overflow-y-auto" x-show="open">
                                 @forelse ($work->chapters->sortBy('number')->reverse() as $chapter)
                                     <div
-                                        class="flex flex-col sm:flex-row justify-center rounded-lg hover:drop-shadow-xl">
+                                        class="flex flex-col sm:flex-row justify-center rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 p-2">
                                         <div
-                                            class="flex items-center justify-center sm:justify-start cursor-pointer w-full">
+                                            class="flex items-center justify-center sm:justify-start cursor-pointer w-full py-7 sm:py-0">
                                             <p class="line-clamp-1">
                                                 {{ "$chapter->number. $chapter->title" }}
                                             </p>

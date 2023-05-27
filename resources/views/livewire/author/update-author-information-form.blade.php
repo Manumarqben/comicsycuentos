@@ -14,7 +14,7 @@
                     <x-author-profile-photo :path="$this->profilePhotoPath"
                         alt="{{ $author->alias }}" />
                 </div>
-                <div>
+                <div class="overflow-hidden">
                     <x-label for="photo" value="{{ __('Author photo') }}" />
                     <input type="file" name="photo" id="photo"
                         wire:model="photo">
