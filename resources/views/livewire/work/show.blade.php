@@ -59,7 +59,7 @@
             <div class="ml-auto pb-5 flex">
                 @auth
                     <x-danger-button wire:click="deleteBookmark" class="mr-2"
-                        title="Eliminar marcapáginas">
+                        title="{{ __('Delete bookmarks') }}">
                         <x-icon.eye-slash />
                     </x-danger-button>
                 @endauth
@@ -81,13 +81,13 @@
                     @auth
                         <div wire:click="bookmarkTo({{ $chapter->id }})">
                             @if ($chapter->number <= $lastChapterRead)
-                                <div title="Marcar como ultimo capítulo leido"
+                                <div title="{{ __('Mark as last chapter read') }}"
                                     class="cursor-pointer text-blue-700 dark:text-blue-300">
                                     <x-icon.eye />
                                 </div>
                             @else
                                 <div
-                                    title="Marcar como leido"
+                                    title="{{ __('Mark as read') }}"
                                     class="cursor-pointer text-gray-500 ">
                                     <x-icon.eye-slash />
                                 </div>

@@ -18,14 +18,14 @@
                                     @if ($sortDirection == 'asc')
                                         <div class="button"
                                             wire:click="$set('sortDirection', 'desc')"
-                                            title="Ordenar descendente">
+                                            title="{{ __('Sort descending') }}">
                                             <x-icon.bars-arrow-up />
                                         </div>
                                     @endif
                                     @if ($sortDirection == 'desc')
                                         <div class="button"
                                             wire:click="$set('sortDirection', 'asc')"
-                                            title="Ordenar ascendente">
+                                            title="{{ __('Sort ascending') }}">
                                             <x-icon.bars-arrow-down />
                                         </div>
                                     @endif

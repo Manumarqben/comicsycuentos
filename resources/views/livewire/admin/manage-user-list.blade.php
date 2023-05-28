@@ -32,13 +32,13 @@
                             @if ($user->admin)
                                 <x-secondary-button
                                     wire:click.prevent="openDeleteAdminModal({{ $user->id }})"
-                                    title="Degradar de administrador">
+                                    title="{{ __('Demote admin') }}">
                                     <x-icon.arrow-down-circle />
                                 </x-secondary-button>
                             @else
                                 <x-secondary-button
                                     wire:click.prevent="openCreateAdminModal({{ $user->id }})"
-                                    title="Ascender a administrador">
+                                    title="{{ __('Promote to admin') }}">
                                     <x-icon.arrow-up-circle />
                                 </x-secondary-button>
                             @endif
