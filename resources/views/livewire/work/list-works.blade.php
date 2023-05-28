@@ -5,7 +5,7 @@
         </div>
     </div>
     <div wire:loading.remove>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 px-2 sm:px-0">
             @forelse ($works as $work)
                 @livewire('work.card', ['work' => $work], key($work->slug))
             @empty
