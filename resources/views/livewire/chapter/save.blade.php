@@ -45,13 +45,13 @@
                             <div class="flex justify-center flex-row">
                                 <x-tab-option @click.prevent="setContentType('text')"
                                     x-bind:disabled="data.type.content == 'text'"
-                                    class="w-full dark:shadow-gray-600"
+                                    class="w-full dark:shadow-gray-500"
                                     :active="$contentType == 'text'">
                                     Text
                                 </x-tab-option>
                                 <x-tab-option @click.prevent="setContentType('image')"
                                     x-bind:disabled="data.type.content == 'image'" 
-                                    class="w-full dark:shadow-gray-600"
+                                    class="w-full dark:shadow-gray-500"
                                     :active="$contentType == 'image'">
                                     Image
                                 </x-tab-option>
