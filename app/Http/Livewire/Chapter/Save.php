@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\Chapter;
 
+use App\Mail\NewChapter;
 use App\Models\Chapter;
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -170,6 +172,10 @@ class Save extends Component
             $this->dispatchBrowserEvent('alert', ['message' => 'Chapter updated successfully']);
         } else {
             $this->dispatchBrowserEvent('alert', ['message' => 'Chapter created successfully']);
+
+            foreach ($this->work->usersMarkers as $user) {
+                Mail::to($user->email)->send(new NewChapter($this->work, $this->chapter->number));
+            }
         }
     }
 
