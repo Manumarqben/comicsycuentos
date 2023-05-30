@@ -4,10 +4,10 @@
         <div
             class="relative flex flex-col overflow-hidden max-w-5xl w-full rounded-lg shadow-md dark:shadow-gray-600 bg-gray-200 dark:bg-gray-800">
             @foreach ($worksInCarousel as $work)
-                <div class="flex flex-row gap-3 w-full h-96"
+                <div class="flex flex-row gap-3 w-full h-96 md:h-[450px]"
                     x-show="currentIndex == {{ $loop->iteration }}">
                     <div id="image-{{ $work->slug }}"
-                        class="w-full sm:w-5/12 md:w-4/12 overflow-hidden border-r-2 cursor-pointer"
+                        class="w-full sm:w-5/12 md:w-4/12 overflow-hidden sm:border-r-2 cursor-pointer"
                         wire:click="redirectToWork('{{ $work->slug }}')">
                         <img src="{{ asset(Storage::url($work->front_page)) }}"
                             alt="carousel-{{ $work->slug }}"
@@ -115,10 +115,12 @@
         </script>
     </div>
 
-    <x-section-border />
+    <div class="p-8 sm:px-0">
+        <div class="border-t border-gray-200 dark:border-gray-700"></div>
+    </div>
 
     <div>
-        <div class="text-center p-5">
+        <div class="text-center pb-5">
             <span class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">Novedades</span>
         </div>
         <div
