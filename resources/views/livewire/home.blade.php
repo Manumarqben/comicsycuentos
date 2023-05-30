@@ -2,36 +2,41 @@
     <div id="carousel" x-data="carousel"
         class="w-full flex justify-center px-4 sm:p-0">
         <div
-            class="relative flex flex-col overflow-hidden max-w-5xl w-full rounded-lg shadow-md dark:shadow-gray-600 bg-gray-200 dark:bg-gray-800">
-            @foreach ($worksInCarousel as $work)
-                <div class="flex flex-row gap-3 w-full h-96 md:h-[450px]"
-                    x-show="currentIndex == {{ $loop->iteration }}">
-                    <div id="image-{{ $work->slug }}"
-                        class="w-full sm:w-5/12 md:w-4/12 overflow-hidden sm:border-r-2 cursor-pointer"
-                        wire:click="redirectToWork('{{ $work->slug }}')">
-                        <img src="{{ asset(Storage::url($work->front_page)) }}"
-                            alt="carousel-{{ $work->slug }}"
-                            class="object-cover w-full h-full" />
-                    </div>
-                    <div
-                        class="hidden sm:block sm:w-7/12 md:w-8/12 grow space-y-2 p-2">
-                        <div id="title"
-                            class="text-2xl sm:text-3xl text-center sm:text-left line-clamp-1">
-                            {{ $work->title }}
-                        </div>
-                        <div id="synopsis"
-                            class="line-clamp-[12] md:line-clamp-[13]">
-                            <div class="text-justify">
-                                {{ $work->synopsis }}
-                            </div>
+            class="flex flex-col overflow-hidden max-w-5xl w-full rounded-lg shadow-md dark:shadow-gray-600 bg-gray-200 dark:bg-gray-800">
+            <div class="flex flex-row">
+                @foreach ($worksInCarousel as $work)
+                    <div class="relative flex flex-row gap-3 w-full h-96 md:h-[450px] transe"
+                        x-show="currentIndex == {{ $loop->iteration }}"
+                        x-transition:enter="transition ease-out duration-500"
+                        x-transition:enter-start="opacity-0 translate-x-96"
+                        x-transition:enter-end="opacity-100 translate-x-0">
+                        <div id="image-{{ $work->slug }}"
+                            class="w-full sm:w-5/12 md:w-4/12 overflow-hidden sm:border-r-2 cursor-pointer"
+                            wire:click="redirectToWork('{{ $work->slug }}')">
+                            <img src="{{ asset(Storage::url($work->front_page)) }}"
+                                alt="carousel-{{ $work->slug }}"
+                                class="object-cover w-full h-full" />
                         </div>
                         <div
-                            class="rounded-full bg-gray-600 text-white absolute bottom-12 right-5 -translate-y-1/2 text-sm px-2 text-center z-20 cursor-pointer" wire:click="redirectToWork('{{ $work->slug }}')">
+                            class="hidden sm:block sm:w-7/12 md:w-8/12 grow space-y-2 p-2">
+                            <div id="title"
+                                class="text-2xl sm:text-3xl text-center sm:text-left line-clamp-1">
+                                {{ $work->title }}
+                            </div>
+                            <div id="synopsis"
+                                class="line-clamp-[12] md:line-clamp-[13]">
+                                <div class="text-justify">
+                                    {{ $work->synopsis }}
+                                </div>
+                            </div>
+                            <div class="rounded-full bg-gray-600 text-white absolute bottom-2 right-5 -translate-y-1/2 text-sm px-2 text-center z-20 cursor-pointer"
+                                wire:click="redirectToWork('{{ $work->slug }}')">
                                 <span>{{ __('See work') }}...</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
 
             <div class="relative w-full bg-gray-500 bg-opacity-50 border-t-2">
                 <div
