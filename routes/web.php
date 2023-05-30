@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', Home::class)->name('home');
+
+// Route::get('/', function () {
+//     return view('dashboard');
+// })->name('dashboard');
 
 // Route::middleware([
 //     'auth:sanctum',
