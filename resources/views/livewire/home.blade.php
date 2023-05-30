@@ -1,50 +1,70 @@
 <div class="container">
-    <div id="carousel" x-data="carousel">
-        <div class="relative w-full flex overflow-hidden shadow-2xl">
-            <div
-                class="rounded-full bg-gray-600 text-white absolute top-5 right-5 text-sm px-2 text-center z-10">
-                <span x-text="currentIndex"></span>/
-                <span>{{ $worksInCarousel->count() }}</span>
-            </div>
-
+    <div id="carousel" x-data="carousel"
+        class="w-full flex justify-center px-4 sm:p-0">
+        <div
+            class="relative flex flex-col overflow-hidden max-w-5xl w-full rounded-lg shadow-md dark:shadow-gray-600 bg-gray-200 dark:bg-gray-800">
             @foreach ($worksInCarousel as $work)
-                <div class="h-96"
+                <div class="flex flex-row gap-3 w-full h-96"
                     x-show="currentIndex == {{ $loop->iteration }}">
-                    <div>
+                    <div id="image-{{ $work->slug }}"
+                        class="w-full sm:w-5/12 md:w-4/12 overflow-hidden border-r-2 cursor-pointer"
+                        wire:click="redirectToWork('{{ $work->slug }}')">
                         <img src="{{ asset(Storage::url($work->front_page)) }}"
-                            alt="carousel-{{ $work->slug }}" class="" />
+                            alt="carousel-{{ $work->slug }}"
+                            class="object-cover w-full h-full" />
                     </div>
-                    <div>
-                        
+                    <div
+                        class="hidden sm:block sm:w-7/12 md:w-8/12 grow space-y-2 p-2">
+                        <div id="title"
+                            class="text-2xl sm:text-3xl text-center sm:text-left line-clamp-1">
+                            {{ $work->title }}
+                        </div>
+                        <div id="synopsis"
+                            class="line-clamp-[12] md:line-clamp-[13]">
+                            <div class="text-justify">
+                                {{ $work->synopsis }}
+                            </div>
+                        </div>
+                        <div
+                            class="rounded-full bg-gray-600 text-white absolute bottom-12 right-5 -translate-y-1/2 text-sm px-2 text-center z-20 cursor-pointer" wire:click="redirectToWork('{{ $work->slug }}')">
+                                <span>{{ __('See work') }}...</span>
+                        </div>
                     </div>
                 </div>
             @endforeach
 
-            <div
-                class="absolute top-0 left-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-400 dark:bg-gray-600 rounded-r-lg z-20">
-                <button @click="back" wire:loading.attr="disabled"
-                    class="flex flex-col justify-around items-center w-full h-full"
-                    title="{{ __('Previous') }}">
-                    <x-icon.chevron-double-left />
-                </button>
-            </div>
-            <div
-                class="absolute top-0 right-0 h-full w-1/5 transition-opacity duration-1000 opacity-5 hover:opacity-80 bg-gray-400 dark:bg-gray-600 rounded-l-lg z-20">
-                <button @click="next" wire:loading.attr="disabled"
-                    class="flex flex-col justify-around items-center w-full h-full"
-                    title="{{ __('Next') }}">
-                    <x-icon.chevron-double-right />
-                </button>
-            </div>
-
-            <div class="absolute bottom-0 ">
-hola
+            <div class="relative w-full bg-gray-500 bg-opacity-50 border-t-2">
+                <div
+                    class="flex flex-row justify-center items-center gap-7 h-10">
+                    <button @click="back" title="{{ __('Previous') }}">
+                        <x-icon.chevron-double-left />
+                    </button>
+                    <div x-show="playCarousel" class="flex justify-center">
+                        <button @click="stopCarousel">
+                            <x-icon.pause />
+                        </button>
+                    </div>
+                    <div x-show="!playCarousel" class="flex justify-center">
+                        <button @click="startCarousel">
+                            <x-icon.play />
+                        </button>
+                    </div>
+                    <button @click="next" title="{{ __('Next') }}">
+                        <x-icon.chevron-double-right />
+                    </button>
+                </div>
+                <div
+                    class="rounded-full bg-gray-600 text-white absolute top-1/2 right-5 -translate-y-1/2 text-sm px-2 text-center z-10">
+                    <span x-text="currentIndex"></span>/
+                    <span>{{ $worksInCarousel->count() }}</span>
+                </div>
             </div>
         </div>
 
         <script>
             function carousel() {
                 return {
+                    playCarousel: false,
                     length: @js($worksInCarousel->count()),
                     currentIndex: 1,
                     interval: '',
@@ -53,13 +73,32 @@ hola
                         this.startCarousel()
                     },
 
+                    startCarousel() {
+                        let intervalId = setInterval(() => {
+                            this.next();
+                        }, 10000);
+
+                        this.interval = intervalId;
+                        this.playCarousel = true;
+                    },
+
+                    stopCarousel() {
+                        clearInterval(this.interval);
+                        this.playCarousel = false;
+                    },
+
+                    resetInterval() {
+                        this.stopCarousel();
+                        this.startCarousel();
+                    },
+
                     back() {
                         if (this.currentIndex > 1) {
-                            this.currentIndex = this.currentIndex -
-                                1;
+                            this.currentIndex = this.currentIndex - 1;
                         } else {
                             this.currentIndex = this.length
                         }
+                        this.resetInterval();
                     },
 
                     next() {
@@ -69,31 +108,30 @@ hola
                         } else if (this.currentIndex <= this.length) {
                             this.currentIndex = 1
                         }
-                    },
-
-                    startCarousel() {
-                        let intervalId = setInterval(() => {
-                            this.next();
-                            console.log(this.interval);
-                        }, 10000);
-
-                        this.interval = intervalId;
-                    },
-
-                    stopCarousel() {
-                        clearInterval(this.interval);
+                        this.resetInterval();
                     },
                 }
             }
         </script>
     </div>
 
-    <div class="p-5">
-        Ultimos capítulos subidos.
-        @foreach ($latestAggregatedWorks as $work)
-            <p>
-                {{ $work->title }}
-            </p>
-        @endforeach
+    <x-section-border />
+
+    <div>
+        <div class="text-center p-5">
+            <span class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">Novedades</span>
+        </div>
+        <div
+            class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 px-2 sm:px-0">
+            @forelse ($latestAggregatedWorks as $work)
+                @livewire('work.card', ['work' => $work], key($work->slug))
+            @empty
+                <div class="col-span-full flex justify-center">
+                    <p class="h2 pt-5">
+                        {{ __('There are no works.') }}
+                    </p>
+                </div>
+            @endforelse
+        </div>
     </div>
 </div>
