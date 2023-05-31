@@ -133,7 +133,9 @@ class Save extends Component
 
     public function submit()
     {
-        $this->work->id ?
+        $isUpdate = $this->work->id;
+
+        $isUpdate ?
             $this->authorize('update', $this->work) :
             $this->authorize('create', Work::class);
 
@@ -145,7 +147,7 @@ class Save extends Component
         $this->validate();
 
         if ($this->frontPage) {
-            $path = $this->frontPage->store('front_pages', 'public');
+            $path = $this->frontPage->storePublicly('front_pages', 's3');
             $this->work->front_page = $path;
         }
 
@@ -153,7 +155,7 @@ class Save extends Component
 
         $this->work->genres()->sync($this->genresActive);
 
-        if ($this->work->created_at == $this->work->updated_at) {
+        if ($isUpdate) {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
             $this->show = true;
         } else {

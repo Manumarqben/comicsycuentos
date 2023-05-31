@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Work;
 
 use App\Models\Work;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class DeleteWorkModal extends Component
@@ -28,11 +29,15 @@ class DeleteWorkModal extends Component
     {
         $this->authorize('delete', $this->work);
 
-        $this->work->delete();
-
-        $this->emit('refresh-manege-author-works');
-        $this->dispatchBrowserEvent('alert', ['message' => 'Work deleted successfully']);
-        $this->show = false;
+        try {
+            Storage::disk('s3')->delete($this->work->front_page);
+            $this->work->delete();
+            $this->emit('refresh-manege-author-works');
+            $this->dispatchBrowserEvent('alert', ['message' => 'Work deleted successfully']);
+            $this->show = false;
+        } catch (\Throwable $th) {
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
+        }
     }
 
     public function open($id)
