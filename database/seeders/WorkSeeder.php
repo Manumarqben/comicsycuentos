@@ -23,7 +23,7 @@ class WorkSeeder extends Seeder
             'title' => 'Don Quijote de la Mancha',
             'slug' => str('Don Quijote de la Mancha')->slug(),
             'synopsis' => 'El ingenioso hidalgo don Quijote de la Mancha narra las aventuras de Alonso Quijano, un hidalgo pobre que de tanto leer novelas de caballería acaba enloqueciendo y creyendo ser un caballero andante, nombrándose a sí mismo como don Quijote de la Mancha',
-            'front_page' => 'front_pages/don-quijote.jpg',
+            'front_page' => 'seed/front_pages/don-quijote.jpg',
             'age_id' => Age::where('year', '9')->first()->id,
             'state_id' => State::where('slug', 'finished')->first()->id,
             'type_id' => Type::where('slug', 'tale')->first()->id,
@@ -67,7 +67,7 @@ class WorkSeeder extends Seeder
             'title' => 'El principito',
             'slug' => str('El principito')->slug(),
             'synopsis' => 'El principito es una narración corta del escritor francés Antoine de Saint-Exupéry. La historia se centra en un pequeño príncipe que realiza una travesía por el universo. En este viaje descubre la extraña forma en que los adultos ven la vida y comprende el valor del amor y la amistad.',
-            'front_page' => 'front_pages/el-principito.jpeg',
+            'front_page' => 'seed/front_pages/el-principito.jpeg',
             'age_id' => Age::where('year', '0')->first()->id,
             'state_id' => State::where('slug', 'finished')->first()->id,
             'type_id' => Type::where('slug', 'tale')->first()->id,
@@ -89,10 +89,10 @@ class WorkSeeder extends Seeder
         ]);
 
         $urls = [
-            'images/2/3/xM8dkDzSGX5MCy0AoLjRFO3hYuYQsgu9PLsN9yWl.png',
-            'images/2/3/ESd4sba1LzH6xRejQx9Gah4BPmcKh6FGqEtnDCFb.png',
-            'images/2/3/uHLD7yMBQJIscegAoARnHHG53fxSPtyHbWcWqdXp.png',
-            'images/2/3/XDoCQPLKzWRljZFKUi15KIJ7qw5I1xJHLXH3vHau.png',
+            'seed/images/2/3/xM8dkDzSGX5MCy0AoLjRFO3hYuYQsgu9PLsN9yWl.png',
+            'seed/images/2/3/ESd4sba1LzH6xRejQx9Gah4BPmcKh6FGqEtnDCFb.png',
+            'seed/images/2/3/uHLD7yMBQJIscegAoARnHHG53fxSPtyHbWcWqdXp.png',
+            'seed/images/2/3/XDoCQPLKzWRljZFKUi15KIJ7qw5I1xJHLXH3vHau.png',
         ];
 
         foreach ($urls as $key => $url) {
@@ -112,11 +112,11 @@ class WorkSeeder extends Seeder
         ]);
 
         $urls = [
-            'images/2/4/tLKbg18M1MrnC51r2Dqcv2L8YLDWMR9fladX0ElF.png',
-            'images/2/4/dv2h7OnKQQV1T4P7KMoaaDIgpfNfcdJvg1lZcbDK.png',
-            'images/2/4/OqDMVpaiFoYZvq172CeV0W686WDaOHnne7iPEGu3.png',
-            'images/2/4/K9gyVgBlDY5WggndDuI6i5V6O4Ij7KEOvXVXJdFg.png',
-            'images/2/4/01wv8qG2tpkcu0pu0aYD640m17tPgrFJJ0mei0ZQ.png',
+            'seed/images/2/4/tLKbg18M1MrnC51r2Dqcv2L8YLDWMR9fladX0ElF.png',
+            'seed/images/2/4/dv2h7OnKQQV1T4P7KMoaaDIgpfNfcdJvg1lZcbDK.png',
+            'seed/images/2/4/OqDMVpaiFoYZvq172CeV0W686WDaOHnne7iPEGu3.png',
+            'seed/images/2/4/K9gyVgBlDY5WggndDuI6i5V6O4Ij7KEOvXVXJdFg.png',
+            'seed/images/2/4/01wv8qG2tpkcu0pu0aYD640m17tPgrFJJ0mei0ZQ.png',
         ];
 
         foreach ($urls as $key => $url) {
@@ -130,7 +130,7 @@ class WorkSeeder extends Seeder
             'title' => 'El nombre de la rosa',
             'slug' => str('El nombre de la rosa')->slug(),
             'synopsis' => 'Un monasterio medieval se ve plagado de atroces asesinatos y sólo un hombre puede juntar las piezas del rompecabezas.',
-            'front_page' => 'front_pages/el-nombre.jpg',
+            'front_page' => 'seed/front_pages/el-nombre.jpg',
             'age_id' => Age::where('year', '12')->first()->id,
             'state_id' => State::where('slug', 'finished')->first()->id,
             'type_id' => Type::where('slug', 'tale')->first()->id,
@@ -146,7 +146,7 @@ class WorkSeeder extends Seeder
             'title' => 'El Lazarillo de Tormes',
             'slug' => str('El Lazarillo de Tormes')->slug(),
             'synopsis' => 'La novela cuenta la vida de un niño llamado Lázaro que al principio era inocente, pero se convirtió en pícaro para poder sobrevivir.',
-            'front_page' => 'front_pages/el-lazarillo.jpg',
+            'front_page' => 'seed/front_pages/el-lazarillo.jpg',
             'age_id' => Age::where('year', '6')->first()->id,
             'state_id' => State::where('slug', 'finished')->first()->id,
             'type_id' => Type::where('slug', 'tale')->first()->id,
@@ -164,7 +164,7 @@ class WorkSeeder extends Seeder
             'title' => 'Los viajes de Gulliver',
             'slug' => str('Los viajes de Gulliver')->slug(),
             'synopsis' => 'Gulliver es un apasionado de los viajes. En su afán por descubrir mundo, vivirá grandes aventuras que lo llevarán a lugares extraordinarios donde conocerá a los seres más insólitos: los minúsculos liliputienses, los gigantes de Brobdingnag, unos sabios insensatos que viven en una isla voladora y unos seres que, sin serlo, son de lo más humanos',
-            'front_page' => 'front_pages/los-viajes.jpg',
+            'front_page' => 'seed/front_pages/los-viajes.jpg',
             'age_id' => Age::where('year', '16')->first()->id,
             'state_id' => State::where('slug', 'finished')->first()->id,
             'type_id' => Type::where('slug', 'tale')->first()->id,
@@ -183,7 +183,7 @@ class WorkSeeder extends Seeder
             'title' => 'Kama-sutra',
             'slug' => str('Kama-sutra')->slug(),
             'synopsis' => 'Un antiguo texto hinduista que trata sobre el comportamiento sexual humano; el cual destaca por las posturas corporales a realizar en su práctica',
-            'front_page' => 'front_pages/kama-sutra.jpg',
+            'front_page' => 'seed/front_pages/kama-sutra.jpg',
             'age_id' => Age::where('year', '18')->first()->id,
             'state_id' => State::where('slug', 'finished')->first()->id,
             'type_id' => Type::where('slug', 'tale')->first()->id,

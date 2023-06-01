@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Chapter;
 
 use App\Models\Chapter;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
@@ -31,18 +32,22 @@ class DeleteChapterModal extends Component
 
         $chapterNumberThatWillBeDeleted = $this->chapter->number;
         $work_id = $this->chapter->work_id;
+        DB::beginTransaction();
+        try {
+            Storage::disk('s3')->deleteDirectory('images/' . $work_id . '/' . $this->chapter->id);
+            $this->chapter->delete();
+            $chapters = Chapter::where('work_id', $work_id)
+                ->where('number', '>', $chapterNumberThatWillBeDeleted);
+            $chapters->decrement('number', 1);
+            DB::commit();
 
-        $prueba = Storage::deleteDirectory('images/' . $this->chapter->work->id . '/' . $this->chapter->id);
+            $this->emit('refresh-manege-author-works');
+            $this->dispatchBrowserEvent('alert', ['message' => 'Chapter deleted successfully']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
+        }
 
-        $this->chapter->delete();
-
-        $chapters = Chapter::where('work_id', $work_id)
-            ->where('number', '>', $chapterNumberThatWillBeDeleted);
-
-        $chapters->decrement('number', 1);
-
-        $this->emit('refresh-manege-author-works');
-        $this->dispatchBrowserEvent('alert', ['message' => 'Chapter deleted successfully']);
         $this->show = false;
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Author;
 use App\Models\Author;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -84,18 +85,26 @@ class UpdateAuthorInformationForm extends Component
 
         $this->validate();
 
-        if ($this->photo) {
-            $extension = $this->photo->getClientOriginalExtension();
-            $fileName = $this->author->id . '.' . $extension;
-            $path = $this->photo->storeAs('author_profile_photos', $fileName, 'public');
-            $this->author->profilePhoto()->updateOrCreate([
-                'path' => $path,
-            ]);
+        DB::beginTransaction();
+        try {
+            if ($this->photo) {
+                $extension = $this->photo->getClientOriginalExtension();
+                $fileName = $this->author->id . '.' . $extension;
+                $path = $this->photo->storePubliclyAs('author_profile_photos', $fileName, 's3');
+                $this->author->profilePhoto()->updateOrCreate([
+                    'path' => $path,
+                ]);
+            }
+
+            $this->author->save();
+
+            DB::commit();
+
+            $this->dispatchBrowserEvent('alert', ['message' => 'Updated successfully']);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
         }
-
-        $this->author->save();
-
-        $this->dispatchBrowserEvent('alert', ['message' => 'Updated successfully']);
     }
 
     public function render()
