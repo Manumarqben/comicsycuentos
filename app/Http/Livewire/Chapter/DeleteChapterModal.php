@@ -31,15 +31,15 @@ class DeleteChapterModal extends Component
 
         $chapterNumberThatWillBeDeleted = $this->chapter->number;
         $work_id = $this->chapter->work_id;
-
-        $prueba = Storage::deleteDirectory('images/' . $this->chapter->work->id . '/' . $this->chapter->id);
-
-        $this->chapter->delete();
-
-        $chapters = Chapter::where('work_id', $work_id)
-            ->where('number', '>', $chapterNumberThatWillBeDeleted);
-
-        $chapters->decrement('number', 1);
+        try {
+            Storage::disk('s3')->deleteDirectory('images/' . $work_id . '/' . $this->chapter->id);
+            $this->chapter->delete();
+            $chapters = Chapter::where('work_id', $work_id)
+                ->where('number', '>', $chapterNumberThatWillBeDeleted);
+            $chapters->decrement('number', 1);
+        } catch (\Throwable $th) {
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
+        }
 
         $this->emit('refresh-manege-author-works');
         $this->dispatchBrowserEvent('alert', ['message' => 'Chapter deleted successfully']);

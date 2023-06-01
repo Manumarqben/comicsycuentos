@@ -156,10 +156,10 @@ class Save extends Component
         $this->work->genres()->sync($this->genresActive);
 
         if ($isUpdate) {
+            $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
+        } else {
             $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
             $this->show = true;
-        } else {
-            $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
         }
     }
 

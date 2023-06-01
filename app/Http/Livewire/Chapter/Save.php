@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -202,7 +201,7 @@ class Save extends Component
                 Storage::delete($previousImage->url);
             }
 
-            $path = $image->store($storage, 'public');
+            $path = $image->storePublicly($storage, 's3');
 
             $this->chapter->images()->updateOrCreate(
                 [

@@ -38,7 +38,7 @@ class WorkFactory extends Factory
             'title' => $title,
             'slug' => str($title)->slug(),
             'synopsis' => $this->faker->paragraph(),
-            'front_page' => 'front_pages/los-pilares.jpg',
+            'front_page' => 'front_pages/brW3NLLJj3XWHv1y6lftmfVkquzHv6VKtQoPZ0Th.jpg',
             'age_id' =>  Age::all()->random()->id,
             'state_id' => State::all()->random()->id,
             'type_id' => Type::all()->random()->id,
