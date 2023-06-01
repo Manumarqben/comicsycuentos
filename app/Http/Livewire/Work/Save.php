@@ -9,6 +9,7 @@ use App\Models\Type;
 use App\Models\Work;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
@@ -146,20 +147,28 @@ class Save extends Component
 
         $this->validate();
 
-        if ($this->frontPage) {
-            $path = $this->frontPage->storePublicly('front_pages', 's3');
-            $this->work->front_page = $path;
-        }
+        DB::beginTransaction();
+        try {
+            if ($this->frontPage) {
+                $path = $this->frontPage->storePublicly('front_pages', 's3');
+                $this->work->front_page = $path;
+            }
 
-        $this->work->save();
+            $this->work->save();
 
-        $this->work->genres()->sync($this->genresActive);
+            $this->work->genres()->sync($this->genresActive);
 
-        if ($isUpdate) {
-            $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
-        } else {
-            $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
-            $this->show = true;
+            DB::commit();
+
+            if ($isUpdate) {
+                $this->dispatchBrowserEvent('alert', ['message' => 'Work updated successfully']);
+            } else {
+                $this->dispatchBrowserEvent('alert', ['message' => 'Work created successfully']);
+                $this->show = true;
+            }
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
         }
     }
 

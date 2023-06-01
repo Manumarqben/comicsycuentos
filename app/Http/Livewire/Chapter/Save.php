@@ -180,38 +180,53 @@ class Save extends Component
 
     private function saveText()
     {
-        $this->chapter->text()->updateOrCreate(
-            ['chapter_id' => $this->chapter->id],
-            ['content' => $this->chapterText]
-        );
+        DB::beginTransaction();
+        try {
+            $this->chapter->text()->updateOrCreate(
+                ['chapter_id' => $this->chapter->id],
+                ['content' => $this->chapterText]
+            );
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
+        }
     }
 
     private function saveImages()
     {
-        $this->chapter->images()->whereIn('order', $this->imagesToDelete)->delete();
+        DB::beginTransaction();
+        try {
+            $this->chapter->images()->whereIn('order', $this->imagesToDelete)->delete();
 
-        $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
-        foreach ($this->chapterImages as $key => $image) {
-            if (is_string($image)) {
-                continue;
+            $storage = 'images/' . $this->chapter->work->id . '/' . $this->chapter->id;
+            foreach ($this->chapterImages as $key => $image) {
+                if (is_string($image)) {
+                    continue;
+                }
+
+                $previousImage = $this->chapter->images()->where('order', $key)->first();
+                if ($previousImage) {
+                    Storage::delete($previousImage->url);
+                }
+
+                $path = $image->storePublicly($storage, 's3');
+
+                $this->chapter->images()->updateOrCreate(
+                    [
+                        'chapter_id' => $this->chapter->id,
+                        'order' => $key,
+                    ],
+                    [
+                        'url' => $path,
+                    ]
+                );
             }
 
-            $previousImage = $this->chapter->images()->where('order', $key)->first();
-            if ($previousImage) {
-                Storage::delete($previousImage->url);
-            }
-
-            $path = $image->storePublicly($storage, 's3');
-
-            $this->chapter->images()->updateOrCreate(
-                [
-                    'chapter_id' => $this->chapter->id,
-                    'order' => $key,
-                ],
-                [
-                    'url' => $path,
-                ]
-            );
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return $this->dispatchBrowserEvent('alert', ['type' => 'danger', 'message' => 'A mistake has happened, try again later']);
         }
     }
 
