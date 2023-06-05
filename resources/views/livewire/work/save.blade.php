@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-span-6 md:flex">
                     <div class="flex flex-col w-full md:h-full pb-4 gap-3">
-                        <div>
+                        <div class="overflow-hidden">
                             <x-label for="frontPage">
                                 {{ __('Front page') }}
                             </x-label>
