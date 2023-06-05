@@ -10,6 +10,12 @@ class Show extends Component
     public Author $author;
     public $state = 'publishing';
 
+    public function setState($newState)
+    {
+        $this->state = $newState;
+        $this->emitTo('work.list-works', 'setState', $newState);
+    }
+
     public function mount($slug)
     {
         $this->fill([
