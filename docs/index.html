@@ -13,7 +13,7 @@
 <body>
   <div class="bg-gray-200 min-h-screen w-full">
     <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="{
-      open: 'index',
+      open: 'user-work-show',
     }">
       <aside class="w-1/6">
         <div>
@@ -372,19 +372,13 @@
               <li>Email field.</li>
               <li>Form to send button.</li>
             </ul>
-            <div class="mt-2 flex flex-col md:flex-row justify-center items-center md:items-start space-y-3">
-              <div class="md:w-1/3">
-                <p class="text-2xl font-semibold">Large screens</p>
-                <img src="images/guest/forgot-pass.png" alt="forgot-pass" class="w-min">
-              </div>
-              <div class="md:w-1/3">
-                <p class="text-2xl font-semibold">Medium screens</p>
-                <img src="images/guest/forgot-pass-tablet.png" alt="forgot-pass-tablet" class="w-min">
-              </div>
-              <div class="md:w-1/3">
-                <p class="text-2xl font-semibold">Small screens</p>
-                <img src="images/guest/forgot-pass-movil.png" alt="forgot-pass-movil" class="w-min">
-              </div>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/forgot-pass.png" alt="forgot-pass" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/forgot-pass-tablet.png" alt="forgot-pass-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/forgot-pass-movil.png" alt="forgot-pass-movil" class="w-min">
             </div>
           </div>
           <div class="mt-3">
@@ -397,19 +391,110 @@
           </div>
         </div>
         <div x-show="open == 'user-profile'">
-          user-profile
+          <p>In this view the user can administer their account.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>User information.</li>
+              <li>Change of password.</li>
+              <li>Double authentication factor.</li>
+              <li>Session closure in other browsers.</li>
+              <li>Account deletion.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/user/profile.png" alt="profile" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/user/profile-tablet.png" alt="profile-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/user/profile-movil.png" alt="profile-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'library'">
-          library
+          <p>In this view, the user can see the works that he has marked with some marker.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Buttons to find the works by the marker assigned by the user.</li>
+              <li>The works leaked by the selected marker.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/user/library.png" alt="library" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/user/library-tablet.png" alt="library-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/user/library-movil.png" alt="library-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'user-work-show'">
-          user-work-show
+          <p>When a login user accesses this view, extra options are abilitated.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Drop -down to select the marker to add the work to your library.</li>
+              <li>Button to mark the work as a favorite.</li>
+              <li>A button that eliminates the follow -up of the work.</li>
+              <li>Icons indicating that chapters has read the user.
+                <ul class="list-inside pl-3">
+                  <li>If you click on an "not read" icon the corresponding chapter and the previous ones will be marked
+                    as read.</li>
+                  <li>If you click on an "read" icon the corresponding chapter will be the last chapter read and the
+                    following will go to "not read" in case they are marked as such.</li>
+                  <li>When you access reader and the chapter has not been read, it will be marked as the last chapter
+                    read.</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/user/work-show.png" alt="user-work-show" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/user/work-show-tablet.png" alt="user-work-show-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/user/work-show-movil.png" alt="user-work-show-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'like'">
-          like
+          <p>When a login user accesses this view, extra options are abilitated.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Button to give "like" or remove "like".</li>
+              <li>Button to give "I don't like" or remove "I don't like".</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Reader text</p>
+              <img src="images/user/reader-text.png" alt="like-text" class="w-min">
+              <p class="text-2xl font-semibold">Reader image</p>
+              <img src="images/user/reader-image.png" alt="like-image" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'be-author'">
-          be-author
+          <p>A login user has the option to apply to be an author, as well as to withdraw your application.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Button to apply.</li>
+              <li>Modal to select alias.</li>
+              <li>Button to withdraw application.</li>
+              <li>Modal to withdraw application.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Button to apply</p>
+              <img src="images/user/be-author.png" alt="like-text" class="w-min">
+              <p class="text-2xl font-semibold">Modal to select alias</p>
+              <img src="images/user/be-author-modal.png" alt="like-image" class="w-min">
+              <p class="text-2xl font-semibold">Button to withdraw application.</p>
+              <img src="images/user/withdraw.png" alt="like-text" class="w-min">
+              <p class="text-2xl font-semibold">Modal to withdraw application</p>
+              <img src="images/user/withdraw-modal.png" alt="like-image" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'author-profile'">
           author-profile
