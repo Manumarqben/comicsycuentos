@@ -1,5 +1,5 @@
 <footer
-    class=" py-20 items-center overflow-hidden bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 z-50">
+    class="py-14 items-center overflow-hidden bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 z-50 sticky top-full">
     <div class="relative m-auto px-3 md:px-6">
         <div class="m-auto md:w-10/12 lg:w-8/12 xl:w-6/12">
             <div
