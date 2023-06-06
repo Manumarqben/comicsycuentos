@@ -3,9 +3,9 @@
     <div class="relative m-auto px-3 md:px-6">
         <div class="m-auto md:w-10/12 lg:w-8/12 xl:w-6/12">
             <div
-                class="flex flex-wrap items-center justify-between md:flex-nowrap">
+                class="flex flex-wrap items-center md:justify-between md:flex-nowrap">
                 <div
-                    class="w-full space-x-12 flex justify-center sm:w-7/12 md:justify-around">
+                    class="w-full space-x-12 flex justify-center sm:w-7/12 sm:justify-around">
                     <ul class="list-disc list-inside space-y-8">
                         <li>
                             <a href="#"
@@ -29,7 +29,7 @@
                     </ul>
 
                     <ul role="list" class="space-y-8" x-data>
-                        <li class="flex items-center space-x-3 hover:text-sky-400 transition"
+                        <li class="flex items-center space-x-3 hover:text-sky-400 transition cursor-pointer"
                             @click="window.open('https://github.com/Manumarqben/comicsycuentos')">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" class="w-5"
@@ -39,7 +39,7 @@
                             </svg>
                             <span>Github</span>
                         </li>
-                        <li class="flex items-center space-x-3 hover:text-sky-400 transition"
+                        <li class="flex items-center space-x-3 hover:text-sky-400 transition cursor-pointer"
                             @click="window.open('https://github.com/Manumarqben/comicsycuentos')">
 
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@
                     </ul>
                 </div>
                 <div
-                    class="w-10/12 m-auto mt-16 space-y-6 text-center sm:text-end sm:w-5/12 sm:mt-auto">
+                    class="w-10/12 m-auto mt-16 space-y-6 text-center md:text-end sm:w-5/12 sm:mt-auto">
                     <span class="block">
                         From children to experts, a space for all literary
                         voices!
