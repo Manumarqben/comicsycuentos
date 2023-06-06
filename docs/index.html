@@ -13,24 +13,24 @@
 <body>
   <div class="bg-gray-200 min-h-screen w-full">
     <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="{
-      open: 'user-work-show',
+      open: 'index',
     }">
-      <aside class="w-1/6">
+      <aside class="w-1/6 max-h-screen overflow-y-auto">
         <div>
           <span class="cursor-pointer font-bold text-xl" @click="open = 'index'">Use Manual</span>
         </div>
         <div class="mt-2">
           <span class="font-bold">Guest</span>
           <ul class="pl-3">
-            <li>
-              <span class="font-medium cursor-pointer" @click="open = 'home'">Home</span>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'home'}">
+              <span class=" font-medium cursor-pointer" @click="open = 'home'">Home</span>
               <ul class="pl-3">
                 <li>
                   Dark-mode
                 </li>
               </ul>
             </li>
-            <li>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'directory'}">
               <span class="font-medium cursor-pointer" @click="open = 'directory'">Directory</span>
               <ul class="pl-3">
                 <li>
@@ -38,13 +38,13 @@
                 </li>
               </ul>
             </li>
-            <li class="font-medium">
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'guest-work-show'}">
               <span class="cursor-pointer" @click="open = 'guest-work-show'">Work</span>
             </li>
-            <li class="font-medium">
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'author-show'}">
               <span class="cursor-pointer" @click="open = 'author-show'">Author</span>
             </li>
-            <li>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'guest-reader'}">
               <span class="font-medium cursor-pointer" @click="open = 'guest-reader'">Reader</span>
               <ul class="pl-3">
                 <li>
@@ -55,14 +55,14 @@
                 </li>
               </ul>
             </li>
-            <li class="font-medium">
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'register'}">
               <span class="cursor-pointer" @click="open = 'register'">Register</span>
             </li>
-            <li class="font-medium">
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'login'}">
               <span class="cursor-pointer" @click="open = 'login'">Login</span>
             </li>
-            <li class="font-medium">
-              <span class="cursor-pointer" @click="open = 'forgot-pass'">Forgot pass</span>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'forgot-pass'}">
+              <span class="font-medium cursor-pointer" @click="open = 'forgot-pass'">Forgot pass</span>
               <ul class="pl-3">
                 <li>
                   Reset pass
@@ -74,19 +74,19 @@
         <div class="mt-2">
           <span class="font-bold">User</spam>
             <ul class="pl-3">
-              <li class="font-medium">
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'user-profile'}">
                 <span class="cursor-pointer" @click="open = 'user-profile'">Profile</span>
               </li>
-              <li class="font-medium">
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'library'}">
                 <span class="cursor-pointer" @click="open = 'library'">Library</span>
               </li>
-              <li class="font-medium">
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'user-work-show'}">
                 <span class="cursor-pointer" @click="open = 'user-work-show'">Work</span>
               </li>
-              <li class="font-medium">
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'like'}">
                 <span class="cursor-pointer" @click="open = 'like'">Like chapter</span>
               </li>
-              <li class="font-medium">
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'be-author'}">
                 <span class="cursor-pointer" @click="open = 'be-author'">Be Author</span>
               </li>
             </ul>
@@ -94,16 +94,16 @@
         <div class="mt-2">
           <span class="font-bold">Author</span>
           <ul class="pl-3">
-            <li class="font-medium">
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'author-profile'}">
               <span class="cursor-pointer" @click="open = 'author-profile'">Profile</span>
             </li>
             <li>
               <span class="font-medium">Work</span>
               <ul class="pl-3">
-                <li>
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'work-save'}">
                   <span class="cursor-pointer" @click="open = 'work-save'">Create / Update</span>
                 </li>
-                <li>
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'work-delete'}">
                   <span class="cursor-pointer" @click="open = 'work-delete'">Delete</span>
                 </li>
               </ul>
@@ -111,7 +111,7 @@
             <li>
               <span class="font-medium">Chapter</span>
               <ul class="pl-3">
-                <li>
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'chapter-save'}">
                   <span class="cursor-pointer" @click="open = 'chapter-save'">Create / Update</span>
                   <ul class="pl-3">
                     <li>
@@ -122,7 +122,7 @@
                     </li>
                   </ul>
                 </li>
-                <li>
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'chapter-delete'}">
                   <span class="cursor-pointer" @click="open = 'chapter-delete'">Delete</span>
                 </li>
               </ul>
