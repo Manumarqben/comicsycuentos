@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyC-Manual Guide</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <div class="bg-gray-200 h-screen">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-10 ">
+      <div>
+        <div x-data="{
+          open: false,
+        }">
+          <p @click="open = !open" class="cursor-pointer">Guest</p>
+          <ul x-show="open" class="pl-3">
+            <li>Home
+              <ul class="pl-3">
+                <li>Dark-mode</li>
+              </ul>
+            </li>
+            <li>Directory
+              <ul class="pl-3">
+                <li>Age control</li>
+              </ul>
+            </li>
+            <li>Work</li>
+            <li>Author</li>
+            <li>Reader
+              <ul class="pl-3">
+                <li>Text</li>
+                <li>Image</li>
+              </ul>
+            </li>
+            <li>Register</li>
+            <li>Login</li>
+            <li>Forgot pass</li>
+          </ul>
+        </div>
+        <div x-data="{
+          open: false,
+        }">
+          <p @click="open = !open" class="cursor-pointer">User</p>
+          <ul x-show="open" class="pl-3">
+            <li>Profile</li>
+            <li>Library</li>
+            <li>Work</li>
+            <li>Like chapter</li>
+            <li>Be Author</li>
+          </ul>
+        </div>
+        <div x-data="{
+          open: false,
+        }">
+          <p @click="open = !open" class="cursor-pointer">Author</p>
+          <ul x-show="open" class="pl-3">
+            <li>Profile</li>
+            <li>Work
+              <ul class="pl-3">
+                <li>Create / Update</li>
+                <li>Delete</li>
+              </ul>
+            </li>
+            <li>Chapter
+              <ul class="pl-3">
+                <li>Create / Update
+                  <ul class="pl-3">
+                    <li>Text</li>
+                    <li>Image</li>
+                  </ul>
+                </li>
+                <li>Delete</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
