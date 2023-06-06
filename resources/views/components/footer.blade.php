@@ -30,7 +30,7 @@
 
                     <ul role="list" class="space-y-8" x-data>
                         <li class="flex items-center space-x-3 hover:text-sky-400 transition cursor-pointer"
-                            @click="window.open('https://github.com/Manumarqben/comicsycuentos')">
+                            @click="window.open('https://github.com/Manumarqben/comicsycuentos', 'CyC', 'fullscreen=yes')">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" class="w-5"
                                 viewBox="0 0 16 16">
@@ -40,7 +40,7 @@
                             <span>Github</span>
                         </li>
                         <li class="flex items-center space-x-3 hover:text-sky-400 transition cursor-pointer"
-                            @click="window.open('https://github.com/Manumarqben/comicsycuentos')">
+                            @click="window.open('https://twitter.com/')">
 
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 fill="currentColor" class="w-5"

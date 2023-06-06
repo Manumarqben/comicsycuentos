@@ -15,7 +15,7 @@
     <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="{
       open: 'index',
     }">
-      <aside>
+      <aside class="w-1/6">
         <div>
           <span class="cursor-pointer font-bold text-xl" @click="open = 'index'">Use Manual</span>
         </div>
@@ -63,6 +63,11 @@
             </li>
             <li class="font-medium">
               <span class="cursor-pointer" @click="open = 'forgot-pass'">Forgot pass</span>
+              <ul class="pl-3">
+                <li>
+                  Reset pass
+                </li>
+              </ul>
             </li>
           </ul>
         </div>
@@ -126,33 +131,270 @@
         </div>
       </aside>
 
-      <main class="pl-3">
+      <main class="w-5/6">
         <div x-show="open == 'index'">
           Estás en el manual de uso de la página comics y cuentos
         </div>
         <div x-show="open == 'home'">
-          Home
+          <p>This is the first view we access when entering our Application.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>The navigation menu, which allows us to move between the different views and functions (it will be
+                Available in all views of the app).</li>
+              <li>A carousel, which will show us 3 random works.</li>
+              <li>The novelties are the latest works created by the authors.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/home.png" alt="home" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/home-tablet.png" alt="home-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/home-movil.png" alt="home-movil" class="w-min">
+            </div>
+          </div>
+          <div class="mt-3">
+            <p class="text-2xl font-bold">Dark mode</p>
+            <p>We also have the option to alternate between dark and luminous mode:</p>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <img src="images/guest/dark-mode.png" alt="home" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'directory'">
-          Directory
+          <p>In this view we can search among all the works on the web.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>A field to search for the name of the work (this field allows you to be positioned in it if you press
+                Enter will be made the search).</li>
+              <li>A button to order the search results in a descending or ascending way.</li>
+              <li>An drop -down to show advanced search options.</li>
+              <li>The search buttons or to apply filters.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/directory.png" alt="directory" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/directory-tablet.png" alt="directory-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/directory-movil.png" alt="directory-movil" class="w-min">
+            </div>
+          </div>
+          <div class="mt-3">
+            <p>This is the view with the applied filters:</p>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>State filter.</li>
+              <li>Type filter.</li>
+              <li>Age filter (Here we have two options to choose, the concrete age or a predefined age range).</li>
+              <li>Gender filter.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <img src="images/guest/directory-filter.png" alt="home" class="w-min">
+            </div>
+          </div>
+          <div class="mt-3">
+            <p class="text-2xl font-bold">Age control</p>
+            <p>Throughout the application we have an age control so that guest or minor users cannot see the works for
+              adults.</p>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Guest or minors filtering +18.</p>
+              <img src="images/user/age-control-children.png" alt="home" class="w-min">
+              <p class="text-2xl font-semibold">Adults filtering +18.</p>
+              <img src="images/user/age-control-adult.png" alt="home" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'guest-work-show'">
-          guest-work-show
+          <p>In this view we can see the information of a work.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>The cover, the recommended minimum type and age.</li>
+              <li>The title, the synopsis, the State, the genres, and the author of the author.</li>
+              <li>A button to order the chapters in descending or ascending.</li>
+              <li>The chapters.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/work-show.png" alt="guest-work-show" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/work-show-tablet.png" alt="guest-work-show-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/work-show-movil.png" alt="guest-work-show-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'author-show'">
-          author-show
+          <p>In this view we can see the author's information.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Author's photo.</li>
+              <li>The alias.</li>
+              <li>The biography.</li>
+              <li>Buttons to find the works of this author for his state.</li>
+              <li>The works leaked by the selected state.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/author-show.png" alt="author-show" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/author-show-tablet.png" alt="author-show-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/author-show-movil.png" alt="author-show-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'guest-reader'">
-          guest-reader
+          <p>In this view we can read the chapters of the works.</p>
+          <div>
+            <p class="text-2xl font-bold mt-2">Text</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Chapter title.</li>
+                <li>A button to return to the work.</li>
+                <li>Buttons to start reproduction of the chapter using TTS.</li>
+                <li>Chapter content.</li>
+                <li>Buttons to move between chapters (If there are no chapters to move does not appear the button).</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/reader-text.png" alt="reader-text" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/reader-text-tablet.png" alt="reader-text-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/reader-text-movil.png" alt="reader-text-movil" class="w-min">
+              </div>
+            </div>
+            <div>
+              <div class="mt-3">
+                <p class="text-2xl font-semibold">Reproductor TTS</p>
+                <p>When we press the button to play the work by TTS, we have the following options:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>In this option the work is being reproduced and we have the option to pause the reproduction to
+                    continue later or stop it completely.</li>
+                  <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                    <img src="images/guest/reader-text-play.png" alt="home" class="w-min">
+                  </div>
+                  <li>In this option the work is slow and we can resume reproduction or stop it completely.</li>
+                  <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                    <img src="images/guest/reader-text-pause.png" alt="home" class="w-min">
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="text-2xl font-bold mt-2">Image</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Chapter title.</li>
+                <li>A button to return to the work.</li>
+                <li>A button to alternate between paginated view or cascade view.</li>
+                <li>Chapter content.</li>
+                <li>Buttons to move between chapters (If there are no chapters to move does not appear the button).</li>
+              </ul>
+              <p class="text-xl font-bold mt-2">Paginate</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/reader-image-paginate.png" alt="reader-image-paginate" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/reader-image-paginate-tablet.png" alt="reader-image-paginate-tablet"
+                  class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/reader-image-paginate-movil.png" alt="reader-image-paginate-movil" class="w-min">
+              </div>
+              <p class="text-xl font-bold mt-2">Cascade</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/reader-image-cascade.png" alt="reader-image-cascade" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/reader-image-cascade-tablet.png" alt="reader-image-cascade-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/reader-image-cascade-movil.png" alt="reader-image-cascade-movil" class="w-min">
+              </div>
+            </div>
+          </div>
         </div>
         <div x-show="open == 'register'">
-          register
+          <p>In this view a guest user can create an account.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Name field.</li>
+              <li>Email field.</li>
+              <li>Age field (optional).</li>
+              <li>Password field.</li>
+              <li>Confirm password field.</li>
+              <li>Link to log in if you already have account.</li>
+              <li>Form to send button.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/register.png" alt="register" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/register-tablet.png" alt="register-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/register-movil.png" alt="register-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'login'">
-          login
+          <p>In this view a guest user can log in.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Email field.</li>
+              <li>Password field.</li>
+              <li>Link to recover the password in case of forgetting it.</li>
+              <li>Form to send button.</li>
+            </ul>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <p class="text-2xl font-semibold">Large screens</p>
+              <img src="images/guest/login.png" alt="login" class="w-min">
+              <p class="text-2xl font-semibold">Medium screens</p>
+              <img src="images/guest/login-tablet.png" alt="login-tablet" class="w-min">
+              <p class="text-2xl font-semibold">Small screens</p>
+              <img src="images/guest/login-movil.png" alt="login-movil" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'forgot-pass'">
-          forgot-pass
+          <p>In this view a user can recover his password through an email.</p>
+          <div>
+            <p>In it we can see:</p>
+            <ul class="list-disc list-inside pl-3">
+              <li>Email field.</li>
+              <li>Form to send button.</li>
+            </ul>
+            <div class="mt-2 flex flex-col md:flex-row justify-center items-center md:items-start space-y-3">
+              <div class="md:w-1/3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/forgot-pass.png" alt="forgot-pass" class="w-min">
+              </div>
+              <div class="md:w-1/3">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/forgot-pass-tablet.png" alt="forgot-pass-tablet" class="w-min">
+              </div>
+              <div class="md:w-1/3">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/forgot-pass-movil.png" alt="forgot-pass-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <p class="text-2xl font-bold">Reset pass</p>
+            <p>Following the link in the email received, it will be redirected to this view where you can change the
+              password.</p>
+            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+              <img src="images/guest/reset-pass.png" alt="reset-pass" class="w-min">
+            </div>
+          </div>
         </div>
         <div x-show="open == 'user-profile'">
           user-profile
