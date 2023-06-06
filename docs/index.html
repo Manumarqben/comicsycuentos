@@ -5,81 +5,187 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CyC-Manual Guide</title>
+  <title>CyC-Use Manual</title>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
-  <div class="bg-gray-200 h-screen">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-10 ">
-      <div>
-        <div x-data="{
-          open: false,
-        }">
-          <p @click="open = !open" class="cursor-pointer">Guest</p>
-          <ul x-show="open" class="pl-3">
-            <li>Home
+  <div class="bg-gray-200 min-h-screen w-full">
+    <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="{
+      open: 'index',
+    }">
+      <aside>
+        <div>
+          <span class="cursor-pointer font-bold text-xl" @click="open = 'index'">Use Manual</span>
+        </div>
+        <div class="mt-2">
+          <span class="font-bold">Guest</span>
+          <ul class="pl-3">
+            <li>
+              <span class="font-medium cursor-pointer" @click="open = 'home'">Home</span>
               <ul class="pl-3">
-                <li>Dark-mode</li>
+                <li>
+                  Dark-mode
+                </li>
               </ul>
             </li>
-            <li>Directory
+            <li>
+              <span class="font-medium cursor-pointer" @click="open = 'directory'">Directory</span>
               <ul class="pl-3">
-                <li>Age control</li>
+                <li>
+                  Age control
+                </li>
               </ul>
             </li>
-            <li>Work</li>
-            <li>Author</li>
-            <li>Reader
+            <li class="font-medium">
+              <span class="cursor-pointer" @click="open = 'guest-work-show'">Work</span>
+            </li>
+            <li class="font-medium">
+              <span class="cursor-pointer" @click="open = 'author-show'">Author</span>
+            </li>
+            <li>
+              <span class="font-medium cursor-pointer" @click="open = 'guest-reader'">Reader</span>
               <ul class="pl-3">
-                <li>Text</li>
-                <li>Image</li>
+                <li>
+                  <span>Text</span>
+                </li>
+                <li>
+                  <span>Image</span>
+                </li>
               </ul>
             </li>
-            <li>Register</li>
-            <li>Login</li>
-            <li>Forgot pass</li>
+            <li class="font-medium">
+              <span class="cursor-pointer" @click="open = 'register'">Register</span>
+            </li>
+            <li class="font-medium">
+              <span class="cursor-pointer" @click="open = 'login'">Login</span>
+            </li>
+            <li class="font-medium">
+              <span class="cursor-pointer" @click="open = 'forgot-pass'">Forgot pass</span>
+            </li>
           </ul>
         </div>
-        <div x-data="{
-          open: false,
-        }">
-          <p @click="open = !open" class="cursor-pointer">User</p>
-          <ul x-show="open" class="pl-3">
-            <li>Profile</li>
-            <li>Library</li>
-            <li>Work</li>
-            <li>Like chapter</li>
-            <li>Be Author</li>
-          </ul>
+        <div class="mt-2">
+          <span class="font-bold">User</spam>
+            <ul class="pl-3">
+              <li class="font-medium">
+                <span class="cursor-pointer" @click="open = 'user-profile'">Profile</span>
+              </li>
+              <li class="font-medium">
+                <span class="cursor-pointer" @click="open = 'library'">Library</span>
+              </li>
+              <li class="font-medium">
+                <span class="cursor-pointer" @click="open = 'user-work-show'">Work</span>
+              </li>
+              <li class="font-medium">
+                <span class="cursor-pointer" @click="open = 'like'">Like chapter</span>
+              </li>
+              <li class="font-medium">
+                <span class="cursor-pointer" @click="open = 'be-author'">Be Author</span>
+              </li>
+            </ul>
         </div>
-        <div x-data="{
-          open: false,
-        }">
-          <p @click="open = !open" class="cursor-pointer">Author</p>
-          <ul x-show="open" class="pl-3">
-            <li>Profile</li>
-            <li>Work
+        <div class="mt-2">
+          <span class="font-bold">Author</span>
+          <ul class="pl-3">
+            <li class="font-medium">
+              <span class="cursor-pointer" @click="open = 'author-profile'">Profile</span>
+            </li>
+            <li>
+              <span class="font-medium">Work</span>
               <ul class="pl-3">
-                <li>Create / Update</li>
-                <li>Delete</li>
+                <li>
+                  <span class="cursor-pointer" @click="open = 'work-save'">Create / Update</span>
+                </li>
+                <li>
+                  <span class="cursor-pointer" @click="open = 'work-delete'">Delete</span>
+                </li>
               </ul>
             </li>
-            <li>Chapter
+            <li>
+              <span class="font-medium">Chapter</span>
               <ul class="pl-3">
-                <li>Create / Update
+                <li>
+                  <span class="cursor-pointer" @click="open = 'chapter-save'">Create / Update</span>
                   <ul class="pl-3">
-                    <li>Text</li>
-                    <li>Image</li>
+                    <li>
+                      <span>Text</span>
+                    </li>
+                    <li>
+                      <span>Image</span>
+                    </li>
                   </ul>
                 </li>
-                <li>Delete</li>
+                <li>
+                  <span class="cursor-pointer" @click="open = 'chapter-delete'">Delete</span>
+                </li>
               </ul>
             </li>
           </ul>
         </div>
-      </div>
+      </aside>
+
+      <main class="pl-3">
+        <div x-show="open == 'index'">
+          Estás en el manual de uso de la página comics y cuentos
+        </div>
+        <div x-show="open == 'home'">
+          Home
+        </div>
+        <div x-show="open == 'directory'">
+          Directory
+        </div>
+        <div x-show="open == 'guest-work-show'">
+          guest-work-show
+        </div>
+        <div x-show="open == 'author-show'">
+          author-show
+        </div>
+        <div x-show="open == 'guest-reader'">
+          guest-reader
+        </div>
+        <div x-show="open == 'register'">
+          register
+        </div>
+        <div x-show="open == 'login'">
+          login
+        </div>
+        <div x-show="open == 'forgot-pass'">
+          forgot-pass
+        </div>
+        <div x-show="open == 'user-profile'">
+          user-profile
+        </div>
+        <div x-show="open == 'library'">
+          library
+        </div>
+        <div x-show="open == 'user-work-show'">
+          user-work-show
+        </div>
+        <div x-show="open == 'like'">
+          like
+        </div>
+        <div x-show="open == 'be-author'">
+          be-author
+        </div>
+        <div x-show="open == 'author-profile'">
+          author-profile
+        </div>
+        <div x-show="open == 'work-save'">
+          work-save
+        </div>
+        <div x-show="open == 'work-delete'">
+          work-delete
+        </div>
+        <div x-show="open == 'chapter-save'">
+          chapter-save
+        </div>
+        <div x-show="open == 'chapter-delete'">
+          chapter-delete
+        </div>
+      </main>
+
     </div>
   </div>
 </body>
