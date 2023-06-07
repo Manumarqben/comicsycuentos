@@ -11,19 +11,18 @@
 </head>
 
 <body>
-  <div class="bg-gray-200 min-h-screen w-full">
-    <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="{
-      open: 'index',
-    }">
-      <aside class="w-1/6 max-h-screen overflow-y-auto">
+  <nav class="bg-white border-b border-gray-100 sticky top-0 left-0 z-50 h-16"></nav>
+  <div class="bg-gray-200 w-full">
+    <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="data()">
+      <aside class="w-1/6 h-screen overflow-y-auto mt-[-32px]">
         <div>
-          <span class="cursor-pointer font-bold text-xl" @click="open = 'index'">Use Manual</span>
+          <span class="cursor-pointer font-bold text-xl" @click="redirect('index')">Use Manual</span>
         </div>
         <div class="mt-2">
           <span class="font-bold">Guest</span>
           <ul class="pl-3">
             <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'home'}">
-              <span class=" font-medium cursor-pointer" @click="open = 'home'">Home</span>
+              <span class="font-medium cursor-pointer" @click="redirect('home')">Home</span>
               <ul class="pl-3">
                 <li>
                   Dark-mode
@@ -31,7 +30,7 @@
               </ul>
             </li>
             <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'directory'}">
-              <span class="font-medium cursor-pointer" @click="open = 'directory'">Directory</span>
+              <span class="font-medium cursor-pointer" @click="redirect('directory')">Directory</span>
               <ul class="pl-3">
                 <li>
                   Age control
@@ -39,13 +38,13 @@
               </ul>
             </li>
             <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'guest-work-show'}">
-              <span class="cursor-pointer" @click="open = 'guest-work-show'">Work</span>
+              <span class="cursor-pointer" @click="redirect('guest-work-show')">Work</span>
             </li>
             <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'author-show'}">
-              <span class="cursor-pointer" @click="open = 'author-show'">Author</span>
+              <span class="cursor-pointer" @click="redirect('author-show')">Author</span>
             </li>
             <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'guest-reader'}">
-              <span class="font-medium cursor-pointer" @click="open = 'guest-reader'">Reader</span>
+              <span class="font-medium cursor-pointer" @click="redirect('guest-reader')">Reader</span>
               <ul class="pl-3">
                 <li>
                   <span>Text</span>
@@ -56,13 +55,13 @@
               </ul>
             </li>
             <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'register'}">
-              <span class="cursor-pointer" @click="open = 'register'">Register</span>
+              <span class="cursor-pointer" @click="redirect('register')">Register</span>
             </li>
             <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'login'}">
-              <span class="cursor-pointer" @click="open = 'login'">Login</span>
+              <span class="cursor-pointer" @click="redirect('login')">Login</span>
             </li>
             <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'forgot-pass'}">
-              <span class="font-medium cursor-pointer" @click="open = 'forgot-pass'">Forgot pass</span>
+              <span class="font-medium cursor-pointer" @click="redirect('forgot-pass')">Forgot pass</span>
               <ul class="pl-3">
                 <li>
                   Reset pass
@@ -75,19 +74,19 @@
           <span class="font-bold">User</spam>
             <ul class="pl-3">
               <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'user-profile'}">
-                <span class="cursor-pointer" @click="open = 'user-profile'">Profile</span>
+                <span class="cursor-pointer" @click="redirect('user-profile')">Profile</span>
               </li>
               <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'library'}">
-                <span class="cursor-pointer" @click="open = 'library'">Library</span>
+                <span class="cursor-pointer" @click="redirect('library')">Library</span>
               </li>
               <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'user-work-show'}">
-                <span class="cursor-pointer" @click="open = 'user-work-show'">Work</span>
+                <span class="cursor-pointer" @click="redirect('user-work-show')">Work</span>
               </li>
               <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'like'}">
-                <span class="cursor-pointer" @click="open = 'like'">Like chapter</span>
+                <span class="cursor-pointer" @click="redirect('like')">Like chapter</span>
               </li>
               <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'be-author'}">
-                <span class="cursor-pointer" @click="open = 'be-author'">Be Author</span>
+                <span class="cursor-pointer" @click="redirect('be-author')">Be Author</span>
               </li>
             </ul>
         </div>
@@ -95,16 +94,16 @@
           <span class="font-bold">Author</span>
           <ul class="pl-3">
             <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'author-profile'}">
-              <span class="cursor-pointer" @click="open = 'author-profile'">Profile</span>
+              <span class="cursor-pointer" @click="redirect('author-profile')">Profile</span>
             </li>
             <li>
               <span class="font-medium">Work</span>
               <ul class="pl-3">
                 <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'work-save'}">
-                  <span class="cursor-pointer" @click="open = 'work-save'">Create / Update</span>
+                  <span class="cursor-pointer" @click="redirect('work-save')">Create / Update</span>
                 </li>
                 <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'work-delete'}">
-                  <span class="cursor-pointer" @click="open = 'work-delete'">Delete</span>
+                  <span class="cursor-pointer" @click="redirect('work-delete')">Delete</span>
                 </li>
               </ul>
             </li>
@@ -112,7 +111,7 @@
               <span class="font-medium">Chapter</span>
               <ul class="pl-3">
                 <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'chapter-save'}">
-                  <span class="cursor-pointer" @click="open = 'chapter-save'">Create / Update</span>
+                  <span class="cursor-pointer" @click="redirect('chapter-save')">Create / Update</span>
                   <ul class="pl-3">
                     <li>
                       <span>Text</span>
@@ -123,7 +122,7 @@
                   </ul>
                 </li>
                 <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'chapter-delete'}">
-                  <span class="cursor-pointer" @click="open = 'chapter-delete'">Delete</span>
+                  <span class="cursor-pointer" @click="redirect('chapter-delete')">Delete</span>
                 </li>
               </ul>
             </li>
@@ -133,7 +132,113 @@
 
       <main class="w-5/6">
         <div x-show="open == 'index'">
-          Estás en el manual de uso de la página comics y cuentos
+          <section>
+            <h1 class="text-3xl font-bold">Descripción general del proyecto</h1>
+            <p>La aplicación "comics y cuentos" permite a los usuarios leer y publicar obras en ella.</p>
+          </section>
+
+          <section class="mt-5">
+            <h2 class="text-2xl font-semibold">Funcionalidad principal de la aplicación</h2>
+            <p>
+              La aplicación se centra en ofrecer al usuario leer las obras publicadas en la aplicación y publicar sus
+              propias obras.
+            </p>
+
+            <p class="mt-2">
+              Los usuarios podrán realizar diferentes acciones en la aplicación:
+            </p>
+
+            <ul class="list-disc list-inside pl-3">
+              <li>
+                Los usuarios no registrados (guest) solo pueden leer las obras que tengan disponibles.
+              </li>
+              <li>
+                Los usuarios registrados (user) tienen opciones adicionales:
+                <ol class="list-decimal list-inside pl-6">
+                  <li>
+                    Leer todas las obras disponibles (si el usuario es menor no tiene a acceso las obras para adultos).
+                  </li>
+                  <li>
+                    Administrar su "biblioteca".
+                  </li>
+                  <li>
+                    Solicitar permisos para publicar.
+                  </li>
+                </ol>
+              </li>
+              <li>
+                Los usuarios que ya tienen permiso para publicar (author) tienen más opciones:
+                <ol class="list-decimal list-inside pl-6">
+                  <li>
+                    Gestión de sus obras.
+                  </li>
+                  <li>
+                    Gestión de los capítulos de dichas obras.
+                  </li>
+                </ol>
+              </li>
+              <li>
+                Los usuarios administradores (admin) pueden:
+                <ol class="list-decimal list-inside pl-6">
+                  <li>
+                    Gestionar usuarios (user y author).
+                  </li>
+                  <li>
+                    Eliminar y editar obras.
+                  </li>
+                  <li>
+                    Eliminar capítulos.
+                  </li>
+                </ol>
+              </li>
+            </ul>
+          </section>
+
+          <section class="mt-5">
+            <h2 class="text-2xl font-semibold">Objetivos generales</h2>
+            <ul class="list-disc list-inside pl-3">
+              <li>
+                Objetivo principal: "Almacenar y dar acceso de las obras publicadas".
+              </li>
+              <li>
+                Gestionar registro, logueo y deslogueo de usuarios.
+              </li>
+              <li>
+                Gestión de los usuarios, obras y capítulos por parte de administradores.
+              </li>
+              <li>
+                Gestionar la creación, modificación y borrado de obras.
+              </li>
+              <li>
+                Gestionar la creación, modificado y borrado de capítulos.
+              </li>
+              <li>
+                Gestionar el estado de la obra y capítulos para cada usuario.
+              </li>
+              <li>
+                Uso del lector con sus diferentes vistas.
+              </li>
+            </ul>
+
+          </section>
+
+          <section class="mt-5">
+            <h2 class="text-2xl font-semibold">Elemento de innovación</h2>
+            <ul class="list-disc list-inside pl-3">
+              <li>
+                Laravel Framework.
+              </li>
+              <li>
+                Livewire Framework para el uso de alpinejs y tailwindcss
+              </li>
+              <li>
+                Amazon S3 como servicio de almacenamiento.
+              </li>
+              <li>
+                CKEditor para la creación y edición de obras cuyo contenido no son imágenes.
+              </li>
+            </ul>
+          </section>
         </div>
         <div x-show="open == 'home'">
           <p>This is the first view we access when entering our Application.</p>
@@ -516,5 +621,20 @@
     </div>
   </div>
 </body>
+<script>
+  function data() {
+    return {
+      open: '',
 
+      init() {
+        let parameters = new URLSearchParams(window.location.search);
+        this.open = parameters.get('option') ?? 'index';
+      },
+
+      redirect(option) {
+        window.location.href = window.location.pathname + "?option=" + option;
+      }
+    }
+  }
+</script>
 </html>
