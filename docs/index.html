@@ -131,142 +131,147 @@
       </aside>
 
       <main class="w-5/6">
-        <div x-show="open == 'index'">
-          <section>
-            <h1 class="text-3xl font-bold">Descripción general del proyecto</h1>
-            <p>La aplicación "comics y cuentos" permite a los usuarios leer y publicar obras en ella.</p>
-          </section>
-
-          <section class="mt-5">
-            <h2 class="text-2xl font-semibold">Funcionalidad principal de la aplicación</h2>
-            <p>
-              La aplicación se centra en ofrecer al usuario leer las obras publicadas en la aplicación y publicar sus
-              propias obras.
-            </p>
-
-            <p class="mt-2">
-              Los usuarios podrán realizar diferentes acciones en la aplicación:
-            </p>
-
-            <ul class="list-disc list-inside pl-3">
-              <li>
-                Los usuarios no registrados (guest) solo pueden leer las obras que tengan disponibles.
-              </li>
-              <li>
-                Los usuarios registrados (user) tienen opciones adicionales:
-                <ol class="list-decimal list-inside pl-6">
-                  <li>
-                    Leer todas las obras disponibles (si el usuario es menor no tiene a acceso las obras para adultos).
-                  </li>
-                  <li>
-                    Administrar su "biblioteca".
-                  </li>
-                  <li>
-                    Solicitar permisos para publicar.
-                  </li>
-                </ol>
-              </li>
-              <li>
-                Los usuarios que ya tienen permiso para publicar (author) tienen más opciones:
-                <ol class="list-decimal list-inside pl-6">
-                  <li>
-                    Gestión de sus obras.
-                  </li>
-                  <li>
-                    Gestión de los capítulos de dichas obras.
-                  </li>
-                </ol>
-              </li>
-              <li>
-                Los usuarios administradores (admin) pueden:
-                <ol class="list-decimal list-inside pl-6">
-                  <li>
-                    Gestionar usuarios (user y author).
-                  </li>
-                  <li>
-                    Eliminar y editar obras.
-                  </li>
-                  <li>
-                    Eliminar capítulos.
-                  </li>
-                </ol>
-              </li>
-            </ul>
-          </section>
-
-          <section class="mt-5">
-            <h2 class="text-2xl font-semibold">Objetivos generales</h2>
-            <ul class="list-disc list-inside pl-3">
-              <li>
-                Objetivo principal: "Almacenar y dar acceso de las obras publicadas".
-              </li>
-              <li>
-                Gestionar registro, logueo y deslogueo de usuarios.
-              </li>
-              <li>
-                Gestión de los usuarios, obras y capítulos por parte de administradores.
-              </li>
-              <li>
-                Gestionar la creación, modificación y borrado de obras.
-              </li>
-              <li>
-                Gestionar la creación, modificado y borrado de capítulos.
-              </li>
-              <li>
-                Gestionar el estado de la obra y capítulos para cada usuario.
-              </li>
-              <li>
-                Uso del lector con sus diferentes vistas.
-              </li>
-            </ul>
-
-          </section>
-
-          <section class="mt-5">
-            <h2 class="text-2xl font-semibold">Elemento de innovación</h2>
-            <ul class="list-disc list-inside pl-3">
-              <li>
-                Laravel Framework.
-              </li>
-              <li>
-                Livewire Framework para el uso de alpinejs y tailwindcss
-              </li>
-              <li>
-                Amazon S3 como servicio de almacenamiento.
-              </li>
-              <li>
-                CKEditor para la creación y edición de obras cuyo contenido no son imágenes.
-              </li>
-            </ul>
-          </section>
-        </div>
-        <div x-show="open == 'home'">
-          <p>This is the first view we access when entering our Application.</p>
+        <template x-if="open == 'index'">
           <div>
-            <p>In it we can see:</p>
-            <ul class="list-disc list-inside pl-3">
-              <li>The navigation menu, which allows us to move between the different views and functions (it will be
-                Available in all views of the app).</li>
-              <li>A carousel, which will show us 3 random works.</li>
-              <li>The novelties are the latest works created by the authors.</li>
-            </ul>
-            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
-              <p class="text-2xl font-semibold">Large screens</p>
-              <img src="images/guest/home.png" alt="home" class="w-min">
-              <p class="text-2xl font-semibold">Medium screens</p>
-              <img src="images/guest/home-tablet.png" alt="home-tablet" class="w-min">
-              <p class="text-2xl font-semibold">Small screens</p>
-              <img src="images/guest/home-movil.png" alt="home-movil" class="w-min">
+            <section>
+              <h1 class="text-3xl font-bold">Descripción general del proyecto</h1>
+              <p>La aplicación "comics y cuentos" permite a los usuarios leer y publicar obras en ella.</p>
+            </section>
+
+            <section class="mt-5">
+              <h2 class="text-2xl font-semibold">Funcionalidad principal de la aplicación</h2>
+              <p>
+                La aplicación se centra en ofrecer al usuario leer las obras publicadas en la aplicación y publicar sus
+                propias obras.
+              </p>
+
+              <p class="mt-2">
+                Los usuarios podrán realizar diferentes acciones en la aplicación:
+              </p>
+
+              <ul class="list-disc list-inside pl-3">
+                <li>
+                  Los usuarios no registrados (guest) solo pueden leer las obras que tengan disponibles.
+                </li>
+                <li>
+                  Los usuarios registrados (user) tienen opciones adicionales:
+                  <ol class="list-decimal list-inside pl-6">
+                    <li>
+                      Leer todas las obras disponibles (si el usuario es menor no tiene a acceso las obras para
+                      adultos).
+                    </li>
+                    <li>
+                      Administrar su "biblioteca".
+                    </li>
+                    <li>
+                      Solicitar permisos para publicar.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  Los usuarios que ya tienen permiso para publicar (author) tienen más opciones:
+                  <ol class="list-decimal list-inside pl-6">
+                    <li>
+                      Gestión de sus obras.
+                    </li>
+                    <li>
+                      Gestión de los capítulos de dichas obras.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  Los usuarios administradores (admin) pueden:
+                  <ol class="list-decimal list-inside pl-6">
+                    <li>
+                      Gestionar usuarios (user y author).
+                    </li>
+                    <li>
+                      Eliminar y editar obras.
+                    </li>
+                    <li>
+                      Eliminar capítulos.
+                    </li>
+                  </ol>
+                </li>
+              </ul>
+            </section>
+
+            <section class="mt-5">
+              <h2 class="text-2xl font-semibold">Objetivos generales</h2>
+              <ul class="list-disc list-inside pl-3">
+                <li>
+                  Objetivo principal: "Almacenar y dar acceso de las obras publicadas".
+                </li>
+                <li>
+                  Gestionar registro, logueo y deslogueo de usuarios.
+                </li>
+                <li>
+                  Gestión de los usuarios, obras y capítulos por parte de administradores.
+                </li>
+                <li>
+                  Gestionar la creación, modificación y borrado de obras.
+                </li>
+                <li>
+                  Gestionar la creación, modificado y borrado de capítulos.
+                </li>
+                <li>
+                  Gestionar el estado de la obra y capítulos para cada usuario.
+                </li>
+                <li>
+                  Uso del lector con sus diferentes vistas.
+                </li>
+              </ul>
+
+            </section>
+
+            <section class="mt-5">
+              <h2 class="text-2xl font-semibold">Elemento de innovación</h2>
+              <ul class="list-disc list-inside pl-3">
+                <li>
+                  Laravel Framework.
+                </li>
+                <li>
+                  Livewire Framework para el uso de alpinejs y tailwindcss
+                </li>
+                <li>
+                  Amazon S3 como servicio de almacenamiento.
+                </li>
+                <li>
+                  CKEditor para la creación y edición de obras cuyo contenido no son imágenes.
+                </li>
+              </ul>
+            </section>
+          </div>
+        </template>
+        <template x-if="open == 'home'">
+          <div>
+            <p>This is the first view we access when entering our Application.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>The navigation menu, which allows us to move between the different views and functions (it will be
+                  Available in all views of the app).</li>
+                <li>A carousel, which will show us 3 random works.</li>
+                <li>The novelties are the latest works created by the authors.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/home.png" alt="home" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/home-tablet.png" alt="home-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/home-movil.png" alt="home-movil" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="text-2xl font-bold">Dark mode</p>
+              <p>We also have the option to alternate between dark and luminous mode:</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <img src="images/guest/dark-mode.png" alt="home" class="w-min">
+              </div>
             </div>
           </div>
-          <div class="mt-3">
-            <p class="text-2xl font-bold">Dark mode</p>
-            <p>We also have the option to alternate between dark and luminous mode:</p>
-            <div class="mt-2 flex flex-col justify-center items-center space-y-3">
-              <img src="images/guest/dark-mode.png" alt="home" class="w-min">
-            </div>
-          </div>
-        </div>
+        </template>
         <div x-show="open == 'directory'">
           <p>In this view we can search among all the works on the web.</p>
           <div>
@@ -637,4 +642,5 @@
     }
   }
 </script>
+
 </html>
