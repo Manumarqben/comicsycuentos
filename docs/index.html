@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CyC-Use Manual</title>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.1/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <nav class="bg-white border-b border-gray-100 sticky top-0 left-0 z-50 h-16"></nav>
+  <div class="bg-gray-200 w-full">
+    <div class="flex flex-row max-w-7xl mx-auto sm:px-6 lg:px-8 py-10" x-data="data()">
+      <aside class="w-1/6 h-screen overflow-y-auto mt-[-32px]">
+        <div>
+          <span class="cursor-pointer font-bold text-xl" @click="redirect('index')">Use Manual</span>
+        </div>
+        <div class="mt-2">
+          <span class="font-bold">Guest</span>
+          <ul class="pl-3">
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'home'}">
+              <span class="font-medium cursor-pointer" @click="redirect('home')">Home</span>
+              <ul class="pl-3">
+                <li>
+                  Dark-mode
+                </li>
+              </ul>
+            </li>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'directory'}">
+              <span class="font-medium cursor-pointer" @click="redirect('directory')">Directory</span>
+              <ul class="pl-3">
+                <li>
+                  Age control
+                </li>
+              </ul>
+            </li>
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'guest-work-show'}">
+              <span class="cursor-pointer" @click="redirect('guest-work-show')">Work</span>
+            </li>
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'author-show'}">
+              <span class="cursor-pointer" @click="redirect('author-show')">Author</span>
+            </li>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'guest-reader'}">
+              <span class="font-medium cursor-pointer" @click="redirect('guest-reader')">Reader</span>
+              <ul class="pl-3">
+                <li>
+                  <span>Text</span>
+                </li>
+                <li>
+                  <span>Image</span>
+                </li>
+              </ul>
+            </li>
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'register'}">
+              <span class="cursor-pointer" @click="redirect('register')">Register</span>
+            </li>
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'login'}">
+              <span class="cursor-pointer" @click="redirect('login')">Login</span>
+            </li>
+            <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'forgot-pass'}">
+              <span class="font-medium cursor-pointer" @click="redirect('forgot-pass')">Forgot pass</span>
+              <ul class="pl-3">
+                <li>
+                  Reset pass
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div class="mt-2">
+          <span class="font-bold">User</spam>
+            <ul class="pl-3">
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'user-profile'}">
+                <span class="cursor-pointer" @click="redirect('user-profile')">Profile</span>
+              </li>
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'library'}">
+                <span class="cursor-pointer" @click="redirect('library')">Library</span>
+              </li>
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'user-work-show'}">
+                <span class="cursor-pointer" @click="redirect('user-work-show')">Work</span>
+              </li>
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'like'}">
+                <span class="cursor-pointer" @click="redirect('like')">Like chapter</span>
+              </li>
+              <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'be-author'}">
+                <span class="cursor-pointer" @click="redirect('be-author')">Be Author</span>
+              </li>
+            </ul>
+        </div>
+        <div class="mt-2">
+          <span class="font-bold">Author</span>
+          <ul class="pl-3">
+            <li class="font-medium p-1 rounded-md" :class="{'bg-gray-300': open == 'author-profile'}">
+              <span class="cursor-pointer" @click="redirect('author-profile')">Profile</span>
+            </li>
+            <li>
+              <span class="font-medium">Work</span>
+              <ul class="pl-3">
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'work-save'}">
+                  <span class="cursor-pointer" @click="redirect('work-save')">Create / Update</span>
+                </li>
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'work-delete'}">
+                  <span class="cursor-pointer" @click="redirect('work-delete')">Delete</span>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <span class="font-medium">Chapter</span>
+              <ul class="pl-3">
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'chapter-save'}">
+                  <span class="cursor-pointer" @click="redirect('chapter-save')">Create / Update</span>
+                  <ul class="pl-3">
+                    <li>
+                      <span>Text</span>
+                    </li>
+                    <li>
+                      <span>Image</span>
+                    </li>
+                  </ul>
+                </li>
+                <li class="p-1 rounded-md" :class="{'bg-gray-300': open == 'chapter-delete'}">
+                  <span class="cursor-pointer" @click="redirect('chapter-delete')">Delete</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="w-5/6">
+        <template x-if="open == 'index'">
+          <div>
+            <section>
+              <h1 class="text-3xl font-bold">Descripción general del proyecto</h1>
+              <p>La aplicación "comics y cuentos" permite a los usuarios leer y publicar obras en ella.</p>
+            </section>
+
+            <section class="mt-5">
+              <h2 class="text-2xl font-semibold">Funcionalidad principal de la aplicación</h2>
+              <p>
+                La aplicación se centra en ofrecer al usuario leer las obras publicadas en la aplicación y publicar sus
+                propias obras.
+              </p>
+
+              <p class="mt-2">
+                Los usuarios podrán realizar diferentes acciones en la aplicación:
+              </p>
+
+              <ul class="list-disc list-inside pl-3">
+                <li>
+                  Los usuarios no registrados (guest) solo pueden leer las obras que tengan disponibles.
+                </li>
+                <li>
+                  Los usuarios registrados (user) tienen opciones adicionales:
+                  <ol class="list-decimal list-inside pl-6">
+                    <li>
+                      Leer todas las obras disponibles (si el usuario es menor no tiene a acceso las obras para
+                      adultos).
+                    </li>
+                    <li>
+                      Administrar su "biblioteca".
+                    </li>
+                    <li>
+                      Solicitar permisos para publicar.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  Los usuarios que ya tienen permiso para publicar (author) tienen más opciones:
+                  <ol class="list-decimal list-inside pl-6">
+                    <li>
+                      Gestión de sus obras.
+                    </li>
+                    <li>
+                      Gestión de los capítulos de dichas obras.
+                    </li>
+                  </ol>
+                </li>
+                <li>
+                  Los usuarios administradores (admin) pueden:
+                  <ol class="list-decimal list-inside pl-6">
+                    <li>
+                      Gestionar usuarios (user y author).
+                    </li>
+                    <li>
+                      Eliminar y editar obras.
+                    </li>
+                    <li>
+                      Eliminar capítulos.
+                    </li>
+                  </ol>
+                </li>
+              </ul>
+            </section>
+
+            <section class="mt-5">
+              <h2 class="text-2xl font-semibold">Objetivos generales</h2>
+              <ul class="list-disc list-inside pl-3">
+                <li>
+                  Objetivo principal: "Almacenar y dar acceso de las obras publicadas".
+                </li>
+                <li>
+                  Gestionar registro, logueo y deslogueo de usuarios.
+                </li>
+                <li>
+                  Gestión de los usuarios, obras y capítulos por parte de administradores.
+                </li>
+                <li>
+                  Gestionar la creación, modificación y borrado de obras.
+                </li>
+                <li>
+                  Gestionar la creación, modificado y borrado de capítulos.
+                </li>
+                <li>
+                  Gestionar el estado de la obra y capítulos para cada usuario.
+                </li>
+                <li>
+                  Uso del lector con sus diferentes vistas.
+                </li>
+              </ul>
+            </section>
+
+            <section class="mt-5">
+              <h2 class="text-2xl font-semibold">Elemento de innovación</h2>
+              <ul class="list-disc list-inside pl-3">
+                <li>
+                  Laravel Framework.
+                </li>
+                <li>
+                  Livewire Framework para el uso de alpinejs y tailwindcss
+                </li>
+                <li>
+                  Amazon S3 como servicio de almacenamiento.
+                </li>
+                <li>
+                  CKEditor para la creación y edición de obras cuyo contenido no son imágenes.
+                </li>
+              </ul>
+            </section>
+          </div>
+        </template>
+        <template x-if="open == 'home'">
+          <div>
+            <p>This is the first view we access when entering our Application.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>The navigation menu, which allows us to move between the different views and functions (it will be
+                  Available in all views of the app).</li>
+                <li>A carousel, which will show us 3 random works.</li>
+                <li>The novelties are the latest works created by the authors.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/home.png" alt="home" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/home-tablet.png" alt="home-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/home-movil.png" alt="home-movil" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="text-2xl font-bold">Dark mode</p>
+              <p>We also have the option to alternate between dark and luminous mode:</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <img src="images/guest/dark-mode.png" alt="home" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'directory'">
+          <div>
+            <p>In this view we can search among all the works on the web.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>A field to search for the name of the work (this field allows you to be positioned in it if you
+                  press
+                  Enter will be made the search).</li>
+                <li>A button to order the search results in a descending or ascending way.</li>
+                <li>An drop -down to show advanced search options.</li>
+                <li>The search buttons or to apply filters.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/directory.png" alt="directory" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/directory-tablet.png" alt="directory-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/directory-movil.png" alt="directory-movil" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p>This is the view with the applied filters:</p>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>State filter.</li>
+                <li>Type filter.</li>
+                <li>Age filter (Here we have two options to choose, the concrete age or a predefined age range).</li>
+                <li>Gender filter.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <img src="images/guest/directory-filter.png" alt="home" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="text-2xl font-bold">Age control</p>
+              <p>Throughout the application we have an age control so that guest or minor users cannot see the works for
+                adults.</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Guest or minors filtering +18.</p>
+                <img src="images/user/age-control-children.png" alt="home" class="w-min">
+                <p class="text-2xl font-semibold">Adults filtering +18.</p>
+                <img src="images/user/age-control-adult.png" alt="home" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'guest-work-show'">
+          <div>
+            <p>In this view we can see the information of a work.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>The cover, the recommended minimum type and age.</li>
+                <li>The title, the synopsis, the State, the genres, and the author of the author.</li>
+                <li>A button to order the chapters in descending or ascending.</li>
+                <li>The chapters.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/work-show.png" alt="guest-work-show" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/work-show-tablet.png" alt="guest-work-show-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/work-show-movil.png" alt="guest-work-show-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'author-show'">
+          <div>
+            <p>In this view we can see the author's information.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Author's photo.</li>
+                <li>The alias.</li>
+                <li>The biography.</li>
+                <li>Buttons to find the works of this author for his state.</li>
+                <li>The works leaked by the selected state.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/author-show.png" alt="author-show" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/author-show-tablet.png" alt="author-show-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/author-show-movil.png" alt="author-show-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'guest-reader'">
+          <div>
+            <p>In this view we can read the chapters of the works.</p>
+            <div>
+              <p class="text-2xl font-bold mt-2">Text</p>
+              <div>
+                <p>In it we can see:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>Chapter title.</li>
+                  <li>A button to return to the work.</li>
+                  <li>Buttons to start reproduction of the chapter using TTS.</li>
+                  <li>Chapter content.</li>
+                  <li>Buttons to move between chapters (If there are no chapters to move does not appear the button).
+                  </li>
+                </ul>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/guest/reader-text.png" alt="reader-text" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/guest/reader-text-tablet.png" alt="reader-text-tablet" class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/guest/reader-text-movil.png" alt="reader-text-movil" class="w-min">
+                </div>
+              </div>
+              <div>
+                <div class="mt-3">
+                  <p class="text-2xl font-semibold">Reproductor TTS</p>
+                  <p>When we press the button to play the work by TTS, we have the following options:</p>
+                  <ul class="list-disc list-inside pl-3">
+                    <li>In this option the work is being reproduced and we have the option to pause the reproduction to
+                      continue later or stop it completely.</li>
+                    <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                      <img src="images/guest/reader-text-play.png" alt="home" class="w-min">
+                    </div>
+                    <li>In this option the work is slow and we can resume reproduction or stop it completely.</li>
+                    <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                      <img src="images/guest/reader-text-pause.png" alt="home" class="w-min">
+                    </div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text-2xl font-bold mt-2">Image</p>
+              <div>
+                <p>In it we can see:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>Chapter title.</li>
+                  <li>A button to return to the work.</li>
+                  <li>A button to alternate between paginated view or cascade view.</li>
+                  <li>Chapter content.</li>
+                  <li>Buttons to move between chapters (If there are no chapters to move does not appear the button).
+                  </li>
+                </ul>
+                <p class="text-xl font-bold mt-2">Paginate</p>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/guest/reader-image-paginate.png" alt="reader-image-paginate" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/guest/reader-image-paginate-tablet.png" alt="reader-image-paginate-tablet"
+                    class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/guest/reader-image-paginate-movil.png" alt="reader-image-paginate-movil"
+                    class="w-min">
+                </div>
+                <p class="text-xl font-bold mt-2">Cascade</p>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/guest/reader-image-cascade.png" alt="reader-image-cascade" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/guest/reader-image-cascade-tablet.png" alt="reader-image-cascade-tablet"
+                    class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/guest/reader-image-cascade-movil.png" alt="reader-image-cascade-movil" class="w-min">
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'register'">
+          <div>
+            <p>In this view a guest user can create an account.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Name field.</li>
+                <li>Email field.</li>
+                <li>Age field (optional).</li>
+                <li>Password field.</li>
+                <li>Confirm password field.</li>
+                <li>Link to log in if you already have account.</li>
+                <li>Form to send button.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/register.png" alt="register" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/register-tablet.png" alt="register-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/register-movil.png" alt="register-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'login'">
+          <div>
+            <p>In this view a guest user can log in.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Email field.</li>
+                <li>Password field.</li>
+                <li>Link to recover the password in case of forgetting it.</li>
+                <li>Form to send button.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/login.png" alt="login" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/login-tablet.png" alt="login-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/login-movil.png" alt="login-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'forgot-pass'">
+          <div>
+            <p>In this view a user can recover his password through an email.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Email field.</li>
+                <li>Form to send button.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/guest/forgot-pass.png" alt="forgot-pass" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/guest/forgot-pass-tablet.png" alt="forgot-pass-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/guest/forgot-pass-movil.png" alt="forgot-pass-movil" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p class="text-2xl font-bold">Reset pass</p>
+              <p>Following the link in the email received, it will be redirected to this view where you can change the
+                password.</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <img src="images/guest/reset-pass.png" alt="reset-pass" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'user-profile'">
+          <div>
+            <p>In this view the user can administer their account.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>User information.</li>
+                <li>Change of password.</li>
+                <li>Double authentication factor.</li>
+                <li>Session closure in other browsers.</li>
+                <li>Account deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/user/profile.png" alt="profile" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/user/profile-tablet.png" alt="profile-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/user/profile-movil.png" alt="profile-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'library'">
+          <div>
+            <p>In this view, the user can see the works that he has marked with some marker.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Buttons to find the works by the marker assigned by the user.</li>
+                <li>The works leaked by the selected marker.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/user/library.png" alt="library" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/user/library-tablet.png" alt="library-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/user/library-movil.png" alt="library-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'user-work-show'">
+          <div>
+            <p>When a login user accesses this view, extra options are abilitated.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Drop -down to select the marker to add the work to your library.</li>
+                <li>Button to mark the work as a favorite.</li>
+                <li>A button that eliminates the follow -up of the work.</li>
+                <li>Icons indicating that chapters has read the user.
+                  <ul class="list-inside pl-3">
+                    <li>If you click on an "not read" icon the corresponding chapter and the previous ones will be
+                      marked
+                      as read.</li>
+                    <li>If you click on an "read" icon the corresponding chapter will be the last chapter read and the
+                      following will go to "not read" in case they are marked as such.</li>
+                    <li>When you access reader and the chapter has not been read, it will be marked as the last chapter
+                      read.</li>
+                  </ul>
+                </li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/user/work-show.png" alt="user-work-show" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/user/work-show-tablet.png" alt="user-work-show-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens</p>
+                <img src="images/user/work-show-movil.png" alt="user-work-show-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'like'">
+          <div>
+            <p>When a login user accesses this view, extra options are abilitated.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Button to give "like" or remove "like".</li>
+                <li>Button to give "I don't like" or remove "I don't like".</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Reader text</p>
+                <img src="images/user/reader-text.png" alt="like-text" class="w-min">
+                <p class="text-2xl font-semibold">Reader image</p>
+                <img src="images/user/reader-image.png" alt="like-image" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'be-author'">
+          <div>
+            <p>A login user has the option to apply to be an author, as well as to withdraw your application.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Button to apply.</li>
+                <li>Modal to select alias.</li>
+                <li>Button to withdraw application.</li>
+                <li>Modal to withdraw application.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Button to apply</p>
+                <img src="images/user/be-author.png" alt="like-text" class="w-min">
+                <p class="text-2xl font-semibold">Modal to select alias</p>
+                <img src="images/user/be-author-modal.png" alt="like-image" class="w-min">
+                <p class="text-2xl font-semibold">Button to withdraw application.</p>
+                <img src="images/user/withdraw.png" alt="like-text" class="w-min">
+                <p class="text-2xl font-semibold">Modal to withdraw application</p>
+                <img src="images/user/withdraw-modal.png" alt="like-image" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'author-profile'">
+          <div>
+            <p>In this view an author user can administer his author account and his works and chapters.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Author information (profile photo, alias and biography).</li>
+                <li>Works management.</li>
+                <li>Author rank deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/author/profile.png" alt="author-profile" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/author/profile-tablet.png" alt="author-profile-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens.</p>
+                <img src="images/author/profile-movil.png" alt="author-profile-movil" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'work-save'">
+          <div>
+            <p>In this view, the Author user can create and update their works.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Title field.</li>
+                <li>Synopsis field.</li>
+                <li>Front page field.</li>
+                <li>A dropdown with the types.</li>
+                <li>A dropdown with the states.</li>
+                <li>A dropdown with the ages.</li>
+                <li>The generos available to select.</li>
+                <li>A preview of how you will see the cover.</li>
+                <li>Form to send button.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/author/work-save.png" alt="work-save" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/author/work-save-tablet.png" alt="work-save-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens.</p>
+                <img src="images/author/work-save-movil.png" alt="work-save-movil" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p>This is the view with the stuffed form and the preview showing the final result:</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <img src="images/author/work-save-con-datos.png" alt="work-save-con-datos" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p>If a work is created, a modal opens that asks the user if he wants to create the first chapter of that
+                work.</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Modal to access to create the first chapter.</p>
+                <img src="images/author/chapter-create-modal.png" alt="chapter-create-modal" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'work-delete'">
+          <div>
+            <p>When the Delete button is pressed in the work, a modal will open to confirm that you want to erase the
+              work.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Information that will happen.</li>
+                <li>Cancel the deletion button.</li>
+                <li>Button to confirm the deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Modal to delete work</p>
+                <img src="images/author/work-delete.png" alt="work-save" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'chapter-save'">
+          <div>
+            <p>In this view an Author user can create a chapter for one of his works.</p>
+            <div>
+              <p class="text-2xl font-bold mt-2">Text</p>
+              <div>
+                <p>In it we can see:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>Field number.</li>
+                  <li>Title field.</li>
+                  <li>Buttons to choose a chapter type (in this case text).</li>
+                  <li>Text editor, with format options.</li>
+                  <li>Button to submit form</li>
+                </ul>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/author/chapter-text-save.png" alt="chapter-text-save" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/author/chapter-text-save-tablet.png" alt="chapter-text-save-tablet" class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/author/chapter-text-save-movil.png" alt="chapter-text-save-movil" class="w-min">
+                </div>
+              </div>
+              <div>
+                <div class="mt-3">
+                  <p class="text-2xl font-semibold">With content:</p>
+                  <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                    <img src="images/author/chapter-text-save-con-datos.png" alt="chapter-text-save-con-datos"
+                      class="w-min">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text-2xl font-bold mt-2">Image</p>
+              <div>
+                <p>In it we can see:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>Field number.</li>
+                  <li>Title field.</li>
+                  <li>Buttons to choose type chapter (in this case image).</li>
+                  <li>Field to select images.</li>
+                  <li>Button to submit form</li>
+                </ul>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/author/chapter-image-save.png" alt="chapter-image-save" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/author/chapter-image-save-tablet.png" alt="chapter-image-save-tablet" class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/author/chapter-image-save-movil.png" alt="chapter-image-save-movil" class="w-min">
+                </div>
+              </div>
+              <div>
+                <div class="mt-3">
+                  <p class="text-2xl font-semibold">With content:</p>
+                  <p>In this view, the user can see a preview of the images.</p>
+                  <p>In the image preview we have a button to remove the image in case of not wanting to remove it.</p>
+                  <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                    <img src="images/author/chapter-image-save-con-datos.png" alt="chapter-image-save-con-datos"
+                      class="w-min">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </template>
+        <template x-if="open == 'chapter-delete'">
+          <div>
+            <p>When the Delete button is pressed in the chapter, a modal will open to confirm that you want to erase the
+              chapter.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Information that will happen.</li>
+                <li>Cancel the deletion button.</li>
+                <li>Button to confirm the deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Modal to delete work</p>
+                <img src="images/author/chapter-delete.png" alt="chapter-delete" class="w-min">
+              </div>
+            </div>
+          </div>
+        </template>
+      </main>
+
+    </div>
+  </div>
+</body>
+<script>
+  function data() {
+    return {
+      open: '',
+
+      init() {
+        let parameters = new URLSearchParams(window.location.search);
+        this.open = parameters.get('option') ?? 'index';
+      },
+
+      redirect(option) {
+        window.location.href = window.location.pathname + "?option=" + option;
+      }
+    }
+  }
+</script>
+
+</html>

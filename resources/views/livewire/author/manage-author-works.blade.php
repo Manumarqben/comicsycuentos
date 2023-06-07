@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-row justify-center items-center">
-                                    <a href="{{ route('work.update', $work->slug) }}"
+                                    <a href="{{ route('work.update', $work->id) }}"
                                         class="button-secondary">
                                         <x-icon.edit />
                                     </a>

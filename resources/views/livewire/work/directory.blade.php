@@ -35,7 +35,7 @@
                         <div x-data="{ open: false }" class="pt-1">
                             <div
                                 class="w-full flex justify-end items-center cursor-pointer">
-                                <span @click="open = !open">Busqueda avanzada</span>
+                                <span @click="open = !open">Advanced search</span>
                                 <template x-if="open">
                                     <x-icon.chevron-up type="mini" />
                                 </template>

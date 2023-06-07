@@ -107,10 +107,10 @@ class Save extends Component
         }
     }
 
-    public function mount($slug = null)
+    public function mount($id = null)
     {
-        if ($slug != null) {
-            $work = Work::where('slug', $slug)->firstOrFail();
+        if ($id != null) {
+            $work = Work::findOrFail($id);
         }
 
         $this->fill([

@@ -126,7 +126,7 @@
 
     <div>
         <div class="text-center pb-5">
-            <span class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">Novedades</span>
+            <span class="font-semibold text-4xl text-gray-800 dark:text-gray-200 leading-tight">{{ __('Latest added works') }}</span>
         </div>
         <div
             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 px-2 sm:px-0">

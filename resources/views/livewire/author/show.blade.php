@@ -5,7 +5,7 @@
             <x-author-profile-photo
                 path="{{ $author->profilePhoto
                     ? asset(Storage::url($author->profilePhoto->path))
-                    : asset(Storage::url('author_profile_photos/cervantes.jpg')); }}"
+                    : asset(Storage::url('author_profile_photos/cervantes.jpg')) }}"
                 alt="{{ $author->alias }}" />
         </div>
         <div id="info" class="grow space-y-2 px-5">
@@ -19,15 +19,23 @@
         </div>
     </div>
     <div>
-        <div class="flex justify-between pb-8">
-            <button
-                wire:click="$emitTo('work.list-works', 'setState', 'publishing')">Publishing</button>
-            <button
-                wire:click="$emitTo('work.list-works', 'setState', 'finished')">Finished</button>
-            <button
-                wire:click="$emitTo('work.list-works', 'setState', 'hiatus')">Hiatus</button>
-            <button
-                wire:click="$emitTo('work.list-works', 'setState', 'discontinued')">Discontinued</button>
+        <div class="flex flex-wrap sm:flex-nowrap justify-around py-2">
+            <x-tab-option wire:click.prevent="setState('publishing')"
+                :active="$state == 'publishing'" class="w-1/2 sm:w-full">
+                Publishing
+            </x-tab-option>
+            <x-tab-option wire:click.prevent="setState('finished')"
+                :active="$state == 'finished'" class="w-1/2 sm:w-full">
+                Finished
+            </x-tab-option>
+            <x-tab-option wire:click.prevent="setState('hiatus')"
+                :active="$state == 'hiatus'" class="w-1/2 sm:w-full">
+                Hiatus
+            </x-tab-option>
+            <x-tab-option wire:click.prevent="setState('discontinued')"
+                :active="$state == 'discontinued'" class="w-1/2 sm:w-full">
+                Discontinued
+            </x-tab-option>
         </div>
         @livewire('work.list-works', ['author' => $author->id, 'state' => $state], key('list-works'))
     </div>

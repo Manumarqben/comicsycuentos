@@ -33,13 +33,13 @@
                                 <x-secondary-button
                                     wire:click.prevent="openDeleteAdminModal({{ $user->id }})"
                                     title="{{ __('Demote admin') }}">
-                                    <x-icon.arrow-down-circle />
+                                    <x-icon.admin  color="fill-green-600 dark:fill-greem-500" />
                                 </x-secondary-button>
                             @else
                                 <x-secondary-button
                                     wire:click.prevent="openCreateAdminModal({{ $user->id }})"
                                     title="{{ __('Promote to admin') }}">
-                                    <x-icon.arrow-up-circle />
+                                    <x-icon.admin />
                                 </x-secondary-button>
                             @endif
                         </div>
