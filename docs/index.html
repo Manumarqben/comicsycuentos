@@ -637,17 +637,82 @@
         </template>
         <template x-if="open == 'author-profile'">
           <div>
-            author-profile
+            <p>In this view an author user can administer his author account and his works and chapters.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Author information (profile photo, alias and biography).</li>
+                <li>Works management.</li>
+                <li>Author rank deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/author/profile.png" alt="author-profile" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/author/profile-tablet.png" alt="author-profile-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens.</p>
+                <img src="images/author/profile-movil.png" alt="author-profile-movil" class="w-min">
+              </div>
+            </div>
           </div>
         </template>
         <template x-if="open == 'work-save'">
           <div>
-            work-save
+            <p>In this view, the Author user can create and update their works.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Title field.</li>
+                <li>Synopsis field.</li>
+                <li>Front page field.</li>
+                <li>A dropdown with the types.</li>
+                <li>A dropdown with the states.</li>
+                <li>A dropdown with the ages.</li>
+                <li>The generos available to select.</li>
+                <li>A preview of how you will see the cover.</li>
+                <li>Form to send button.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Large screens</p>
+                <img src="images/author/work-save.png" alt="work-save" class="w-min">
+                <p class="text-2xl font-semibold">Medium screens</p>
+                <img src="images/author/work-save-tablet.png" alt="work-save-tablet" class="w-min">
+                <p class="text-2xl font-semibold">Small screens.</p>
+                <img src="images/author/work-save-movil.png" alt="work-save-movil" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p>This is the view with the stuffed form and the preview showing the final result:</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <img src="images/author/work-save-con-datos.png" alt="work-save-con-datos" class="w-min">
+              </div>
+            </div>
+            <div class="mt-3">
+              <p>If a work is created, a modal opens that asks the user if he wants to create the first chapter of that
+                work.</p>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Modal to access to create the first chapter.</p>
+                <img src="images/author/chapter-create-modal.png" alt="chapter-create-modal" class="w-min">
+              </div>
+            </div>
           </div>
         </template>
         <template x-if="open == 'work-delete'">
           <div>
-            work-delete
+            <p>When the Delete button is pressed in the work, a modal will open to confirm that you want to erase the
+              work.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Information that will happen.</li>
+                <li>Cancel the deletion button.</li>
+                <li>Button to confirm the deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Modal to delete work</p>
+                <img src="images/author/work-delete.png" alt="work-save" class="w-min">
+              </div>
+            </div>
           </div>
         </template>
         <template x-if="open == 'chapter-save'">
