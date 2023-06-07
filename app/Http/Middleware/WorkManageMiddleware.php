@@ -16,13 +16,18 @@ class WorkManageMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $slug = $request->route('slug');
-        $work = Work::where('slug', $slug)->firstOrFail();
-        
-        if (auth()->user()->author->id !== $work->author_id) {
-            abort(404);
+        $id = $request->route('id');
+
+        if (is_numeric($id)) {
+            $work = Work::findOrFail($id);
         }
 
-        return $next($request);
+        if (isset($work)) {
+            if (auth()->user()->author->id == $work->author_id) {
+                return $next($request);
+            }
+        }
+
+        abort(404);
     }
 }
