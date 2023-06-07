@@ -717,12 +717,87 @@
         </template>
         <template x-if="open == 'chapter-save'">
           <div>
-            chapter-save
+            <p>In this view an Author user can create a chapter for one of his works.</p>
+            <div>
+              <p class="text-2xl font-bold mt-2">Text</p>
+              <div>
+                <p>In it we can see:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>Field number.</li>
+                  <li>Title field.</li>
+                  <li>Buttons to choose a chapter type (in this case text).</li>
+                  <li>Text editor, with format options.</li>
+                  <li>Button to submit form</li>
+                </ul>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/author/chapter-text-save.png" alt="chapter-text-save" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/author/chapter-text-save-tablet.png" alt="chapter-text-save-tablet" class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/author/chapter-text-save-movil.png" alt="chapter-text-save-movil" class="w-min">
+                </div>
+              </div>
+              <div>
+                <div class="mt-3">
+                  <p class="text-2xl font-semibold">With content:</p>
+                  <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                    <img src="images/author/chapter-text-save-con-datos.png" alt="chapter-text-save-con-datos"
+                      class="w-min">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <p class="text-2xl font-bold mt-2">Image</p>
+              <div>
+                <p>In it we can see:</p>
+                <ul class="list-disc list-inside pl-3">
+                  <li>Field number.</li>
+                  <li>Title field.</li>
+                  <li>Buttons to choose type chapter (in this case image).</li>
+                  <li>Field to select images.</li>
+                  <li>Button to submit form</li>
+                </ul>
+                <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                  <p class="text-2xl font-semibold">Large screens</p>
+                  <img src="images/author/chapter-image-save.png" alt="chapter-image-save" class="w-min">
+                  <p class="text-2xl font-semibold">Medium screens</p>
+                  <img src="images/author/chapter-image-save-tablet.png" alt="chapter-image-save-tablet" class="w-min">
+                  <p class="text-2xl font-semibold">Small screens</p>
+                  <img src="images/author/chapter-image-save-movil.png" alt="chapter-image-save-movil" class="w-min">
+                </div>
+              </div>
+              <div>
+                <div class="mt-3">
+                  <p class="text-2xl font-semibold">With content:</p>
+                  <p>In this view, the user can see a preview of the images.</p>
+                  <p>In the image preview we have a button to remove the image in case of not wanting to remove it.</p>
+                  <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                    <img src="images/author/chapter-image-save-con-datos.png" alt="chapter-image-save-con-datos"
+                      class="w-min">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </template>
         <template x-if="open == 'chapter-delete'">
           <div>
-            chapter-delete
+            <p>When the Delete button is pressed in the chapter, a modal will open to confirm that you want to erase the
+              chapter.</p>
+            <div>
+              <p>In it we can see:</p>
+              <ul class="list-disc list-inside pl-3">
+                <li>Information that will happen.</li>
+                <li>Cancel the deletion button.</li>
+                <li>Button to confirm the deletion.</li>
+              </ul>
+              <div class="mt-2 flex flex-col justify-center items-center space-y-3">
+                <p class="text-2xl font-semibold">Modal to delete work</p>
+                <img src="images/author/chapter-delete.png" alt="chapter-delete" class="w-min">
+              </div>
+            </div>
           </div>
         </template>
       </main>
