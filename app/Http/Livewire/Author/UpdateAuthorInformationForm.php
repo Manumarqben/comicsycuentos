@@ -72,7 +72,7 @@ class UpdateAuthorInformationForm extends Component
             return asset(Storage::url($this->author->profilePhoto->path));
         }
 
-        return asset(Storage::url('author_profile_photos/cervantes.jpg'));
+        return asset(Storage::url('seed/author_profile_photos/cervantes.jpg'));
     }
 
     public function updateAuthorInformation()
@@ -88,12 +88,16 @@ class UpdateAuthorInformationForm extends Component
         DB::beginTransaction();
         try {
             if ($this->photo) {
+                if ($this->author->profilePhoto->path) {
+                    Storage::disk('s3')->delete($this->author->profilePhoto->path);
+                }
                 $extension = $this->photo->getClientOriginalExtension();
                 $fileName = $this->author->id . '.' . $extension;
                 $path = $this->photo->storePubliclyAs('author_profile_photos', $fileName, 's3');
-                $this->author->profilePhoto()->updateOrCreate([
-                    'path' => $path,
-                ]);
+                $this->author->profilePhoto()->updateOrCreate(
+                    ['author_id' => $this->author->id],
+                    ['path' => $path]
+                );
             }
 
             $this->author->save();
