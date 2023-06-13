@@ -25,7 +25,7 @@
                             </div>
                         </td>
                         <td class="p-4">
-                            <div class="flex flex-row justify-center">
+                            <div class="flex flex-row justify-center space-x-1">
                                 <x-button
                                     wire:click.prevent="redirectToAdminAuthor('{{ $author->id }}')">
                                     <x-icon.edit />

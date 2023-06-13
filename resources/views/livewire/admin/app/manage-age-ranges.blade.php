@@ -38,7 +38,7 @@
                             </div>
                         </td>
                         <td class="p-4">
-                            <div class="flex flex-row flex-wrap justify-center">
+                            <div class="flex flex-row flex-wrap justify-center space-x-1">
                                 <x-button
                                     wire:click.prevent="openSaveModal({{ $range->id }})">
                                     <x-icon.edit />

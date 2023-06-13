@@ -32,7 +32,7 @@
                         </span>
                     </td>
                     <td class="p-4">
-                        <div class="flex flex-row justify-center">
+                        <div class="flex flex-row justify-center space-x-1">
                             <x-button
                                 wire:click.prevent="openSaveModal({{ $type->id }})">
                                 <x-icon.edit />

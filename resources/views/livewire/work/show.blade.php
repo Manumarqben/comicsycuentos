@@ -56,7 +56,7 @@
                 {{ __('There is still no chapters') }}
             </div>
         @else
-            <div class="ml-auto pb-5 flex">
+            <div class="ml-auto pb-5 pr-2 flex">
                 @auth
                     <x-danger-button wire:click="deleteBookmark" class="mr-2"
                         title="{{ __('Delete bookmarks') }}">
