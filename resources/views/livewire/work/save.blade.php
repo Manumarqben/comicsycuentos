@@ -149,7 +149,7 @@
                                     {{ __('Genres') }}
                                 </span>
                                 <div
-                                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-h-36 overflow-y-auto">
+                                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 max-h-36 overflow-y-auto px-2">
                                     @foreach ($genres as $id => $genre)
                                         <div class="flex flex-row items-center gap-2">
                                             <input type="checkbox"

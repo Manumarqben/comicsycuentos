@@ -37,7 +37,7 @@
                                         </template>
                                     </div>
                                 </div>
-                                <div class="flex flex-row justify-center items-center">
+                                <div class="flex flex-row justify-center items-center space-x-1">
                                     <a href="{{ route('work.update', $work->id) }}"
                                         class="button-secondary">
                                         <x-icon.edit />
@@ -63,7 +63,7 @@
                                             </p>
                                         </div>
                                         <div
-                                            class="flex flex-row justify-center">
+                                            class="flex flex-row justify-center space-x-1">
                                             <a href="{{ route('chapter.update', ['workSlug' => $work->slug, 'chapterId' => $chapter->id]) }}"
                                                 class="button-secondary">
                                                 <x-icon.edit />
